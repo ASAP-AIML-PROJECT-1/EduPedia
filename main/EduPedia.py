@@ -67,7 +67,7 @@ def login(frame):
     check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
                             command=lambda: showpsd(v, entry_pwd))
     button_submit = Button(frame, text="Submit", height=2, width=15, bg="green",command = lambda: validate_account(frame,entry_usr,entry_pwd))
-    button_forget = Button(frame, text="forgot password", bg="blue", fg="white",command = lambda: forget_password(frame))
+    button_forget = Button(frame, text="forgot password", bg="blue", fg="white")
     button_create = Button(frame, text="Create account", fg="blue")
     button_back = Button(frame, text="back", command=lambda: home(frame))
 

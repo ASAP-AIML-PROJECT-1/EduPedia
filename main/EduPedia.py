@@ -1,44 +1,40 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk, Image
-
 import mysql.connector
 
-## connecting to edupedia database
-# edupedia = mysql.connector.connect(
-#     host = "localhost",
-#     user = "root",
-#     password = "root1234",
-#     database = "edupedia"
-# )
-# edupedia_cursor = edupedia.cursor()
-#
+# connecting to edupedia database
+edupedia = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "root1234",
+    database = "edupedia"
+)
+edupedia_cursor = edupedia.cursor()
+
 
 # Tkinter window
-window=Tk()
+window = Tk()
 window.geometry('1280x700')
-window.title("home".center(100)) # centering the title ?
+window.title("home".center(100))  # centering the title ?
 window.config(bg="black")
+
 
 # login
 def student():
-    val='student'
     frame_login.place_forget()
-    login(frame_stud_log,val)
-
+    login(frame_stud_log)
 
 def institute():
-
-    val='institute'
     frame_login.place_forget()
-    login(frame_inst_log,val)
+    login(frame_inst_log)
 
 def company():
-    val='company'
     frame_login.place_forget()
-    login(frame_comp_log,val)
+    login(frame_comp_log)
 
-def validate_account(frame,entry_usr,entry_pwd):
+# validating username and password
+def validate_account(frame, entry_usr, entry_pwd):
     # cheking which category is loging in
     if frame == frame_stud_log:
         table = "student_login"
@@ -55,15 +51,15 @@ def validate_account(frame,entry_usr,entry_pwd):
     results = edupedia_cursor.fetchall()
     # checking if any matches found for given username and password
     if results:
-            messagebox.showinfo("success","Login Successful")
-            profile(frame)
+        messagebox.showinfo("success", "Login Successful")
+        profile(frame)
     # if username and password does not match or exist
     else:
-        messagebox.showerror("Failed","Username or password is incorrect")
-        
+        messagebox.showerror("Failed", "Username or password is incorrect")
+
 
 # login window
-def login(frame,who):
+def login(frame):
     def home(frame):
         frame.pack_forget()
         frame_login.place(x=350, y=200)
@@ -74,13 +70,10 @@ def login(frame,who):
     label_pwd = Label(frame, text="Enter Password ", bg='yellow', font=("Helvetica", "16"))
     entry_pwd = Entry(frame, show="*", font=("Helvetica", "16"))
     v = IntVar(value=0)
-    check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
-                            command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green",
-                           command=lambda:validate_account())
-
+    check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0, command=lambda: showpsd(v, entry_pwd))
+    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green", command=lambda: validate_account(frame, entry_usr, entry_pwd))
     button_forget = Button(frame, text="forgot password", bg="blue", fg="white")
-    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame,who))
+    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame))
     button_back = Button(frame, text="back", command=lambda: home(frame))
 
     label_usr.grid(row=0, column=0, padx=20, pady=20)
@@ -93,8 +86,9 @@ def login(frame,who):
     button_create.grid(row=3, column=2)
     button_back.grid(row=5, column=1)
 
-def showpsd(v,entry_pwd):
-    if v.get()==1:
+
+def showpsd(v, entry_pwd):
+    if v.get() == 1:
         entry_pwd.config(show='')
     else:
         entry_pwd.config(show='*')
@@ -127,37 +121,26 @@ def profile(frame):
                            command=lambda: logout())
 
     # left
-
-    profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18,
-                               anchor="nw")
+    profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18, anchor="nw")
     profile_img = Image.open("resources/profile.jpg")
     profile_img = ImageTk.PhotoImage(profile_img)
     profile_canvas = Canvas(left_frame, height=180, width=220)
     profile_canvas.create_image(0, 0, image=profile_img, anchor='nw')
     profile_name_label = Label(left_frame, font=("Helvetica", "16"), text="name", bg="pink", width=18, anchor='nw')
-    view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2,
-                               bg="yellow")
-    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2,
-                                 bg="orange")
+    view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2, bg="yellow")
+    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange")
     vlog_butt = Button(left_frame, text="Vlogs", font=("Helvetica", "16"), bg="green", width=18, height=2)
     favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2)
     extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)
 
     # top_icons
-
-    search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13,
-                           command=lambda: search())
-    vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
-                         width=13)
-    create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"),
-                                height=1, width=13)
-    index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
-                          width=13)
-    extra_button = Button(top_icons, text="Extra", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
-                          width=13)
+    search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13, command=lambda: search())
+    vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
+    create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
+    index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
+    extra_button = Button(top_icons, text="Extra", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
 
     # top frame
-
     top_frame.place(x=0, y=0)
     left_frame.place(x=0, y=80)
     logo_canvas.place(x=0, y=0)
@@ -167,7 +150,6 @@ def profile(frame):
     center_frame.place(x=225, y=120)
 
     # left frame
-
     profile_text_label.grid(row=0, column=0)
     profile_canvas.grid(row=1, column=0)
     profile_name_label.grid(row=2, column=0)
@@ -178,15 +160,14 @@ def profile(frame):
     extra_butt.grid(row=7, column=0)
 
     # top icons
-
     search_button.grid(row=0, column=1, padx=25)
     vlog_button.grid(row=0, column=2, padx=25)
     create_vlog_button.grid(row=0, column=3, padx=20)
     index_button.grid(row=0, column=4, padx=25)
     extra_button.grid(row=0, column=5, padx=25)
 
+    # seacrh frame
     sercch_frame = Frame(center_frame, bg="orange", width=700, height=300)
-
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
     search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0)
@@ -195,65 +176,52 @@ def profile(frame):
     close_img = ImageTk.PhotoImage(close_img)
     close_button = Button(sercch_frame, image=close_img, borderwidth=0, command=lambda: close())
 
-    search_button.place(x=540, y=100)
+    search_button.place(x=30, y=100)
     search_Entry.place(x=50, y=100)
     close_button.place(x=670, y=0)
     window.mainloop()
 
 
+def create_uesr(frame):
+    def creating_account():
+        pass
 
-def create_uesr(frame,who):
-
+    def close(frame):
+        frame_create_usr.place_forget()
+        login(frame)
 
     frame.pack_forget()
-
-    def close(f,who):
-        frame_create_usr.place_forget()
-        login(f,who)
-
     frame_create_usr = Frame(window, bg='pink', width=500, height=400)
-
-    label_usr = Label(frame_create_usr, text="Enter Username ", bg="yellow", font=("Helvetica", "16"), width=16,
-                      anchor='nw')
+    label_usr = Label(frame_create_usr, text="Enter Username ", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
     entry_usr = Entry(frame_create_usr, font=("Helvetica", "16"))
-    label_pwd = Label(frame_create_usr, text="Enter Password ", bg='yellow', font=("Helvetica", "16"), width=16,
-                      anchor='nw')
+    label_pwd = Label(frame_create_usr, text="Enter Password ", bg='yellow', font=("Helvetica", "16"), width=16, anchor='nw')
     v = IntVar(value=0)
-    check_pwd = Checkbutton(frame_create_usr, text="show password", variable=v, onvalue=1, offvalue=0,
-                            command=lambda: showpsd(v, entry_pwd))
+    check_pwd = Checkbutton(frame_create_usr, text="show password", variable=v, onvalue=1, offvalue=0, command=lambda: showpsd(v, entry_pwd))
     entry_pwd = Entry(frame_create_usr, show="*", font=("Helvetica", "16"))
-    label_conpwd = Label(frame_create_usr, text="Conform Password ", bg='yellow', font=("Helvetica", "16"), width=16,
-                         anchor='nw')
+    label_conpwd = Label(frame_create_usr, text="Conform Password ", bg='yellow', font=("Helvetica", "16"), width=16, anchor='nw')
     entry_conpwd = Entry(frame_create_usr, show="*", font=("Helvetica", "16"))
-    label_mob = Label(frame_create_usr, text="Enter Mobile no ", bg="yellow", font=("Helvetica", "16"), width=16,
-                      anchor='nw')
+    label_mob = Label(frame_create_usr, text="Enter Mobile no ", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
     entry_mob = Entry(frame_create_usr, font=("Helvetica", "16"))
-    label_email = Label(frame_create_usr, text="Enter Email id", bg="yellow", font=("Helvetica", "16"), width=16,
-                      anchor='nw')
+    label_email = Label(frame_create_usr, text="Enter Email id", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
     entry_email = Entry(frame_create_usr, font=("Helvetica", "16"))
+    entry_belongs_to = Entry(frame_create_usr, font=("Helvetica", "16"))
+    entry_belongs_to.grid(row=6, column=1)
 
-
-    if who == 'student':
-        entry_collage = Entry(frame_create_usr, font=("Helvetica", "16"))
-        label_collge = Label(frame_create_usr, text="Enter Collage name ", bg="yellow", font=("Helvetica", "16"), width=16,
-                            anchor='nw')
+    if frame == frame_stud_log:
+        label_collge = Label(frame_create_usr, text="Enter Collage name ", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
         label_collge.grid(row=6, column=0, pady=10)
-        entry_collage.grid(row=6, column=1)
-    elif who=='company':
-        entry_company = Entry(frame_create_usr, font=("Helvetica", "16"))
-        label_company = Label(frame_create_usr, text="Enter company name", bg="yellow", font=("Helvetica", "16"), width=16,
-                            anchor='nw')
-        label_company.grid(row=6, column=0, pady=10)
-        entry_company.grid(row=6, column=1)
-    else:
-        entry_institue = Entry(frame_create_usr, font=("Helvetica", "16"))
-        label_institue = Label(frame_create_usr, text="Enter institute name", bg="yellow", font=("Helvetica", "16"), width=16,
-                            anchor='nw')
-        label_institue.grid(row=6, column=0, pady=10)
-        entry_institue.grid(row=6, column=1)
 
-    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame,who))
-    submit_button = Button(frame_create_usr, text="submit", bg="green", fg="yellow", font=("Helvetica", "16"))
+    elif frame == frame_inst_log:
+        label_institue = Label(frame_create_usr, text="Enter institute name", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
+        label_institue.grid(row=6, column=0, pady=10)
+    else:
+        label_company = Label(frame_create_usr, text="Enter company name", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
+        label_company.grid(row=6, column=0, pady=10)
+
+
+
+    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame))
+    submit_button = Button(frame_create_usr, text="submit", bg="green", fg="yellow", font=("Helvetica", "16"), command= lambda : creating_account())
 
     frame_create_usr.place(x=300, y=200)
     close_button.grid(row=0, column=2, sticky='e')
@@ -271,22 +239,21 @@ def create_uesr(frame,who):
     submit_button.grid(row=7, column=1, pady=10)
 
 
-
-# category frames
-frame_login=Frame(window,width=600,height=300,bg="white")
-frame_login.place(x=350,y=200)
+# mian frame categories
+frame_login = Frame(window, width=600, height=300, bg="white")
+frame_login.place(x=350, y=200)
 
 frame_stud_log = Frame(window, bg="yellow")
 frame_inst_log = Frame(window, bg="green")
 frame_comp_log = Frame(window, bg="pink")
 
 # category button
-button_stud=Button(frame_login,text="student login",bg="blue",fg='white',activebackground="green",font=("Comic Sans MS", 15, "bold"),width=12,command=lambda :student())
-button_inst=Button(frame_login,text="institute login",bg="blue",fg='white',activebackground="green",font=("Comic Sans MS", 15, "bold"),width=12,command=lambda :institute())
-button_comp=Button(frame_login,text="company login",bg="blue",fg='white',activebackground="green",font=("Comic Sans MS", 15, "bold"),width=12,command=lambda :company())
+button_stud = Button(frame_login, text="student login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: student())
+button_inst = Button(frame_login, text="institute login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: institute())
+button_comp = Button(frame_login, text="company login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: company())
 
-button_stud.place(x=250,y=25)
-button_inst.place(x=250,y=100)
-button_comp.place(x=250,y=175)
+button_stud.place(x=250, y=25)
+button_inst.place(x=250, y=100)
+button_comp.place(x=250, y=175)
 
 window.mainloop()

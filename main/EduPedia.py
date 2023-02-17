@@ -117,8 +117,7 @@ def profile(frame):
     logo_canvas = Canvas(top_frame, height=80, width=100, )
     logo_canvas.create_text(40, 40, text="logo", fill="black")
 
-    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
-                           command=lambda: logout())
+    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1, command=lambda: logout())
 
     # left
     profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18, anchor="nw")
@@ -183,8 +182,49 @@ def profile(frame):
 
 
 def create_uesr(frame):
-    def creating_account():
-        pass
+
+    def creating_account(entry_usr,entry_pwd,entry_conpwd,entry_mob,entry_email,entry_belongs_to):
+        account_details = [entry_usr, entry_pwd, entry_mob, entry_email, entry_belongs_to]
+        # checking if the passwords are same
+        if entry_pwd.get() != entry_conpwd.get():
+            messagebox.showerror("Oops...!","Passwords are mismatching")
+        else:
+            if frame == frame_stud_log:
+                table_profile = "student_profile"
+                table_login = "student_login"
+                column_belongs_to = "college"
+            elif frame == frame_inst_log:
+                table_profile = "institute_profile"
+                table_login = "institute_login"
+                column_belongs_to = "institute_name"
+            else:
+                table_profile = "company_profile"
+                table_login = "company_login"
+                column_belongs_to = "company_name"
+
+            # checking if the username exists
+            sql_user_names = f"SELECT * FROM {table_login} WHERE user_name = %s"
+            values_user_names = (entry_usr.get(),)
+            edupedia_cursor.execute(sql_user_names,values_user_names)
+            result = edupedia_cursor.fetchall()
+            if result:
+                messagebox.showerror("Oops","username already exists\nTry another one or Log in to your account with this username")
+            else:
+                # creating mew user with details provided
+                try:
+                    sql_profile = f"INSERT INTO {table_profile} (username,email,phone_number,{column_belongs_to}) VALUES (%s,%s,%s,%s)"
+                    values_profile = (entry_usr.get(),entry_email.get(),entry_mob.get(),entry_belongs_to.get())
+                    sql_login_details = f"INSERT INTO {table_login} (user_name,password) VALUES (%s,%s)"
+                    value_login_details = (entry_usr.get(),entry_pwd.get())
+                    edupedia_cursor.execute(sql_profile,values_profile)
+                    edupedia_cursor.execute(sql_login_details,value_login_details)
+                    messagebox.showinfo("Success", "Account created\nLogin and go to update profile to complete your account details")
+                    edupedia.commit()
+                    frame_create_usr.place_forget()
+                    login(frame)
+
+                except Exception as error:
+                    messagebox.showerror("Error...!",f"{error}\nPlease contact the administrators")
 
     def close(frame):
         frame_create_usr.place_forget()
@@ -218,10 +258,8 @@ def create_uesr(frame):
         label_company = Label(frame_create_usr, text="Enter company name", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
         label_company.grid(row=6, column=0, pady=10)
 
-
-
     close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame))
-    submit_button = Button(frame_create_usr, text="submit", bg="green", fg="yellow", font=("Helvetica", "16"), command= lambda : creating_account())
+    submit_button = Button(frame_create_usr, text="submit", bg="green", fg="yellow", font=("Helvetica", "16"), command= lambda : creating_account(entry_usr,entry_pwd,entry_conpwd,entry_mob,entry_email,entry_belongs_to))
 
     frame_create_usr.place(x=300, y=200)
     close_button.grid(row=0, column=2, sticky='e')

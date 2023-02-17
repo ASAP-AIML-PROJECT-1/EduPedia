@@ -52,10 +52,30 @@ def validate_account(frame, entry_usr, entry_pwd):
     # checking if any matches found for given username and password
     if results:
         messagebox.showinfo("success", "Login Successful")
-        profile(frame)
+        profile(frame,entry_usr.get())
     # if username and password does not match or exist
     else:
         messagebox.showerror("Failed", "Username or password is incorrect")
+
+def forget(frame):
+
+    def recovery_mail(entry_mail):
+        if entry_mail.get() == "":
+            messagebox.showerror("Oops..!","Enter mail adddress")
+        else:
+            messagebox.showinfo("Success",f"Recovery mail has been sent to \"{entry_mail.get()}\"")
+
+    frame.pack_forget()
+    frame_forget = Frame(window, bg="red", width=700, height=300)
+    frame_forget.place(x=350, y=200)
+
+    label_mail = Label(frame_forget, text="Enter mail address ", bg="yellow", font=("Helvetica", "16"))
+    entry_mail = Entry(frame_forget, font=("Helvetica", "16"))
+    button_submit = Button(frame_forget, text="Send recovery mail", height=2, width=15, bg="yellow",command= lambda: recovery_mail(entry_mail))
+
+    label_mail.grid(row=0, column=0, padx=20, pady=20)
+    entry_mail.grid(row=0, column=1, padx=20, pady=20)
+    button_submit.grid(row=1, column=1, pady=20)
 
 
 # login window
@@ -72,7 +92,7 @@ def login(frame):
     v = IntVar(value=0)
     check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0, command=lambda: showpsd(v, entry_pwd))
     button_submit = Button(frame, text="Submit", height=2, width=15, bg="green", command=lambda: validate_account(frame, entry_usr, entry_pwd))
-    button_forget = Button(frame, text="forgot password", bg="blue", fg="white")
+    button_forget = Button(frame, text="forgot password", bg="blue", fg="white", command= lambda : forget(frame))
     button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame))
     button_back = Button(frame, text="back", command=lambda: home(frame))
 
@@ -94,8 +114,13 @@ def showpsd(v, entry_pwd):
         entry_pwd.config(show='*')
 
 
-def profile(frame):
+def profile(frame,username):
     frame.pack_forget()
+
+    def update_profile(frame,username):
+        update_value = []
+        update_column = []
+
 
     def search():
         sercch_frame.place(x=200, y=150)
@@ -127,7 +152,7 @@ def profile(frame):
     profile_canvas.create_image(0, 0, image=profile_img, anchor='nw')
     profile_name_label = Label(left_frame, font=("Helvetica", "16"), text="name", bg="pink", width=18, anchor='nw')
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2, bg="yellow")
-    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange")
+    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange", command= lambda: update_profile(frame,username))
     vlog_butt = Button(left_frame, text="Vlogs", font=("Helvetica", "16"), bg="green", width=18, height=2)
     favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2)
     extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)

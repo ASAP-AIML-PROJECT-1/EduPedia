@@ -21,24 +21,28 @@ window.config(bg="black")
 
 
 # login
-def student():
+def student(s):
+    user = s
     frame_login.place_forget()
-    login(frame_stud_log)
+    print(frame_stud_log)
+    login(frame_stud_log,user)
 
-def institute():
+def institute(i):
+    user = i
     frame_login.place_forget()
-    login(frame_inst_log)
+    login(frame_inst_log,user)
 
-def company():
+def company(c):
+    user = c
     frame_login.place_forget()
-    login(frame_comp_log)
+    login(frame_comp_log,user)
 
 # validating username and password
-def validate_account(frame, entry_usr, entry_pwd):
+def validate_account(frame, entry_usr, entry_pwd,user):
     # cheking which category is loging in
-    if frame == frame_stud_log:
+    if user == "student":
         table = "student_login"
-    elif frame == frame_inst_log:
+    elif user == "institute":
         table = "institute_login"
     else:
         table = "company_login"
@@ -52,7 +56,7 @@ def validate_account(frame, entry_usr, entry_pwd):
     # checking if any matches found for given username and password
     if results:
         messagebox.showinfo("success", "Login Successful")
-        profile(frame,entry_usr.get())
+        profile(frame,entry_usr.get(),user)
     # if username and password does not match or exist
     else:
         messagebox.showerror("Failed", "Username or password is incorrect")
@@ -79,7 +83,7 @@ def forget(frame):
 
 
 # login window
-def login(frame):
+def login(frame,user):
     def home(frame):
         frame.pack_forget()
         frame_login.place(x=350, y=200)
@@ -91,9 +95,9 @@ def login(frame):
     entry_pwd = Entry(frame, show="*", font=("Helvetica", "16"))
     v = IntVar(value=0)
     check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0, command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green", command=lambda: validate_account(frame, entry_usr, entry_pwd))
+    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green", command=lambda: validate_account(frame, entry_usr, entry_pwd,user))
     button_forget = Button(frame, text="forgot password", bg="blue", fg="white", command= lambda : forget(frame))
-    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame))
+    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame,user))
     button_back = Button(frame, text="back", command=lambda: home(frame))
 
     label_usr.grid(row=0, column=0, padx=20, pady=20)
@@ -114,12 +118,77 @@ def showpsd(v, entry_pwd):
         entry_pwd.config(show='*')
 
 
-def profile(frame,username):
+def profile(frame,username,user):
     frame.pack_forget()
+    def update_profile(frame,username,user):
+        def save_profile():
+            messagebox.showinfo("Success","Profile updated succesfully")
+            frame_update_profile.place_forget()
+            profile(frame, username,user)
 
-    def update_profile(frame,username):
+        def cancel():
+            frame_update_profile.place_forget()
+            profile(frame, username, user)
+
         update_value = []
         update_column = []
+        frame.pack_forget()
+        frame_update_profile = Frame(window, bg="red")
+        print(frame_update_profile)
+        frame_update_profile.pack()
+        frame_update_profile.place(x=350, y=50)
+
+        label_Name = Label(frame_update_profile, text="Name ", bg="yellow", font=("Helvetica", "16"))
+        entry_Name = Entry(frame_update_profile, font=("Helvetica", "16"))
+        label_email = Label(frame_update_profile, text="email ", bg="yellow", font=("Helvetica", "16"))
+        entry_email = Entry(frame_update_profile, font=("Helvetica", "16"))
+        label_phone_number = Label(frame_update_profile, text="Phone number ", bg="yellow", font=("Helvetica", "16"))
+        entry_phone_number = Entry(frame_update_profile, font=("Helvetica", "16"))
+        label_address = Label(frame_update_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
+        entry_address = Entry(frame_update_profile, font=("Helvetica", "16"))
+
+        button_submit = Button(frame_update_profile, text="save", height=2, width=15, bg="yellow",command= lambda: save_profile())
+        button_cancel = Button(frame_update_profile, text="cancel", height=2, width=15, bg="yellow",command= lambda: cancel())
+
+
+        if user == "student":
+            label_college = Label(frame_update_profile, text="College ", bg="yellow", font=("Helvetica", "16"))
+            entry_college = Entry(frame_update_profile, font=("Helvetica", "16"))
+            label_course = Label(frame_update_profile, text="Course ", bg="yellow", font=("Helvetica", "16"))
+            entry_course = Entry(frame_update_profile, font=("Helvetica", "16"))
+            label_interested_areas = Label(frame, text="Interested areas ", bg="yellow", font=("Helvetica", "16"))
+            entry_interested_areas = Entry(frame, font=("Helvetica", "16"))
+
+            label_college.grid(row=4, column=0, padx=20, pady=20)
+            entry_college.grid(row=4, column=1, padx=20, pady=20)
+            label_course.grid(row=5, column=0, padx=20, pady=20)
+            entry_course.grid(row=5, column=1, padx=20, pady=20)
+            label_interested_areas.grid(row=6, column=0, padx=20, pady=20)
+            entry_interested_areas.grid(row=6, column=1, padx=20, pady=20)
+
+        elif user == "institute":
+            label_courses_offered = Label(frame_update_profile, text="Courses Offered ", bg="yellow", font=("Helvetica", "16"))
+            entry_courses_offered = Entry(frame_update_profile, font=("Helvetica", "16"))
+            label_courses_offered.grid(row=4, column=0, padx=20, pady=20)
+            entry_courses_offered.grid(row=4, column=1, padx=20, pady=20)
+        else:
+            label_services_offered = Label(frame_update_profile, text="Services Providing ", bg="yellow", font=("Helvetica", "16"))
+            entry_services_offered = Entry(frame_update_profile, font=("Helvetica", "16"))
+            label_services_offered.grid(row=4, column=0, padx=20, pady=20)
+            entry_services_offered.grid(row=4, column=1, padx=20, pady=20)
+
+
+        label_Name.grid(row=0, column=0, padx=20, pady=20)
+        entry_Name.grid(row=0, column=1, padx=20, pady=20)
+        label_email.grid(row=1, column=0, padx=20, pady=20)
+        entry_email.grid(row=1, column=1, padx=20, pady=20)
+        label_phone_number.grid(row=2, column=0, padx=20, pady=20)
+        entry_phone_number.grid(row=2, column=1, padx=20, pady=20)
+        label_address.grid(row=3, column=0, padx=20, pady=20)
+        entry_address.grid(row=3, column=1, padx=20, pady=20)
+
+        button_submit.grid(row=8, column=1, pady=20)
+        button_cancel.grid(row=8, column=0, pady=20)
 
 
     def search():
@@ -129,6 +198,7 @@ def profile(frame,username):
         sercch_frame.place_forget()
 
     def logout():
+        print(frame)
         frame.pack_forget()
         frame_login.place(x=350, y=200)
 
@@ -152,7 +222,7 @@ def profile(frame,username):
     profile_canvas.create_image(0, 0, image=profile_img, anchor='nw')
     profile_name_label = Label(left_frame, font=("Helvetica", "16"), text="name", bg="pink", width=18, anchor='nw')
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2, bg="yellow")
-    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange", command= lambda: update_profile(frame,username))
+    update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange", command= lambda: update_profile(frame,username,user))
     vlog_butt = Button(left_frame, text="Vlogs", font=("Helvetica", "16"), bg="green", width=18, height=2)
     favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2)
     extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)
@@ -206,19 +276,19 @@ def profile(frame,username):
     window.mainloop()
 
 
-def create_uesr(frame):
-
+def create_uesr(frame,user):
     def creating_account(entry_usr,entry_pwd,entry_conpwd,entry_mob,entry_email,entry_belongs_to):
         account_details = [entry_usr, entry_pwd, entry_mob, entry_email, entry_belongs_to]
         # checking if the passwords are same
         if entry_pwd.get() != entry_conpwd.get():
             messagebox.showerror("Oops...!","Passwords are mismatching")
         else:
-            if frame == frame_stud_log:
+
+            if user == "student":
                 table_profile = "student_profile"
                 table_login = "student_login"
                 column_belongs_to = "college"
-            elif frame == frame_inst_log:
+            elif user == "institute":
                 table_profile = "institute_profile"
                 table_login = "institute_login"
                 column_belongs_to = "institute_name"
@@ -253,7 +323,7 @@ def create_uesr(frame):
 
     def close(frame):
         frame_create_usr.place_forget()
-        login(frame)
+        login(frame,user)
 
     frame.pack_forget()
     frame_create_usr = Frame(window, bg='pink', width=500, height=400)
@@ -272,11 +342,11 @@ def create_uesr(frame):
     entry_belongs_to = Entry(frame_create_usr, font=("Helvetica", "16"))
     entry_belongs_to.grid(row=6, column=1)
 
-    if frame == frame_stud_log:
+    if user == "student":
         label_collge = Label(frame_create_usr, text="Enter Collage name ", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
         label_collge.grid(row=6, column=0, pady=10)
 
-    elif frame == frame_inst_log:
+    elif user == "institute":
         label_institue = Label(frame_create_usr, text="Enter institute name", bg="yellow", font=("Helvetica", "16"), width=16, anchor='nw')
         label_institue.grid(row=6, column=0, pady=10)
     else:
@@ -310,10 +380,12 @@ frame_stud_log = Frame(window, bg="yellow")
 frame_inst_log = Frame(window, bg="green")
 frame_comp_log = Frame(window, bg="pink")
 
+s,i,c = "student","institute","company"
+
 # category button
-button_stud = Button(frame_login, text="student login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: student())
-button_inst = Button(frame_login, text="institute login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: institute())
-button_comp = Button(frame_login, text="company login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: company())
+button_stud = Button(frame_login, text="student login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: student(s))
+button_inst = Button(frame_login, text="institute login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: institute(i))
+button_comp = Button(frame_login, text="company login", bg="blue", fg='white', activebackground="green", font=("Comic Sans MS", 15, "bold"), width=12, command=lambda: company(c))
 
 button_stud.place(x=250, y=25)
 button_inst.place(x=250, y=100)

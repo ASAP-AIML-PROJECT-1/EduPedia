@@ -22,16 +22,21 @@ window.config(bg="black")
 
 # login
 def student():
+    val='student'
     frame_login.place_forget()
-    login(frame_stud_log)
+    login(frame_stud_log,val)
+
 
 def institute():
+
+    val='institute'
     frame_login.place_forget()
-    login(frame_inst_log)
+    login(frame_inst_log,val)
 
 def company():
+    val='company'
     frame_login.place_forget()
-    login(frame_comp_log)
+    login(frame_comp_log,val)
 
 def validate_account(frame,entry_usr,entry_pwd):
     # cheking which category is loging in
@@ -50,7 +55,7 @@ def validate_account(frame,entry_usr,entry_pwd):
     results = edupedia_cursor.fetchall()
     # checking if any matches found for given username and password
     if results:
-            messagebox.showinfo("success","Login Succesfull")
+            messagebox.showinfo("success","Login Successful")
             profile(frame)
     # if username and password does not match or exist
     else:
@@ -58,13 +63,12 @@ def validate_account(frame,entry_usr,entry_pwd):
         
 
 # login window
-def login(frame):
-
+def login(frame,who):
     def home(frame):
         frame.pack_forget()
         frame_login.place(x=350, y=200)
 
-    frame.pack(side="left",padx=350)
+    frame.pack(side="left", padx=350)
     label_usr = Label(frame, text="Enter Username ", bg="yellow", font=("Helvetica", "16"))
     entry_usr = Entry(frame, font=("Helvetica", "16"))
     label_pwd = Label(frame, text="Enter Password ", bg='yellow', font=("Helvetica", "16"))
@@ -72,9 +76,11 @@ def login(frame):
     v = IntVar(value=0)
     check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
                             command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green",command=lambda :validate_account(frame,entry_usr,entry_pwd))
+    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green",
+                           command=lambda:validate_account())
+
     button_forget = Button(frame, text="forgot password", bg="blue", fg="white")
-    button_create = Button(frame, text="Create account", fg="blue",command=lambda :create_uesr(frame))
+    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame,who))
     button_back = Button(frame, text="back", command=lambda: home(frame))
 
     label_usr.grid(row=0, column=0, padx=20, pady=20)
@@ -95,7 +101,6 @@ def showpsd(v,entry_pwd):
 
 
 def profile(frame):
-
     frame.pack_forget()
 
     def search():
@@ -103,12 +108,13 @@ def profile(frame):
 
     def close():
         sercch_frame.place_forget()
+
     def logout():
         frame.pack_forget()
         frame_login.place(x=350, y=200)
 
     # inside frame
-    frame=Frame(window,width=1280,height=700)
+    frame = Frame(window, width=1280, height=700)
     frame.pack()
     top_frame = Frame(frame, width=1280, height=80, bg='green')
     left_frame = Frame(frame, width=220, height=620, bg="black")
@@ -117,7 +123,8 @@ def profile(frame):
     logo_canvas = Canvas(top_frame, height=80, width=100, )
     logo_canvas.create_text(40, 40, text="logo", fill="black")
 
-    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,command=lambda :logout())
+    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
+                           command=lambda: logout())
 
     # left
 
@@ -195,15 +202,14 @@ def profile(frame):
 
 
 
-def create_uesr(frame):
+def create_uesr(frame,who):
+
 
     frame.pack_forget()
 
-    def close(f):
+    def close(f,who):
         frame_create_usr.place_forget()
-        login(f)
-
-
+        login(f,who)
 
     frame_create_usr = Frame(window, bg='pink', width=500, height=400)
 
@@ -212,6 +218,9 @@ def create_uesr(frame):
     entry_usr = Entry(frame_create_usr, font=("Helvetica", "16"))
     label_pwd = Label(frame_create_usr, text="Enter Password ", bg='yellow', font=("Helvetica", "16"), width=16,
                       anchor='nw')
+    v = IntVar(value=0)
+    check_pwd = Checkbutton(frame_create_usr, text="show password", variable=v, onvalue=1, offvalue=0,
+                            command=lambda: showpsd(v, entry_pwd))
     entry_pwd = Entry(frame_create_usr, show="*", font=("Helvetica", "16"))
     label_conpwd = Label(frame_create_usr, text="Conform Password ", bg='yellow', font=("Helvetica", "16"), width=16,
                          anchor='nw')
@@ -219,10 +228,31 @@ def create_uesr(frame):
     label_mob = Label(frame_create_usr, text="Enter Mobile no ", bg="yellow", font=("Helvetica", "16"), width=16,
                       anchor='nw')
     entry_mob = Entry(frame_create_usr, font=("Helvetica", "16"))
-    v = IntVar(value=0)
-    check_pwd = Checkbutton(frame_create_usr, text="show password", variable=v, onvalue=1, offvalue=0,
-                            command=lambda: showpsd(v, entry_pwd))
-    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame))
+    label_email = Label(frame_create_usr, text="Enter Email id", bg="yellow", font=("Helvetica", "16"), width=16,
+                      anchor='nw')
+    entry_email = Entry(frame_create_usr, font=("Helvetica", "16"))
+
+
+    if who == 'student':
+        entry_collage = Entry(frame_create_usr, font=("Helvetica", "16"))
+        label_collge = Label(frame_create_usr, text="Enter Collage name ", bg="yellow", font=("Helvetica", "16"), width=16,
+                            anchor='nw')
+        label_collge.grid(row=6, column=0, pady=10)
+        entry_collage.grid(row=6, column=1)
+    elif who=='company':
+        entry_company = Entry(frame_create_usr, font=("Helvetica", "16"))
+        label_company = Label(frame_create_usr, text="Enter company name", bg="yellow", font=("Helvetica", "16"), width=16,
+                            anchor='nw')
+        label_company.grid(row=6, column=0, pady=10)
+        entry_company.grid(row=6, column=1)
+    else:
+        entry_institue = Entry(frame_create_usr, font=("Helvetica", "16"))
+        label_institue = Label(frame_create_usr, text="Enter institute name", bg="yellow", font=("Helvetica", "16"), width=16,
+                            anchor='nw')
+        label_institue.grid(row=6, column=0, pady=10)
+        entry_institue.grid(row=6, column=1)
+
+    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame,who))
     submit_button = Button(frame_create_usr, text="submit", bg="green", fg="yellow", font=("Helvetica", "16"))
 
     frame_create_usr.place(x=300, y=200)
@@ -236,10 +266,9 @@ def create_uesr(frame):
     entry_conpwd.grid(row=3, column=1)
     label_mob.grid(row=4, column=0, pady=10)
     entry_mob.grid(row=4, column=1)
-    submit_button.grid(row=5, column=1, pady=10)
-
-
-
+    label_email.grid(row=5, column=0, pady=10)
+    entry_email.grid(row=5, column=1)
+    submit_button.grid(row=7, column=1, pady=10)
 
 
 

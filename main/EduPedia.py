@@ -311,6 +311,139 @@ def profile(frame,username,user):
     def logout():
         frame.pack_forget()
         frame_login.place(x=350, y=200)
+    # index
+
+
+    def index():
+
+
+            # index in profile
+            index_frame = Frame(frame, bg='white', width=200, height=400)
+
+            def goto():
+
+                def show():
+
+                    close(index_frame)
+
+                    show_frame = Frame(frame, width=800, height=300, bg="white")
+                    result_label = Label(show_frame, text="Results", fg="blue")
+                    text_widget = Text(show_frame, width=85, height=15, bg='white', pady=20, padx=10)
+                    scrollbar = Scrollbar(show_frame)
+                    text_widget.config(yscrollcommand=scrollbar.set)
+                    scrollbar.config(command=text_widget.yview)
+                    close_button = Button(show_frame, text="X", bg="red", fg="white", width=2,
+                                          command=lambda: close(show_frame))
+                    result_label.grid(row=0, column=0, sticky='w', pady=10, padx=10)
+                    close_button.grid(row=0, column=1, pady=10, sticky='w', padx=10)
+                    text_widget.grid(row=1, column=0, sticky='w')
+                    scrollbar.grid(row=1, column=0, sticky='e')
+                    show_frame.place(x=300, y=180)
+
+
+                    try:
+                        index_of_item = list_box_index.curselection()
+
+
+                        if list_box_index.get(index_of_item) == 'Monday':
+
+                            fact = "Monday.com was founded in 2012[7] by Roy Mann, Eran Kampf and Eran Zinman.[8] By August of that year," \
+                                   " the company, then called dapulse, raised $1.5 million in seed funding.[9][10][11] The product was " \
+                                   "commercially launched in 2014.[12][13] In June 2016, the company announced the closing of $7.6 million" \
+                                   " in a Series A round.[14][11] The round was led by Genesis Partners, with participation from existing " \
+                                   "backer Entrée Capital.[11] In April 2017, the company raised $25 million.[15] The round was led by New " \
+                                   "York-based firm Insight Venture Partners, with participation from existing Series A investors Genesis " \
+                                   "Partners and Entrée Capital.[16] In November 2017, the company changed its brand name from dapulse to" \
+                                   " Monday.com.[17]In July 2018, the company raised a $50 million Series C funding round.[8] The round was led " \
+                                   "by New York-based growth equity firm, Stripes Group, with participation from existing Series A and B investors," \
+                                   " Insight Venture Partners and Entrée Capital. In July 2019, the company announced it raised a $150 million Series D" \
+                                   " round, bringing total funding to $234.1 million. The round was led by Sapphire Ventures with participation from Hamilton" \
+                                   " Lane, HarbourVest Partners, ION Crossover Partners and Vintage Investment Partners.[4] The funding gave the company" \
+                                   " a valuation of $1.9 billion, making it a unicorn.[4] As of 2021, the company reported over it was serving 127,000 customers" \
+                                   " across over 200 business verticals.[18][19][20] In May 2020, the company won the 2020 Webby Award for Productivity in the category " \
+                                   "Apps, Mobile & Voice.[21][22] In May 2021, the company filed for a U.S. IPO.[23][24] The company went public on June 10, 2021.[25] "
+                            text_widget.insert(END, fact)
+
+                        else:
+                            fact = "nothing"
+                            text_widget.insert(END, fact)
+                    except Exception as e:
+
+                        show_frame.place_forget()
+                        index()
+                        messagebox.showinfo("oops", "select at least one")
+
+
+
+                def back(frame):
+                    frame.place_forget()
+                    index()
+
+                try:
+                    index_of_item = list_box_index.curselection()
+
+                    if list_box_index.get(index_of_item) == 'may':
+                        list_box_index.delete(0, END)
+                        weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+                        for values in weekDays:
+                            list_box_index.insert(END, values)
+                    else:
+                        pass
+                except Exception as e:
+                    messagebox.showinfo("oops", "select at least one")
+                    index_frame.place_forget()
+
+                back_button = Button(index_frame, text="Back", fg="green", bg="yellow",
+                                     command=lambda: back(index_frame))
+                back_button.grid(row=2, column=0, sticky='e', padx=60)
+                show_button = Button(index_frame, text="Show ", bg='blue', fg='white', command=lambda: show())
+                show_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+
+            def sort_reverse():
+
+                data = list(list_box_index.get(0, END))
+
+                def sort_true():
+                    list_box_index.delete(0, END)
+                    data.sort()
+                    for values in data:
+                        list_box_index.insert(END, values)
+                    sort_button = Button(index_frame, text="A-Z", bg="red", command=lambda: sort_reverse())
+                    sort_button.grid(row=0, column=0, pady=10, sticky='w')
+
+                list_box_index.delete(0, END)
+                data.sort(reverse=True)
+                for values in data:
+                    list_box_index.insert(END, values)
+                sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_true())
+                sort_button.grid(row=0, column=0, pady=10, sticky='w')
+
+            index_frame.place(x=830, y=120)
+            months = ['january', 'february', 'march', 'april', 'may', 'june',
+                      'july', 'august', 'september', 'october', 'november', 'december', 'january', 'february', 'march',
+                      'april',
+                      'may', 'june',
+                      'july', 'august', 'september', 'october', 'november', 'december']
+            months.sort()
+
+            sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_reverse())
+            close_button = Button(index_frame, text="X", bg='green', width=2, command=lambda: close(index_frame))
+            list_box_index = Listbox(index_frame, width=32, height=10)
+            scrollbar_index = Scrollbar(index_frame)
+            list_box_index.delete(0, END)
+            for values in months:
+                list_box_index.insert(END, values)
+
+            goto_button = Button(index_frame, text="Go to", bg='blue', fg='white', command=lambda: goto())
+
+            sort_button.grid(row=0, column=0, pady=10, sticky='w')
+            close_button.grid(row=0, column=0, sticky='e')
+            list_box_index.grid(row=1, column=0, sticky='w', padx=10)
+            scrollbar_index.grid(row=1, column=0, sticky='e')
+            list_box_index.config(yscrollcommand=scrollbar_index.set)
+            scrollbar_index.config(command=list_box_index.yview)
+            goto_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+
 
     # inside frame
     frame = Frame(window, width=1280, height=700)
@@ -437,7 +570,7 @@ def profile(frame,username,user):
     close_img = ImageTk.PhotoImage(close_img)
     close_button = Button(sercch_frame, image=close_img, borderwidth=0, command=lambda: close())
 
-    search_button.place(x=30, y=100)
+    search_button.place(x=540, y=100)
     search_Entry.place(x=50, y=100)
     close_button.place(x=670, y=0)
     window.mainloop()

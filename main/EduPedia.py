@@ -4,13 +4,13 @@ from PIL import ImageTk, Image
 import mysql.connector
 
 # connecting to edupedia database
-# edupedia = mysql.connector.connect(
-#     host = "localhost",
-#     user = "root",
-#     password = "root1234",
-#     database = "edupedia"
-# )
-# edupedia_cursor = edupedia.cursor()
+edupedia = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "root1234",
+    database = "edupedia"
+)
+edupedia_cursor = edupedia.cursor()
 
 
 # Tkinter window
@@ -311,7 +311,6 @@ def profile(frame,username,user):
     def logout():
         frame.pack_forget()
         frame_login.place(x=350, y=200)
-
     # index
 
 
@@ -458,22 +457,36 @@ def profile(frame,username,user):
 
     button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1, command=lambda: logout())
 
+    def show_favourite(frame, username):
+        # need to show linkable result
+        sql_favourite = "SELECT favourite FROM favourite WHERE username = %s"
+        value_favourite = [f"{username}"]
+        edupedia_cursor.execute(sql_favourite,value_favourite)
+        result_favourite = edupedia_cursor.fetchall()
+        for favourite in result_favourite:
+            print(favourite)
+
+
     # left
     profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18, anchor="nw")
     profile_img = Image.open("resources/profile.jpg")
     profile_img = ImageTk.PhotoImage(profile_img)
     profile_canvas = Canvas(left_frame, height=180, width=220)
     profile_canvas.create_image(0, 0, image=profile_img, anchor='nw')
-    profile_name_label = Label(left_frame, font=("Helvetica", "16"), text="name", bg="pink", width=18, anchor='nw')
+    profile_name_label = Label(left_frame, font=("Helvetica", "16"), text=f"{username}", bg="pink", width=18, anchor='nw')
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2, bg="yellow", command= lambda : view_profile(frame,username,user))
     update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange", command= lambda: update_profile(frame,username,user))
     vlog_butt = Button(left_frame, text="Vlogs", font=("Helvetica", "16"), bg="green", width=18, height=2)
-    favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2)
+    favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2, command= lambda : show_favourite(frame,username))
     extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)
+
+
+    def blog_feed(user):
+        pass
 
     # top_icons
     search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13, command=lambda: search_window())
-    vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
+    vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13, command = lambda: blog_feed(user))
     create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
     index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
     extra_button = Button(top_icons, text="Extra", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)

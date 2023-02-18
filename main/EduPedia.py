@@ -257,7 +257,7 @@ def profile(frame,username,user):
             label_address = Label(frame_view_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
             show_address = Label(frame_view_profile, text=profile_values[0][5], bg="yellow", font=("Helvetica", "16"))
 
-            button_back = Button(frame_view_profile, text="cancel", height=2, width=15, bg="yellow",
+            button_back = Button(frame_view_profile, text="back", height=2, width=15, bg="yellow",
                                    command=lambda: back())
 
             if user == "student":
@@ -302,7 +302,7 @@ def profile(frame,username,user):
             messagebox.showerror("Error...!", f"{error}\nPlease contact the administrators")
             profile(frame, username, user)
 
-    def search():
+    def search_window():
         sercch_frame.place(x=200, y=150)
 
     def close():
@@ -338,7 +338,7 @@ def profile(frame,username,user):
     extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)
 
     # top_icons
-    search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13, command=lambda: search())
+    search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13, command=lambda: search_window())
     vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
     create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
     index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
@@ -370,11 +370,54 @@ def profile(frame,username,user):
     index_button.grid(row=0, column=4, padx=25)
     extra_button.grid(row=0, column=5, padx=25)
 
+    def seacrh_result(search_Entry,frame):
+        #search result frame
+        frame.pack_forget()
+        frame_search = Frame(window, width=1280, height=700, bg="white")
+        # frame_search.place(x=200,y=200)
+        frame_search.pack()
+
+        search_tables = ["blogs","books","colleges","company_profile","online_courses"]
+        for table in search_tables:
+            if table == "blogs":
+                selection = "blog_name"
+            elif table == "books":
+                selection = "title"
+            elif table == "colleges":
+                selection = "College_Name"
+            elif table == "company_profile":
+                selection = "company_name"
+            elif table == "online_courses":
+                selection = "title"
+
+            print(f"***** search result in {table}************")
+            sql_search = f"select {selection} from {table} where {selection} like %s"
+            val_search = [f"%{search_Entry.get()}%"]
+            edupedia_cursor.execute(sql_search,val_search)
+            result_tables = edupedia_cursor.fetchall()
+            print(result_tables, "\n\n")
+
+            table_label = Label(frame_search, font=("Helvetica", "16"), text=f"{table}", bg="pink", width=18, anchor="nw")
+            table_label.grid(row=0,column=0)
+
+            for i in range(len(result_tables)):
+                print(f"***** search result from {table} - {result_tables[i]}************")
+                table_label = Label(frame_search, font=("Helvetica", "16"), text=f"{result_tables[i]}", bg="pink", width=18,
+                                    anchor="nw")
+                table_label.grid(row=i+1, column=1)
+
+                # for expanding on clicking
+                # sql_column_search = f"select * from {table} where {selection} = %s"
+                # val_column_search = result_tables[i]
+                # edupedia_cursor.execute(sql_column_search, val_column_search)
+                # result_column = edupedia_cursor.fetchall()
+                # print(result_column, "\n\n")
+
     # seacrh frame
     sercch_frame = Frame(center_frame, bg="orange", width=700, height=300)
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
-    search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0)
+    search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0, command= lambda : seacrh_result(search_Entry,frame))
     search_Entry = Entry(sercch_frame, font=("Comic Sans MS", 14), width=40)
     close_img = Image.open("resources/close.png")
     close_img = ImageTk.PhotoImage(close_img)
@@ -426,7 +469,7 @@ def create_uesr(frame,user):
                     messagebox.showinfo("Success", "Account created\nLogin and go to update profile to complete your account details")
                     edupedia.commit()
                     frame_create_usr.place_forget()
-                    login(frame)
+                    login(frame,user)
 
                 except Exception as error:
                     messagebox.showerror("Error...!",f"{error}\nPlease contact the administrators")

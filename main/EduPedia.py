@@ -121,16 +121,52 @@ def profile(frame,username,user):
     frame.pack_forget()
     def update_profile(frame,username,user):
         def save_profile():
-            messagebox.showinfo("Success","Profile updated succesfully")
-            frame_update_profile.place_forget()
-            profile(frame, username,user)
+            # values enetered by user
+            update_value = []
+            update_value.append(entry_Name.get())
+            update_value.append(entry_email.get())
+            update_value.append(entry_phone_number.get())
+            update_value.append(entry_address.get())
+            if user == "student":
+                update_value.append(entry_college.get())
+                update_value.append(entry_course.get())
+                update_value.append(entry_interested_areas.get())
+                # respective column name in table
+                update_column = ["name","email", "phone_number", "address", "college","course","interested_areas"]
+                # table name
+                table = "student_profile"
+            elif user == "institute":
+                update_value.append(entry_courses_offered.get())
+                update_column = ["institute_name", "email", "phone_number", "address", "courses_offered"]
+                table = "institute_profile"
+
+            else:
+                update_value.append(entry_services_offered.get())
+                update_column = ["company_name","email", "phone_number", "address", "services_provided"]
+                table = "company_profile"
+
+            print(update_value)
+            print(update_column)
+
+            try:
+                for i in range(len(update_column)):
+                    if update_value[i] != "":
+                        sql_update_profile = f"UPDATE {table} SET {update_column[i]} = %s WHERE (username = %s)"
+                        value_update_profile = (str(update_value[i]),username)
+                        print(sql_update_profile,value_update_profile)
+                        edupedia_cursor.execute(sql_update_profile,value_update_profile)
+                        edupedia.commit()
+                messagebox.showinfo("Success","Profile updated succesfully")
+                frame_update_profile.place_forget()
+                profile(frame, username,user)
+            except Exception as error:
+                messagebox.showerror("Error...!", f"{error}\nPlease contact the administrators")
+                profile(frame, username, user)
 
         def cancel():
             frame_update_profile.place_forget()
             profile(frame, username, user)
 
-        update_value = []
-        update_column = []
         frame.pack_forget()
         frame_update_profile = Frame(window, bg="red")
         frame_update_profile.pack()
@@ -188,6 +224,7 @@ def profile(frame,username,user):
         button_submit.grid(row=8, column=1, pady=20)
         button_cancel.grid(row=8, column=0, pady=20)
 
+
     def view_profile(frame,username,user):
         if user == "student":
             table = "student_profile"
@@ -205,62 +242,65 @@ def profile(frame,username,user):
         frame_view_profile.pack()
         frame_view_profile.place(x=350, y=50)
 
-        sql = f"SELECT * FROM {table} where username = %s"
-        val = [f"{username}"]
-        edupedia_cursor.execute(sql, val)
-        profile_values = edupedia_cursor.fetchall()
+        try:
+            sql = f"SELECT * FROM {table} where username = %s"
+            val = [f"{username}"]
+            edupedia_cursor.execute(sql, val)
+            profile_values = edupedia_cursor.fetchall()
 
-        label_Name = Label(frame_view_profile, text="Name ", bg="yellow", font=("Helvetica", "16"))
-        show_Name = Label(frame_view_profile, text=profile_values[0][1], bg="yellow", font=("Helvetica", "16"))
-        label_email = Label(frame_view_profile, text="email ", bg="yellow", font=("Helvetica", "16"))
-        show_email = Label(frame_view_profile, text=profile_values[0][3], bg="yellow", font=("Helvetica", "16"))
-        label_phone_number = Label(frame_view_profile, text="Phone number ", bg="yellow", font=("Helvetica", "16"))
-        show_phone_number = Label(frame_view_profile, text=profile_values[0][4], bg="yellow", font=("Helvetica", "16"))
-        label_address = Label(frame_view_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
-        show_address = Label(frame_view_profile, text=profile_values[0][5], bg="yellow", font=("Helvetica", "16"))
+            label_Name = Label(frame_view_profile, text="Name ", bg="yellow", font=("Helvetica", "16"))
+            show_Name = Label(frame_view_profile, text=profile_values[0][1], bg="yellow", font=("Helvetica", "16"))
+            label_email = Label(frame_view_profile, text="email ", bg="yellow", font=("Helvetica", "16"))
+            show_email = Label(frame_view_profile, text=profile_values[0][3], bg="yellow", font=("Helvetica", "16"))
+            label_phone_number = Label(frame_view_profile, text="Phone number ", bg="yellow", font=("Helvetica", "16"))
+            show_phone_number = Label(frame_view_profile, text=profile_values[0][4], bg="yellow", font=("Helvetica", "16"))
+            label_address = Label(frame_view_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
+            show_address = Label(frame_view_profile, text=profile_values[0][5], bg="yellow", font=("Helvetica", "16"))
 
-        button_back = Button(frame_view_profile, text="cancel", height=2, width=15, bg="yellow",
-                               command=lambda: back())
+            button_back = Button(frame_view_profile, text="cancel", height=2, width=15, bg="yellow",
+                                   command=lambda: back())
 
-        if user == "student":
-            label_college = Label(frame_view_profile, text="College ", bg="yellow", font=("Helvetica", "16"))
-            show_college = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
-            label_course = Label(frame_view_profile, text="Course ", bg="yellow", font=("Helvetica", "16"))
-            show_course = Label(frame_view_profile, text=profile_values[0][7], bg="yellow", font=("Helvetica", "16"))
-            label_interested_areas = Label(frame_view_profile, text="Interested areas ", bg="yellow", font=("Helvetica", "16"))
-            show_interested_areas = Label(frame_view_profile, text=profile_values[0][8], bg="yellow", font=("Helvetica", "16"))
+            if user == "student":
+                label_college = Label(frame_view_profile, text="College ", bg="yellow", font=("Helvetica", "16"))
+                show_college = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
+                label_course = Label(frame_view_profile, text="Course ", bg="yellow", font=("Helvetica", "16"))
+                show_course = Label(frame_view_profile, text=profile_values[0][7], bg="yellow", font=("Helvetica", "16"))
+                label_interested_areas = Label(frame_view_profile, text="Interested areas ", bg="yellow", font=("Helvetica", "16"))
+                show_interested_areas = Label(frame_view_profile, text=profile_values[0][8], bg="yellow", font=("Helvetica", "16"))
 
-            label_college.grid(row=4, column=0, padx=20, pady=20)
-            show_college.grid(row=4, column=1, padx=20, pady=20)
-            label_course.grid(row=5, column=0, padx=20, pady=20)
-            show_course.grid(row=5, column=1, padx=20, pady=20)
-            label_interested_areas.grid(row=6, column=0, padx=20, pady=20)
-            show_interested_areas.grid(row=6, column=1, padx=20, pady=20)
+                label_college.grid(row=4, column=0, padx=20, pady=20)
+                show_college.grid(row=4, column=1, padx=20, pady=20)
+                label_course.grid(row=5, column=0, padx=20, pady=20)
+                show_course.grid(row=5, column=1, padx=20, pady=20)
+                label_interested_areas.grid(row=6, column=0, padx=20, pady=20)
+                show_interested_areas.grid(row=6, column=1, padx=20, pady=20)
 
-        elif user == "institute":
-            label_courses_offered = Label(frame_view_profile, text="Courses Offered ", bg="yellow",
-                                          font=("Helvetica", "16"))
-            show_courses_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
-            label_courses_offered.grid(row=4, column=0, padx=20, pady=20)
-            show_courses_offered.grid(row=4, column=1, padx=20, pady=20)
-        else:
-            label_services_offered = Label(frame_view_profile, text="Services Providing ", bg="yellow",
-                                           font=("Helvetica", "16"))
-            show_services_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
-            label_services_offered.grid(row=4, column=0, padx=20, pady=20)
-            show_services_offered.grid(row=4, column=1, padx=20, pady=20)
+            elif user == "institute":
+                label_courses_offered = Label(frame_view_profile, text="Courses Offered ", bg="yellow",
+                                              font=("Helvetica", "16"))
+                show_courses_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
+                label_courses_offered.grid(row=4, column=0, padx=20, pady=20)
+                show_courses_offered.grid(row=4, column=1, padx=20, pady=20)
+            else:
+                label_services_offered = Label(frame_view_profile, text="Services Providing ", bg="yellow",
+                                               font=("Helvetica", "16"))
+                show_services_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow", font=("Helvetica", "16"))
+                label_services_offered.grid(row=4, column=0, padx=20, pady=20)
+                show_services_offered.grid(row=4, column=1, padx=20, pady=20)
 
-        label_Name.grid(row=0, column=0, padx=20, pady=20)
-        show_Name.grid(row=0, column=1, padx=20, pady=20)
-        label_email.grid(row=1, column=0, padx=20, pady=20)
-        show_email.grid(row=1, column=1, padx=20, pady=20)
-        label_phone_number.grid(row=2, column=0, padx=20, pady=20)
-        show_phone_number.grid(row=2, column=1, padx=20, pady=20)
-        label_address.grid(row=3, column=0, padx=20, pady=20)
-        show_address.grid(row=3, column=1, padx=20, pady=20)
+            label_Name.grid(row=0, column=0, padx=20, pady=20)
+            show_Name.grid(row=0, column=1, padx=20, pady=20)
+            label_email.grid(row=1, column=0, padx=20, pady=20)
+            show_email.grid(row=1, column=1, padx=20, pady=20)
+            label_phone_number.grid(row=2, column=0, padx=20, pady=20)
+            show_phone_number.grid(row=2, column=1, padx=20, pady=20)
+            label_address.grid(row=3, column=0, padx=20, pady=20)
+            show_address.grid(row=3, column=1, padx=20, pady=20)
 
-        button_back.grid(row=8, column=0, pady=20)
-
+            button_back.grid(row=8, column=0, pady=20)
+        except Exception as error:
+            messagebox.showerror("Error...!", f"{error}\nPlease contact the administrators")
+            profile(frame, username, user)
 
     def search():
         sercch_frame.place(x=200, y=150)

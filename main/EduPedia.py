@@ -228,7 +228,6 @@ def profile(frame,username,user):
 
 
         create_blog_frame=Frame(frame,width=800,height=550,bg="black")
-
         author_name_label = Label(create_blog_frame, text="author_name", font=("Helvetica", "16"), fg='white', bg="black",anchor="nw",width=15)
         author_name_entry = Entry(create_blog_frame, font=("Helvetica", "16"),width=50)
         category_label = Label(create_blog_frame, text="category", font=("Helvetica", "16"), fg='white', bg="black",anchor="nw",width=15)

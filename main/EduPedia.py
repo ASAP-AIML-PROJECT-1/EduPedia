@@ -444,13 +444,19 @@ def profile(frame,username,user):
     button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1, command=lambda: logout())
 
     def show_favourite(frame, username):
-        # need to show linkable result
+
+        def go_favorite():
+            index_of_favorite = list_box_favorie.curselection()
+            favourite_search = list_box_favorie.get(index_of_favorite)
+            frame_favorite.place_forget()
+            seacrh_result(favourite_search, frame_favorite)
+
         frame_favorite = Frame(frame,height=200,width=800)
-        frame_favorite.place(x=200,y=200)
-        list_box_favorie = Listbox(frame_favorite,height=10,width=40)
+        frame_favorite.place(x=350,y=200)
+        list_box_favorie = Listbox(frame_favorite,height=17,width=100)
         scroll_bar_favorite = Scrollbar(frame_favorite)
-        cancel_button = Button(frame_favorite,bg="red",text="X",width=2)
-        go_button = Button(frame_favorite,bg="green",text="Go")
+        close_button = Button(frame_favorite,bg="red",text="X",width=2, command=lambda : close(frame_favorite))
+        go_button = Button(frame_favorite,bg="green",text="Go", command= lambda : go_favorite())
 
         sql_favourite = "SELECT favourite FROM favourite WHERE username = %s"
         value_favourite = [f"{username}"]
@@ -458,7 +464,7 @@ def profile(frame,username,user):
         result_favourite = edupedia_cursor.fetchall()
         for favourite in result_favourite:
             list_box_favorie.insert(END,favourite)
-        cancel_button.grid(row=0,column=0,sticky="e",padx=10)
+        close_button.grid(row=0,column=0,sticky="e",padx=10)
         list_box_favorie.grid(row=1,column=0,sticky="w")
         scroll_bar_favorite.grid(row=1,column=0,sticky="e")
         go_button.grid(row=2,column=0,sticky="e",padx=10)
@@ -536,7 +542,7 @@ def profile(frame,username,user):
 
             print(f"***** search result in {table}************")
             sql_search = f"select {selection} from {table} where {selection} like %s"
-            val_search = [f"%{search_Entry.get()}%"]
+            val_search = [f"%{search_Entry}%"]
             edupedia_cursor.execute(sql_search,val_search)
             result_tables = edupedia_cursor.fetchall()
             print(result_tables, "\n\n")
@@ -548,7 +554,7 @@ def profile(frame,username,user):
                 print(f"***** search result from {table} - {result_tables[i]}************")
                 table_label = Label(frame_search, font=("Helvetica", "16"), text=f"{result_tables[i]}", bg="pink", width=18,
                                     anchor="nw")
-                table_label.grid(row=i+1, column=1)
+                # table_label.grid(row=i+1, column=1)
 
                 # for expanding on clicking
                 # sql_column_search = f"select * from {table} where {selection} = %s"
@@ -561,13 +567,14 @@ def profile(frame,username,user):
     sercch_frame = Frame(center_frame, bg="orange", width=700, height=300)
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
-    search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0, command= lambda : seacrh_result(search_Entry,frame))
+    search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0, command= lambda : seacrh_result(search_Entry_value,frame))
     search_Entry = Entry(sercch_frame, font=("Comic Sans MS", 14), width=40)
+    search_Entry_value = search_Entry.get()
     close_img = Image.open("resources/close.png")
     close_img = ImageTk.PhotoImage(close_img)
-    close_button = Button(sercch_frame, image=close_img, borderwidth=0, command=lambda: close())
+    close_button = Button(sercch_frame, image=close_img, borderwidth=0, command=lambda: close(sercch_frame))
 
-    search_button.place(x=540, y=100)
+    search_button.place(x=30, y=100)
     search_Entry.place(x=50, y=100)
     close_button.place(x=670, y=0)
     window.mainloop()

@@ -17,6 +17,7 @@ window = Tk()
 window.geometry('1280x700')
 window.title("home".center(100))  # centering the title ?
 window.config(bg="black")
+eqe=""
 
 
 # login
@@ -511,9 +512,9 @@ def profile(frame, username, user):
 
     def calculator(fra):
 
-        base_frame = Frame(fra, width=450, height=550, bg='light green')
-        base_frame.place(x=750, y=120)
-        frame = Frame(base_frame, width=410, height=500, bg="black")
+        base_frame = Frame(fra, width=450, height=640, bg='blue')
+        base_frame.place(x=750, y=70)
+        frame = Frame(base_frame, width=410, height=580, bg="black")
         frame.place(x=20, y=40)
 
         # label

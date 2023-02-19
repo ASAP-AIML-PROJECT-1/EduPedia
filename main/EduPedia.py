@@ -463,7 +463,292 @@ def profile(frame,username,user):
         list_box_index.config(yscrollcommand=scrollbar_index.set)
         scrollbar_index.config(command=list_box_index.yview)
         goto_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+        
+        
+        
+        
+    # calculator
 
+    def calculator(fra):
+        
+        base_frame =  Frame(fra, width=450, height=550, bg='light green')
+        base_frame.place(x=750,y=120)
+        frame =  Frame(base_frame, width=410, height=500, bg="black")
+        frame.place(x=20, y=40)
+
+        # label
+
+        lb =  Label(frame, height=2, width=18, text='', bg='white', fg='black', anchor="se",
+                           font=("Times", 25, "italic bold"))
+        lb.place(x=30, y=45, )
+
+        # number button click action  add
+
+        opvalue = 0
+        oldvalue = ''
+        newvalue = ''
+        eqe = ""
+
+        dot_button_clicked = False
+
+        def button1_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button2_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button3_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button4_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button5_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button6_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button7_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button8_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button9_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def button0_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        def buttondot_clicked(value):
+            global eqe
+            eqe += value
+            lb.config(text=eqe)
+
+        # control button click action
+
+        def buttonce_clicked():
+            global eqe
+            eqe = ''
+
+            lb.config(text=eqe)
+
+        def buttonc_clicked():
+            global oldvalue
+            global newvalue
+            global opvalue
+            global eqe
+
+            oldvalue = ''
+            newvalue = ''
+            opvalue = 0
+            eqe = ''
+            lb.config(text=eqe)
+
+        def buttonX_clicked():
+            global eqe
+            eqe = ''
+            num = lb['text']
+            cout = 1
+            for i in num:
+                if cout < len(num):
+                    eqe += i
+                    cout += 1
+
+                else:
+                    break
+            lb.config(text=eqe)
+
+        # operator button click action
+
+        def add_but_clicked():
+            global oldvalue
+            global eqe
+            global opvalue
+            check = len(lb['text'])
+
+            if check == 0:
+                eqe = ''
+                lb.config(text=eqe)
+                opvalue = 0
+            else:
+                eqe = ''
+                oldvalue = lb['text']
+                lb.config(text=eqe)
+                opvalue = 1
+
+        def sub_but_clicked():
+            global oldvalue
+            global eqe
+            global opvalue
+            check = len(lb['text'])
+
+            if check == 0:
+                eqe = ''
+                lb.config(text=eqe)
+                opvalue = 0
+            else:
+                eqe = ''
+                oldvalue = lb['text']
+                lb.config(text=eqe)
+                opvalue = 2
+
+        def mult_but_clicked():
+            global oldvalue
+            global eqe
+            global opvalue
+            check = len(lb['text'])
+
+            if check == 0:
+                eqe = ''
+                lb.config(text=eqe)
+                opvalue = 0
+            else:
+                eqe = ''
+                oldvalue = lb['text']
+                lb.config(text=eqe)
+                opvalue = 3
+
+        def div_but_clicked():
+            global oldvalue
+            global opvalue
+            global eqe
+            check = len(lb['text'])
+
+            if check == 0:
+                eqe = ''
+                lb.config(text=eqe)
+                opvalue = 0
+            else:
+                eqe = ''
+                oldvalue = lb['text']
+                lb.config(text=eqe)
+                opvalue = 4
+
+        def equal_button_clicked():
+            global opvalue
+            global oldvalue
+            global newvalue
+            newvalue = lb['text']
+
+            if opvalue == 1:
+
+                resuil = float(oldvalue) + float(newvalue)
+                resuil = str(resuil)
+                lb.config(text=resuil)
+                opvalue = 0
+
+
+            elif opvalue == 2:
+                resuil = float(oldvalue) - float(newvalue)
+                resuil = str(resuil)
+                lb.config(text=resuil)
+                opvalue = 0
+
+            elif opvalue == 3:
+                resuil = float(oldvalue) * float(newvalue)
+                resuil = str(resuil)
+                lb.config(text=resuil)
+                opvalue = 0
+
+            elif opvalue == 4:
+                resuil = float(oldvalue) / float(newvalue)
+                resuil = str(resuil)
+                lb.config(text=resuil)
+                opvalue = 0
+            else:
+                initial = lb['text']
+                lb.config(text=initial)
+
+        # control buttons
+
+        buttce =  Button(frame, text='CE', bg='#fc475f', width=3, height=1, activebackground='red',
+                                command=lambda: buttonce_clicked(), font=("Times", 25, "italic bold"))
+        buttce.place(x=30, y=150)
+        buttc =  Button(frame, text='C', bg='#fc475f', width=3, height=1, activebackground='red',
+                               command=lambda: buttonc_clicked(), font=("Times", 25, "italic bold"))
+        buttc.place(x=120, y=150)
+        buttx =  Button(frame, text='X', bg='#fc475f', width=3, height=1, activebackground='red',
+                               command=lambda: buttonX_clicked(), font=("Times", 25, "italic bold"))
+        buttx.place(x=210, y=150)
+
+        # number buttons
+
+        butt7 =  Button(frame, text='7', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button7_clicked('7'), font=("Times", 25, "italic bold"))
+        butt7.place(x=30, y=240)
+        butt8 =  Button(frame, text='8', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button8_clicked('8'), font=("Times", 25, "italic bold"))
+        butt8.place(x=120, y=240)
+        butt9 =  Button(frame, text='9', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button9_clicked('9'), font=("Times", 25, "italic bold"))
+        butt9.place(x=210, y=240)
+        butt4 =  Button(frame, text='4', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button4_clicked('4'), font=("Times", 25, "italic bold"))
+        butt4.place(x=30, y=330)
+        butt5 =  Button(frame, text='5', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button5_clicked('5'), font=("Times", 25, "italic bold"))
+        butt5.place(x=120, y=330)
+        butt6 =  Button(frame, text='6', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button6_clicked('6'), font=("Times", 25, "italic bold"))
+        butt6.place(x=210, y=330)
+        butt1 =  Button(frame, text='1', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button1_clicked('1'), font=("Times", 25, "italic bold"))
+        butt1.place(x=30, y=420)
+        butt2 =  Button(frame, text='2', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button2_clicked('2'), font=("Times", 25, "italic bold"))
+        butt2.place(x=120, y=420)
+        butt3 =  Button(frame, text='3', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button3_clicked('3'), font=("Times", 25, "italic bold"))
+        butt3.place(x=210, y=420)
+        butt0 =  Button(frame, text='0', bg='gray', width=3, height=1, activebackground='#62bce3',
+                               command=lambda: button0_clicked('0'), font=("Times", 25, "italic bold"))
+        butt0.place(x=30, y=510)
+        butt_dot =  Button(frame, text='.', bg='gray', width=3, height=1, activebackground='#62bce3',
+                                  command=lambda: buttondot_clicked('.'), font=("Times", 25, "italic bold"))
+        butt_dot.place(x=120, y=510)
+
+        # operator buttons
+
+        butt_equal =  Button(frame, text='=', bg='#5bf0a5', width=8, height=1, activebackground='white',
+                                    command=lambda: equal_button_clicked(), font=("Times", 25, "italic bold"))
+        butt_equal.place(x=215, y=510)
+        butt_div =  Button(frame, text='/', bg='#695cab', width=4, height=1, activebackground='green',
+                                  command=lambda: div_but_clicked(), font=("Times", 24, "italic bold"))
+        butt_div.place(x=297, y=150)
+        butt_mult =  Button(frame, text='*', bg='#695cab', width=4, height=1, activebackground='green',
+                                   command=lambda: mult_but_clicked(), font=("Times", 24, "italic bold"))
+        butt_mult.place(x=297, y=240)
+        butt_sub =  Button(frame, text='-', bg='#695cab', width=4, height=1, activebackground='green',
+                                  command=lambda: sub_but_clicked(), font=("Times", 24, "italic bold"))
+        butt_sub.place(x=297, y=330)
+        butt_add =  Button(frame, text='+', bg='#695cab', width=4, height=1, activebackground='green',
+                                  command=lambda: add_but_clicked(), font=("Times", 24, "italic bold"))
+        butt_add.place(x=297, y=420)
+
+        close_button =  Button(base_frame, text="X", bg='red', width=3,command=lambda :close(base_frame))
+        close_button.place(x=400, y=2)
 
     # inside frame
     frame = Frame(window, width=1280, height=700)
@@ -513,9 +798,20 @@ def profile(frame,username,user):
     profile_name_label = Label(left_frame, font=("Helvetica", "16"), text=f"{username}", bg="pink", width=18, anchor='nw')
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2, bg="yellow", command= lambda : view_profile(frame,username,user))
     update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2, bg="orange", command= lambda: update_profile(frame,username,user))
-    vlog_butt = Button(left_frame, text="Vlogs", font=("Helvetica", "16"), bg="green", width=18, height=2)
+    history_butt = Button(left_frame, text="History", font=("Helvetica", "16"), bg="green", width=18, height=2)
     favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2, command= lambda : show_favourite(frame,username))
-    extra_butt = Button(left_frame, text="Extra", font=("Helvetica", "16"), bg="green", width=18, height=2)
+
+
+    if user=="student":
+        help_butt = Button(left_frame, text="Help", font=("Helvetica", "16"), bg="green", width=18, height=2)
+        help_butt.grid(row=7, column=0)
+    elif user=='institute':
+        club_butt = Button(left_frame, text="Clubs", font=("Helvetica", "16"), bg="green", width=18, height=2)
+        club_butt.grid(row=7, column=0)
+
+    else:
+        advertise_butt = Button(left_frame, text="Advertise", font=("Helvetica", "16"), bg="green", width=18, height=2)
+        advertise_butt.grid(row=7, column=0)
 
 
     def blog_feed(user):
@@ -526,7 +822,16 @@ def profile(frame,username,user):
     vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13, command = lambda: blog_feed(user))
     create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13,command=lambda :create_blog(frame,username,user))
     index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13,command=lambda : index())
-    extra_button = Button(top_icons, text="Extra", bg='white', foreground='blue', font=("Helvetica", "14"), height=1, width=13)
+
+    if user=='student'or user=="institute":
+        calc_button = Button(top_icons, text="Calc", bg='white', foreground='blue', font=("Helvetica", "14"),
+                              height=1, width=13,command=lambda :calculator(frame))
+        calc_button.grid(row=0, column=5, padx=25)
+
+    else:
+        analyse_button = Button(top_icons, text="Analyse", bg='white', foreground='blue', font=("Helvetica", "14"),
+                              height=1, width=13)
+        analyse_button.grid(row=0, column=5, padx=25)
 
     # top frame
     top_frame.place(x=0, y=0)
@@ -543,16 +848,14 @@ def profile(frame,username,user):
     profile_name_label.grid(row=2, column=0)
     view_profile_butt.grid(row=3, column=0, pady=10)
     update_profile_butt.grid(row=4, column=0)
-    vlog_butt.grid(row=5, column=0, pady=10)
+    history_butt.grid(row=5, column=0, pady=10)
     favorite_butt.grid(row=6, column=0)
-    extra_butt.grid(row=7, column=0)
 
     # top icons
     search_button.grid(row=0, column=1, padx=25)
     vlog_button.grid(row=0, column=2, padx=25)
     create_vlog_button.grid(row=0, column=3, padx=20)
     index_button.grid(row=0, column=4, padx=25)
-    extra_button.grid(row=0, column=5, padx=25)
 
     def seacrh_result(search_Entry,frame):
         #search result frame

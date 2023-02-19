@@ -19,7 +19,7 @@ window = Tk()
 window.geometry('1280x700')
 window.title("home".center(100))  # centering the title ?
 window.config(bg="black")
-
+eqe=""
 
 # login
 def student(s):
@@ -389,7 +389,7 @@ def profile(frame, username, user):
 
                 show_frame = Frame(frame, width=800, height=300, bg="white")
                 result_label = Label(show_frame, text="Results", fg="blue")
-                text_widget = Text(show_frame, width=85, height=15, bg='white', pady=20, padx=10)
+                text_widget = Text(show_frame, width=85, height=15, bg='white', pady=20, padx=10,font=("Helvetica", "16"))
                 scrollbar = Scrollbar(show_frame)
                 text_widget.config(yscrollcommand=scrollbar.set)
                 scrollbar.config(command=text_widget.yview)
@@ -421,7 +421,7 @@ def profile(frame, username, user):
 
                     # showing index result
                     for i in range(len(columns_names)):
-                        fact = f"<<<<<{columns_names[i]}>>>>>\n{result_index_search_show[0][i]}\n\n\n"
+                        fact = f"{columns_names[i].upper()} :\n \n {result_index_search_show[0][i]} \n\n\n"
                         text_widget.insert(END, fact)
                 except Exception as e:
                     show_frame.place_forget()
@@ -493,7 +493,7 @@ def profile(frame, username, user):
 
         sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_reverse())
         close_button = Button(index_frame, text="X", bg='green', width=2, command=lambda: close(index_frame))
-        list_box_index = Listbox(index_frame, width=32, height=10)
+        list_box_index = Listbox(index_frame, width=32, height=10,font=("Helvetica", "16"))
         scrollbar_index = Scrollbar(index_frame)
         list_box_index.delete(0, END)
         for values in tables_index:
@@ -513,9 +513,9 @@ def profile(frame, username, user):
 
     def calculator(fra):
 
-        base_frame = Frame(fra, width=450, height=550, bg='light green')
-        base_frame.place(x=750, y=120)
-        frame = Frame(base_frame, width=410, height=500, bg="black")
+        base_frame = Frame(fra, width=450, height=640, bg='blue')
+        base_frame.place(x=750, y=70)
+        frame = Frame(base_frame, width=410, height=580, bg="black")
         frame.place(x=20, y=40)
 
         # label
@@ -1154,7 +1154,7 @@ def profile(frame, username, user):
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
     search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0,
-                           command=lambda: seacrh_result(search_Entry_value, search_img))
+                           command=lambda: seacrh_result(search_Entry_value))
     search_Entry = Entry(sercch_frame, font=("Comic Sans MS", 14), width=40)
     search_Entry_value = search_Entry.get()
     close_img = Image.open("resources/close.png")

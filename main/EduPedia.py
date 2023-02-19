@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk, Image
 import mysql.connector
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 # connecting to edupedia database
 edupedia = mysql.connector.connect(
@@ -982,6 +984,73 @@ def profile(frame, username, user):
     def blog_feed(user):
         pass
 
+    def analyse(frame):
+
+        frame_analyse = Frame(frame,width=800 ,height=200)
+        frame_analyse.place(x=350,y=140)
+
+        def plot(x,y):
+            frame_analyse_graph = Frame(frame, width=800, height=150)
+            frame_analyse_graph.place(x=350, y=200)
+            fig = Figure(figsize=(7,4),dpi=100)
+            graph = fig.add_subplot(111)
+            draw = graph.bar(x,y,.3)
+            canvas = FigureCanvasTkAgg(fig,master=frame_analyse_graph)
+            canvas.draw()
+            canvas.get_tk_widget().pack()
+
+        def trending():
+            sql_blog_likes = f"SELECT blog_name,likes FROM blogs ORDER BY blog_name LIMIT 10;"
+            edupedia_cursor.execute(sql_blog_likes)
+            likes = edupedia_cursor.fetchall()
+            x_axis = []
+            y_axis = []
+            for i in range(len(likes)):
+                x_axis.append(likes[i][0])
+                y_axis.append(int(likes[i][1]))
+
+            plot(x_axis,y_axis)
+
+        def ADVT():
+            sql_blog_likes = f"SELECT ADVT_name,rating FROM advertisement ORDER BY ADVT_name LIMIT 10;"
+            edupedia_cursor.execute(sql_blog_likes)
+            likes = edupedia_cursor.fetchall()
+            x_axis = []
+            y_axis = []
+            for i in range(len(likes)):
+                x_axis.append(likes[i][0])
+                y_axis.append(float(likes[i][1]))
+
+            plot(x_axis,y_axis)
+
+        def reactions():
+            sql_blog_likes = f"SELECT post_name,likes FROM reactions ORDER BY post_name LIMIT 10;"
+            edupedia_cursor.execute(sql_blog_likes)
+            likes = edupedia_cursor.fetchall()
+            x_axis = []
+            y_axis = []
+            for i in range(len(likes)):
+                x_axis.append(likes[i][0])
+                y_axis.append(int(likes[i][1]))
+
+            plot(x_axis,y_axis)
+
+        label_tredning = Button(frame_analyse, font=("Helvetica", "16"), text="Trending", bg="pink", width=18,
+                               anchor='nw', command= lambda : trending())
+        label_ADVT = Button(frame_analyse, font=("Helvetica", "16"), text="ADVT.", bg="pink", width=18,
+                               anchor='nw', command= lambda : ADVT())
+        label_reactions_to_post = Button(frame_analyse, font=("Helvetica", "16"), text="Reactions", bg="pink", width=18,
+                               anchor='nw', command= lambda : reactions())
+        label_tredning.grid(row=0 ,column=0)
+        label_ADVT.grid(row=0, column=1)
+        label_reactions_to_post.grid(row=0, column=2)
+
+
+
+
+
+
+
     # top_icons
     search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13,
                            command=lambda: search_window())
@@ -999,7 +1068,7 @@ def profile(frame, username, user):
 
     else:
         analyse_button = Button(top_icons, text="Analyse", bg='white', foreground='blue', font=("Helvetica", "14"),
-                                height=1, width=13)
+                                height=1, width=13, command= lambda : analyse(frame))
         analyse_button.grid(row=0, column=5, padx=25)
 
     # top frame

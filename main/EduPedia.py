@@ -153,15 +153,12 @@ def profile(frame, username, user):
                 update_column = ["company_name", "email", "phone_number", "address", "services_provided"]
                 table = "company_profile"
 
-            print(update_value)
-            print(update_column)
 
             try:
                 for i in range(len(update_column)):
                     if update_value[i] != "":
                         sql_update_profile = f"UPDATE {table} SET {update_column[i]} = %s WHERE (username = %s)"
                         value_update_profile = (str(update_value[i]), username)
-                        print(sql_update_profile, value_update_profile)
                         edupedia_cursor.execute(sql_update_profile, value_update_profile)
                         edupedia.commit()
                 messagebox.showinfo("Success", "Profile updated succesfully")
@@ -403,13 +400,11 @@ def profile(frame, username, user):
 
                 try:
                     index_of_item = list_box_index.curselection()
-                    print(list_box_index.get(index_of_item))
                     # getting index results (row values)
                     sql_index_search_show = f"SELECT * FROM {selected_table_index} WHERE {selection} = %s"
                     value_index_search_show = [f"{list_box_index.get(index_of_item)}"]
                     edupedia_cursor.execute(sql_index_search_show, value_index_search_show)
                     result_index_search_show = edupedia_cursor.fetchall()
-                    print(result_index_search_show)
                     # getting colunm details for each row
                     sql_index_search_row = f"show columns from {selected_table_index}"
                     edupedia_cursor.execute(sql_index_search_row)
@@ -450,12 +445,10 @@ def profile(frame, username, user):
                     selection = "title"
                     selected_table_index = "online_courses"
 
-                print(f"***** search result in {selected_table_index}************")
                 sql_index_search = f"select {selection} from {selected_table_index}"
                 edupedia_cursor.execute(sql_index_search)
                 result_tables = edupedia_cursor.fetchall()
                 list_box_index.delete(0, END)
-                print(result_tables, "\n\n")
                 for columns_value in result_tables:
                     list_box_index.insert(END, columns_value[0])
 
@@ -871,7 +864,6 @@ def profile(frame, username, user):
             # frame_contribute_submit.pack()
             frame_contribute_submit.place(x=350, y=30)
             columns = ["title","category","description","level","duration","skills_covered","prerequisites","language","associated_with","instructors","price","rating","url"]
-            print(columns)
             for i in range(len(columns)):
                 label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
                                     font=("Helvetica", "16"))
@@ -892,7 +884,6 @@ def profile(frame, username, user):
             # frame_contribute_submit.pack()
             frame_contribute_submit.place(x=350, y=30)
             columns = ["University_Name","College_Name","College_Type","State_Name","District_Name"]
-            print(columns)
             for i in range(len(columns)):
                 label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
                                     font=("Helvetica", "16"))
@@ -914,7 +905,6 @@ def profile(frame, username, user):
             # frame_contribute_submit.pack()
             frame_contribute_submit.place(x=350, y=30)
             columns = ["author","image","description","download_link","pages","publisher","year","language","file"]
-            print(columns)
             for i in range(len(columns)):
                 label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow", font=("Helvetica", "16"))
                 entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
@@ -971,7 +961,7 @@ def profile(frame, username, user):
 
     if user == "student":
         favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2,command=lambda: show_favourite(frame, username))
-        favorite_butt.grid(row=7, column=0)
+        favorite_butt.grid(row=6, column=0)
 
     elif user == 'institute':
         club_butt = Button(left_frame, text="Clubs", font=("Helvetica", "16"), bg="green", width=18, height=2)
@@ -1087,7 +1077,7 @@ def profile(frame, username, user):
     view_profile_butt.grid(row=3, column=0, pady=10)
     update_profile_butt.grid(row=4, column=0)
     history_butt.grid(row=5, column=0, pady=10)
-    contirubte_butt.grid(row=6, column=0)
+    contirubte_butt.grid(row=7, column=0)
 
     # top icons
     search_button.grid(row=0, column=1, padx=25)
@@ -1095,21 +1085,79 @@ def profile(frame, username, user):
     create_vlog_button.grid(row=0, column=3, padx=20)
     index_button.grid(row=0, column=4, padx=25)
 
-    def seacrh_result(search_Entry):
+    def seacrh_result(search_Entry,frame):
         # search result frame
 
-        def go_history():
+        def go_search(count_index_table):
             index_of_search = list_box_search.curselection()
-            history_search = list_box_search.get(index_of_search)
-            frame_search.place_forget()
-            seacrh_result(history_search, frame_search)
+            index_of_table = 0
+            if index_of_search[0] > count_index_table[-1]:
+                index_of_table = count_index_table[-1]
+            else:
+                for i in range(len(count_index_table)):
+                    if count_index_table[i] > index_of_search[0]:
+                        index_of_table = count_index_table[i-1]
+                        break
 
-        frame_search = Frame(frame, height=200, width=800)
-        frame_search.place(x=350, y=200)
-        list_box_search = Listbox(frame_search, height=17, width=100)
+            column_name = list_box_search.get(index_of_search)[5:]
+            table_name = list_box_search.get(index_of_table)
+            print(column_name)
+            print(table_name)
+
+            text_widget = Text(frame_search, width=85, height=15, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
+            scrollbar = Scrollbar(frame_search)
+            text_widget.config(yscrollcommand=scrollbar.set)
+            scrollbar.config(command=text_widget.yview)
+
+            text_widget.grid(row=1, column=0, sticky='w')
+            scrollbar.grid(row=1, column=0, sticky='e')
+
+            if table_name == "blogs":
+                selection = "blog_name"
+            elif table_name == "books":
+                selection = "title"
+            elif table_name == "colleges":
+                selection = "College_Name"
+            elif table_name == "company_profile":
+                selection = "company_name"
+            elif table_name == "online_courses":
+                selection = "title"
+
+            sql_search_goto = f"SELECT * FROM {table_name} WHERE {selection} = %s"
+            value_search_goto = [column_name]
+            edupedia_cursor.execute(sql_search_goto, value_search_goto)
+            result_seacrh_goto = edupedia_cursor.fetchall()
+            sql_search_row = f"show columns from {table_name}"
+            edupedia_cursor.execute(sql_search_row)
+            result_search_column_detail = edupedia_cursor.fetchall()
+            # getting colunm name for each row
+            columns_names = []
+            for column_name in result_search_column_detail:
+                columns_names.append(column_name[0])
+
+            # showing search result
+            for i in range(len(columns_names)):
+                fact = f"{columns_names[i].upper()} :\n \n {result_seacrh_goto[0][i]} \n\n\n"
+                text_widget.insert(END, fact)
+
+            def back(frame):
+                frame.pack_forget()
+                search_window(search_Entry,frame)
+
+            back_button = Button(frame_search, text="Close", fg="green", bg="yellow",
+                                 command=lambda: close(frame_search))
+            back_button.grid(row=2, column=0, sticky='e', padx=10)
+            #show_button = Button(frame_search, text="Show ", bg='blue', fg='white', command=lambda: show())
+            #show_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+
+
+        frame_search = Frame(frame, height=210, width=850)
+        frame_search.place(x=300, y=170)
+        list_box_search = Listbox(frame_search, height=18, width=90,font=("Helvetica", "12"))
         scroll_bar_search = Scrollbar(frame_search)
+        list_box_search.delete(0, END)
         close_button = Button(frame_search, bg="red", text="X", width=2, command=lambda: close(frame_search))
-        go_button = Button(frame_search, bg="green", text="Go", command=lambda: go_history())
+        go_button = Button(frame_search, bg="green", text="Go", command=lambda: go_search(count_index_table))
 
 
         close_button.grid(row=0, column=0, sticky="e", padx=10)
@@ -1119,6 +1167,8 @@ def profile(frame, username, user):
 
 
         search_tables = ["blogs", "books", "colleges", "company_profile", "online_courses"]
+        count_index_table = []
+        count = -2
         for table in search_tables:
             if table == "blogs":
                 selection = "blog_name"
@@ -1131,30 +1181,29 @@ def profile(frame, username, user):
             elif table == "online_courses":
                 selection = "title"
 
-            print(f"***** search result in {table}************")
+            list_box_search.insert(END, f"{table}")
+            list_box_search.insert(END,"="*len(table))
             sql_search = f"select {selection} from {table} where {selection} like %s"
             val_search = [f"%{search_Entry}%"]
             edupedia_cursor.execute(sql_search, val_search)
             result_tables = edupedia_cursor.fetchall()
             print(result_tables, "\n\n")
-
-
+            count+=2
+            count_index_table.append(count)
             for i in range(len(result_tables)):
-                print(f"***** search result from {table} - {result_tables[i]}************")
+                list_box_search.insert(END, f"     {result_tables[i][0]}")
+                count+=1
+            list_box_search.insert(END, "")
+            count+=1
+        print(count_index_table)
 
-                # for expanding on clicking
-                # sql_column_search = f"select * from {table} where {selection} = %s"
-                # val_column_search = result_tables[i]
-                # edupedia_cursor.execute(sql_column_search, val_column_search)
-                # result_column = edupedia_cursor.fetchall()
-                # print(result_column, "\n\n")
 
     # seacrh frame
     sercch_frame = Frame(center_frame, bg="orange", width=700, height=300)
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
     search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0,
-                           command=lambda: seacrh_result(search_Entry_value))
+                           command=lambda: seacrh_result(search_Entry.get(),frame))
     search_Entry = Entry(sercch_frame, font=("Comic Sans MS", 14), width=40)
     search_Entry_value = search_Entry.get()
     close_img = Image.open("resources/close.png")

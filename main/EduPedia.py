@@ -228,6 +228,7 @@ def profile(frame,username,user):
 
 
         create_blog_frame=Frame(frame,width=800,height=550,bg="black")
+
         author_name_label = Label(create_blog_frame, text="author_name", font=("Helvetica", "16"), fg='white', bg="black",anchor="nw",width=15)
         author_name_entry = Entry(create_blog_frame, font=("Helvetica", "16"),width=50)
         category_label = Label(create_blog_frame, text="category", font=("Helvetica", "16"), fg='white', bg="black",anchor="nw",width=15)
@@ -372,26 +373,25 @@ def profile(frame,username,user):
 
                 try:
                     index_of_item = list_box_index.curselection()
-                    if list_box_index.get(index_of_item) == 'Monday':
+                    print(list_box_index.get(index_of_item))
+                    #getting index results (row values)
+                    sql_index_search_show = f"SELECT * FROM {selected_table_index} WHERE {selection} = %s"
+                    value_index_search_show = [f"{list_box_index.get(index_of_item)}"]
+                    edupedia_cursor.execute(sql_index_search_show,value_index_search_show)
+                    result_index_search_show = edupedia_cursor.fetchall()
+                    print(result_index_search_show)
+                    #getting colunm details for each row
+                    sql_index_search_row = f"show columns from {selected_table_index}"
+                    edupedia_cursor.execute(sql_index_search_row)
+                    result_index_search_column_detail = edupedia_cursor.fetchall()
+                    # getting colunm name for each row
+                    columns_names = []
+                    for column_name in result_index_search_column_detail:
+                        columns_names.append(column_name[0])
 
-                        fact = "Monday.com was founded in 2012[7] by Roy Mann, Eran Kampf and Eran Zinman.[8] By August of that year," \
-                               " the company, then called dapulse, raised $1.5 million in seed funding.[9][10][11] The product was " \
-                               "commercially launched in 2014.[12][13] In June 2016, the company announced the closing of $7.6 million" \
-                               " in a Series A round.[14][11] The round was led by Genesis Partners, with participation from existing " \
-                               "backer Entrée Capital.[11] In April 2017, the company raised $25 million.[15] The round was led by New " \
-                               "York-based firm Insight Venture Partners, with participation from existing Series A investors Genesis " \
-                               "Partners and Entrée Capital.[16] In November 2017, the company changed its brand name from dapulse to" \
-                               " Monday.com.[17]In July 2018, the company raised a $50 million Series C funding round.[8] The round was led " \
-                               "by New York-based growth equity firm, Stripes Group, with participation from existing Series A and B investors," \
-                               " Insight Venture Partners and Entrée Capital. In July 2019, the company announced it raised a $150 million Series D" \
-                               " round, bringing total funding to $234.1 million. The round was led by Sapphire Ventures with participation from Hamilton" \
-                               " Lane, HarbourVest Partners, ION Crossover Partners and Vintage Investment Partners.[4] The funding gave the company" \
-                               " a valuation of $1.9 billion, making it a unicorn.[4] As of 2021, the company reported over it was serving 127,000 customers" \
-                               " across over 200 business verticals.[18][19][20] In May 2020, the company won the 2020 Webby Award for Productivity in the category " \
-                               "Apps, Mobile & Voice.[21][22] In May 2021, the company filed for a U.S. IPO.[23][24] The company went public on June 10, 2021.[25] "
-                        text_widget.insert(END, fact)
-                    else:
-                        fact = "nothing"
+                    # showing index result
+                    for i in range(len(columns_names)):
+                        fact = f"<<<<<{columns_names[i]}>>>>>\n{result_index_search_show[0][i]}\n\n\n"
                         text_widget.insert(END, fact)
                 except Exception as e:
                     show_frame.place_forget()
@@ -403,14 +403,31 @@ def profile(frame,username,user):
                 index()
             try:
                 index_of_item = list_box_index.curselection()
+                if list_box_index.get(index_of_item) == "blogs":
+                    selection = "blog_name"
+                    selected_table_index = "blogs"
+                elif list_box_index.get(index_of_item) == "books":
+                    selection = "title"
+                    selected_table_index = "books"
+                elif list_box_index.get(index_of_item) == "colleges":
+                    selection = "College_Name"
+                    selected_table_index = "colleges"
+                elif list_box_index.get(index_of_item) == "company_profile":
+                    selection = "company_name"
+                    selected_table_index = "company_profile"
+                elif list_box_index.get(index_of_item) == "online_courses":
+                    selection = "title"
+                    selected_table_index = "online_courses"
 
-                if list_box_index.get(index_of_item) == 'may':
-                    list_box_index.delete(0, END)
-                    weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-                    for values in weekDays:
-                        list_box_index.insert(END, values)
-                else:
-                    pass
+                print(f"***** search result in {selected_table_index}************")
+                sql_index_search = f"select {selection} from {selected_table_index}"
+                edupedia_cursor.execute(sql_index_search)
+                result_tables = edupedia_cursor.fetchall()
+                list_box_index.delete(0, END)
+                print(result_tables, "\n\n")
+                for columns_value in result_tables:
+                        list_box_index.insert(END, columns_value[0])
+
             except Exception as e:
                 messagebox.showinfo("oops", "select at least one")
                 index_frame.place_forget()
@@ -439,19 +456,15 @@ def profile(frame,username,user):
             sort_button.grid(row=0, column=0, pady=10, sticky='w')
 
         index_frame.place(x=830, y=120)
-        months = ['january', 'february', 'march', 'april', 'may', 'june',
-                  'july', 'august', 'september', 'october', 'november', 'december', 'january', 'february', 'march',
-                  'april',
-                  'may', 'june',
-                  'july', 'august', 'september', 'october', 'november', 'december']
-        months.sort()
+        tables_index = ["blogs","books","colleges","company_profile","online_courses"]
+        tables_index.sort()
 
         sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_reverse())
         close_button = Button(index_frame, text="X", bg='green', width=2, command=lambda: close(index_frame))
         list_box_index = Listbox(index_frame, width=32, height=10)
         scrollbar_index = Scrollbar(index_frame)
         list_box_index.delete(0, END)
-        for values in months:
+        for values in tables_index:
             list_box_index.insert(END, values)
 
         goto_button = Button(index_frame, text="Go to", bg='blue', fg='white', command=lambda: goto())

@@ -17,7 +17,6 @@ window = Tk()
 window.geometry('1280x700')
 window.title("home".center(100))  # centering the title ?
 window.config(bg="black")
-eqe=""
 
 
 # login
@@ -512,9 +511,9 @@ def profile(frame, username, user):
 
     def calculator(fra):
 
-        base_frame = Frame(fra, width=450, height=640, bg='blue')
-        base_frame.place(x=750, y=70)
-        frame = Frame(base_frame, width=410, height=580, bg="black")
+        base_frame = Frame(fra, width=450, height=550, bg='light green')
+        base_frame.place(x=750, y=120)
+        frame = Frame(base_frame, width=410, height=500, bg="black")
         frame.place(x=20, y=40)
 
         # label
@@ -831,7 +830,7 @@ def profile(frame, username, user):
         go_button.grid(row=2, column=0, sticky="e", padx=10)
 
     def show_history():
-        
+
         def go_history():
             index_of_history = list_box_history.curselection()
             history_search = list_box_history.get(index_of_history)
@@ -856,6 +855,100 @@ def profile(frame, username, user):
         scroll_bar_history.grid(row=1, column=0, sticky="e")
         go_button.grid(row=2, column=0, sticky="e", padx=10)
 
+    def contribute(frame,username,user):
+        frame.pack_forget()
+        frame.place_forget()
+
+        def submit_contribute_others(frame):
+            messagebox.showinfo("Sorry","we are updating this")
+            frame.pack_forget()
+            profile(frame,username,user)
+        def submit_contribute_online_courses(frame):
+            frame.place_forget()
+            frame_contribute_submit = Frame(window, bg="red")
+            # frame_contribute_submit.pack()
+            frame_contribute_submit.place(x=350, y=30)
+            columns = ["title","category","description","level","duration","skills_covered","prerequisites","language","associated_with","instructors","price","rating","url"]
+            print(columns)
+            for i in range(len(columns)):
+                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
+                                    font=("Helvetica", "16"))
+                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0, padx=20, pady=10)
+                entry_title.grid(row=i, column=1, padx=20, pady=10)
+
+            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
+                                 command=lambda: profile(frame, username, user))
+            button_back.grid(row=len(columns) + 1, column=0, padx=20, pady=20)
+            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
+                                   command=lambda: profile(frame, username, user))
+            button_submit.grid(row=len(columns) + 1, column=1, padx=20, pady=20)
+
+        def submit_contribute_colleges(frame):
+            frame.place_forget()
+            frame_contribute_submit = Frame(window, bg="red")
+            # frame_contribute_submit.pack()
+            frame_contribute_submit.place(x=350, y=30)
+            columns = ["University_Name","College_Name","College_Type","State_Name","District_Name"]
+            print(columns)
+            for i in range(len(columns)):
+                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
+                                    font=("Helvetica", "16"))
+                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0, padx=20, pady=10)
+                entry_title.grid(row=i, column=1, padx=20, pady=10)
+
+            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
+                                 command=lambda: profile(frame, username, user))
+            button_back.grid(row=len(columns) + 1, column=0, padx=20, pady=20)
+            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
+                                   command=lambda: profile(frame, username, user))
+            button_submit.grid(row=len(columns) + 1, column=1, padx=20, pady=20)
+
+        def submit_contribute_books(frame):
+
+            frame.place_forget()
+            frame_contribute_submit = Frame(window, bg="red")
+            # frame_contribute_submit.pack()
+            frame_contribute_submit.place(x=350, y=30)
+            columns = ["author","image","description","download_link","pages","publisher","year","language","file"]
+            print(columns)
+            for i in range(len(columns)):
+                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow", font=("Helvetica", "16"))
+                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0, padx=20, pady=10)
+                entry_title.grid(row=i, column=1, padx=20, pady=10)
+
+            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
+                                 command=lambda: profile(frame, username, user))
+            button_back.grid(row=len(columns)+1, column=0, padx=20, pady=20)
+            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
+                                 command=lambda: profile(frame, username, user))
+            button_submit.grid(row=len(columns)+1, column=1, padx=20, pady=20)
+
+
+        frame_contribute_profile = Frame(window, bg="red")
+        frame_contribute_profile.pack()
+        frame_contribute_profile.place(x=350, y=50)
+
+        label_category = Label(frame_contribute_profile, text="select a category ", bg="yellow", font=("Helvetica", "16"))
+        label_category.grid(row=0, column=0, padx=20, pady=20)
+
+        button_category = Button(frame_contribute_profile, text=f"books", bg="yellow",font=("Helvetica", "16"), command=lambda: submit_contribute_books(frame_contribute_profile))
+        button_category.grid(row=1, column=0, padx=20, pady=20)
+        button_category = Button(frame_contribute_profile, text=f"colleges", bg="yellow", font=("Helvetica", "16"),
+                                 command=lambda: submit_contribute_colleges(frame_contribute_profile))
+        button_category.grid(row=2, column=0, padx=20, pady=20)
+        button_category = Button(frame_contribute_profile, text=f"online coursees", bg="yellow", font=("Helvetica", "16"),
+                                 command=lambda: submit_contribute_online_courses(frame_contribute_profile))
+        button_category.grid(row=3, column=0, padx=20, pady=20)
+        button_category = Button(frame_contribute_profile, text=f"others", bg="yellow", font=("Helvetica", "16"),
+                                 command=lambda: submit_contribute_others(frame_contribute_profile))
+        button_category.grid(row=4, column=0, padx=20, pady=20)
+
+        button_back = Button(frame_contribute_profile, text="back", height=2, width=15, bg="yellow", command=lambda: profile(frame, username, user))
+        button_back.grid(row=5, column=0, padx=20, pady=20)
+
 
     # left
     profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18,
@@ -870,13 +963,14 @@ def profile(frame, username, user):
                                bg="yellow", command=lambda: view_profile(frame, username, user))
     update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2,
                                  bg="orange", command=lambda: update_profile(frame, username, user))
+    contirubte_butt = Button(left_frame, text="Contiribute", font=("Helvetica", "16"), bg="green", width=18, height=2,
+                             command=lambda: contribute(frame,username,user))
     history_butt = Button(left_frame, text="History", font=("Helvetica", "16"), bg="green", width=18, height=2, command= lambda : show_history())
-    favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2,
-                           command=lambda: show_favourite(frame, username))
 
     if user == "student":
-        help_butt = Button(left_frame, text="Help", font=("Helvetica", "16"), bg="green", width=18, height=2)
-        help_butt.grid(row=7, column=0)
+        favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2,command=lambda: show_favourite(frame, username))
+        favorite_butt.grid(row=7, column=0)
+
     elif user == 'institute':
         club_butt = Button(left_frame, text="Clubs", font=("Helvetica", "16"), bg="green", width=18, height=2)
         club_butt.grid(row=7, column=0)
@@ -924,7 +1018,7 @@ def profile(frame, username, user):
     view_profile_butt.grid(row=3, column=0, pady=10)
     update_profile_butt.grid(row=4, column=0)
     history_butt.grid(row=5, column=0, pady=10)
-    favorite_butt.grid(row=6, column=0)
+    contirubte_butt.grid(row=6, column=0)
 
     # top icons
     search_button.grid(row=0, column=1, padx=25)
@@ -932,12 +1026,28 @@ def profile(frame, username, user):
     create_vlog_button.grid(row=0, column=3, padx=20)
     index_button.grid(row=0, column=4, padx=25)
 
-    def seacrh_result(search_Entry, frame):
+    def seacrh_result(search_Entry):
         # search result frame
-        frame.pack_forget()
-        frame_search = Frame(window, width=1280, height=700, bg="white")
-        # frame_search.place(x=200,y=200)
-        frame_search.pack()
+
+        def go_history():
+            index_of_search = list_box_search.curselection()
+            history_search = list_box_search.get(index_of_search)
+            frame_search.place_forget()
+            seacrh_result(history_search, frame_search)
+
+        frame_search = Frame(frame, height=200, width=800)
+        frame_search.place(x=350, y=200)
+        list_box_search = Listbox(frame_search, height=17, width=100)
+        scroll_bar_search = Scrollbar(frame_search)
+        close_button = Button(frame_search, bg="red", text="X", width=2, command=lambda: close(frame_search))
+        go_button = Button(frame_search, bg="green", text="Go", command=lambda: go_history())
+
+
+        close_button.grid(row=0, column=0, sticky="e", padx=10)
+        list_box_search.grid(row=1, column=0, sticky="w")
+        scroll_bar_search.grid(row=1, column=0, sticky="e")
+        go_button.grid(row=2, column=0, sticky="e", padx=10)
+
 
         search_tables = ["blogs", "books", "colleges", "company_profile", "online_courses"]
         for table in search_tables:
@@ -959,16 +1069,9 @@ def profile(frame, username, user):
             result_tables = edupedia_cursor.fetchall()
             print(result_tables, "\n\n")
 
-            table_label = Label(frame_search, font=("Helvetica", "16"), text=f"{table}", bg="pink", width=18,
-                                anchor="nw")
-            table_label.grid(row=0, column=0)
 
             for i in range(len(result_tables)):
                 print(f"***** search result from {table} - {result_tables[i]}************")
-                table_label = Label(frame_search, font=("Helvetica", "16"), text=f"{result_tables[i]}", bg="pink",
-                                    width=18,
-                                    anchor="nw")
-                # table_label.grid(row=i+1, column=1)
 
                 # for expanding on clicking
                 # sql_column_search = f"select * from {table} where {selection} = %s"
@@ -982,7 +1085,7 @@ def profile(frame, username, user):
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
     search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0,
-                           command=lambda: seacrh_result(search_Entry_value, frame))
+                           command=lambda: seacrh_result(search_Entry_value, search_img))
     search_Entry = Entry(sercch_frame, font=("Comic Sans MS", 14), width=40)
     search_Entry_value = search_Entry.get()
     close_img = Image.open("resources/close.png")

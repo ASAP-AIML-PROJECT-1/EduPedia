@@ -972,7 +972,55 @@ def profile(frame, username, user):
         advertise_butt.grid(row=7, column=0)
 
     def blog_feed(user):
-        pass
+
+        frame_blog = Frame(frame, height=50, width=60)
+        frame_blog.place(x=300, y=150)
+        list_box_blog = Listbox(frame_blog, height=10, width=50)
+        scroll_bar_blog = Scrollbar(frame_blog)
+        close_button = Button(frame_blog, bg="red", text="X", width=2, command=lambda: close(frame_blog))
+
+        close_button.grid(row=0, column=0, sticky="e", padx=10)
+        list_box_blog.grid(row=1, column=0, sticky="w")
+        scroll_bar_blog.grid(row=1, column=0, sticky="e")
+        like_button = Button(frame_blog, bg="blue", text="Like")
+        like_button.grid(row=2, column=0, sticky="w", padx=10)
+        share_button = Button(frame_blog, bg="blue", text="share")
+        share_button.grid(row=2, column=0, sticky="w", padx=50)
+        favorite_button = Button(frame_blog, bg="blue", text="favorite")
+        favorite_button.grid(row=2, column=0, sticky="w", padx=100)
+
+
+        text_widget = Text(frame_blog, width=80, height=16, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
+        scrollbar = Scrollbar(frame_blog)
+        text_widget.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=text_widget.yview)
+        text_widget.grid(row=1, column=0, sticky='w')
+        scrollbar.grid(row=1, column=0, sticky='e')
+
+
+        result_blog_columns = ["author_name","category","blog_name","blog"]
+
+        sql_blog_feed = f"SELECT * FROM blogs ORDER BY rating DESC LIMIT 50"
+        edupedia_cursor.execute(sql_blog_feed)
+        result_blog_feed = edupedia_cursor.fetchall()
+        result_blog_feed_value = []
+
+        for blogs in result_blog_feed:
+            blog = []
+            for blogs_row in blogs:
+                blog.append(blogs_row)
+            blog = blog[2:6]
+            result_blog_feed_value.append(blog)
+
+        for i in range(len(result_blog_feed_value)):
+            text_widget.insert(END, f"BLOG.{i+1}\n")
+            text_widget.insert(END, f"="*len(f"BLOG.{i+1}"))
+            for j in range(len(result_blog_columns)):
+                text_widget.insert(END, f"\n{result_blog_columns[j]} :")
+                text_widget.insert(END, f"    {result_blog_feed_value[i][j]}")
+            text_widget.insert(END, "\n\n")
+
+
 
     def analyse(frame):
 
@@ -1044,9 +1092,9 @@ def profile(frame, username, user):
     # top_icons
     search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13,
                            command=lambda: search_window())
-    vlog_button = Button(top_icons, text="vlogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
+    vlog_button = Button(top_icons, text="blogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
                          width=13, command=lambda: blog_feed(user))
-    create_vlog_button = Button(top_icons, text="create vlogs", bg='white', foreground='blue', font=("Helvetica", "14"),
+    create_vlog_button = Button(top_icons, text="create blogs", bg='white', foreground='blue', font=("Helvetica", "14"),
                                 height=1, width=13, command=lambda: create_blog(frame, username, user))
     index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
                           width=13, command=lambda: index())

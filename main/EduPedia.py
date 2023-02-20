@@ -1600,7 +1600,7 @@ img = ImageTk.PhotoImage(img)
 label_main=Label(window,image=img)
 label_main.pack()
 
-logo_img = Image.open("resources/Projerased (1).png")
+logo_img = Image.open("resources/main_logo.jpg")
 logo_img = ImageTk.PhotoImage(logo_img)
 logo_label=Label(label_main,image=logo_img)
 logo_label.place(x=580,y=80)
@@ -1617,7 +1617,7 @@ def into(w=None,e=None):
     #     label_main = Label(window, image=img)
     #     label_main.pack()
 
-    logo_img1 = Image.open("resources/Projerased (1).png")
+    logo_img1 = Image.open("resources/main_logo.jpg")
     logo_img1 = ImageTk.PhotoImage(logo_img1)
     logo_label1 = Label(label_main, image=logo_img1)
     logo_label1.place(x=580, y=80)
@@ -1640,10 +1640,11 @@ def into(w=None,e=None):
 
 
 
-welcome_label=Label(label_main,text="Welcome to",font=("Comic Sans MS", 11, "bold"))
-edupidia_button=Button(label_main,text="Edupedia",fg="#198b91",font=("Comic Sans MS", 15, "bold"),command=lambda :into(welcome_label,edupidia_button,))
-welcome_label.place(x=550,y=283)
-edupidia_button.place(x=650,y=273)
+welcome_label=Label(label_main,text="Welcome to",font=("Comic Sans MS", 13, "bold"))
+edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("Comic Sans MS", 25, "bold"),activebackground="#d3f4f5",activeforeground="#0f9496",command=lambda :into(welcome_label,edupidia_button,))
+# welcome_label.place(x=620,y=250)
+edupidia_button.place(x=550,y=250)
+
 
 frame_stud_log = Frame(label_main, bg="#b2e9f7")
 frame_inst_log = Frame(label_main, bg="#b2e9f7")

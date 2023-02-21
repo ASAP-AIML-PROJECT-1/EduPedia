@@ -62,7 +62,7 @@ def validate_account(frame, entry_usr, entry_pwd, user):
     results = edupedia_cursor.fetchall()
     # checking if any matches found for given username and password
     if results:
-        messagebox.showinfo("success", "Login Successful")
+        # messagebox.showinfo("success", "Login Successful")
         profile(frame, entry_usr.get(), user)
     # if username and password does not match or exist
     else:
@@ -823,7 +823,9 @@ def profile(frame, username, user):
     top_icons = Frame(frame, width=1060, bg='brown', height=40, padx=25)
     center_frame = Frame(frame, width=1060, height=580, bg="light blue")
     logo_canvas = Canvas(top_frame, height=80, width=100, )
-    logo_canvas.create_text(40, 40, text="logo", fill="black")
+    img_small_logo= Image.open("resources/small_logo.jpg")
+    img_small_logo = ImageTk.PhotoImage(img_small_logo)
+    logo_canvas.create_image(0, 0, image=img_small_logo, anchor='nw')
 
     button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
                            command=lambda: logout(frame))

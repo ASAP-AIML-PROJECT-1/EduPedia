@@ -62,7 +62,7 @@ def validate_account(frame, entry_usr, entry_pwd, user):
     results = edupedia_cursor.fetchall()
     # checking if any matches found for given username and password
     if results:
-        messagebox.showinfo("success", "Login Successful")
+        # messagebox.showinfo("success", "Login Successful")
         profile(frame, entry_usr.get(), user)
     # if username and password does not match or exist
     else:
@@ -70,24 +70,39 @@ def validate_account(frame, entry_usr, entry_pwd, user):
 
 
 def forget(frame,button_stud,button_inst,button_comp):
+    def home(frame):
+        frame.place_forget()
+        into()
+
+    def back(frame_forget):
+        frame_forget.place_forget()
+        frame.place(x=350, y=200)
+
     def recovery_mail(entry_mail):
         if entry_mail.get() == "":
             messagebox.showerror("Oops..!", "Enter mail adddress")
         else:
             messagebox.showinfo("Success", f"Recovery mail has been sent to \"{entry_mail.get()}\"")
+            frame_forget.place_forget()
+            frame.place(x=350, y=200)
 
-    frame.pack_forget()
-    frame_forget = Frame(label_main, bg="red", width=700, height=300)
+    frame.place_forget()
+    frame_forget = Frame(label_main, bg="#b2e9f7", width=700, height=300)
     frame_forget.place(x=350, y=200)
 
-    label_mail = Label(frame_forget, text="Enter mail address ", bg="yellow", font=("Helvetica", "16"))
+    label_mail = Label(frame_forget, text="Enter mail address ", bg="#b2e9f7", font=("Helvetica", "16"))
     entry_mail = Entry(frame_forget, font=("Helvetica", "16"))
-    button_submit = Button(frame_forget, text="Send recovery mail", height=2, width=15, bg="yellow",
+    button_submit = Button(frame_forget, text="Send recovery mail", height=1, width=15, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+                           activebackground="#b2e9f7",activeforeground="#040742",
                            command=lambda: recovery_mail(entry_mail))
+    button_back = Button(frame_forget, text="X",width=2,bg="red", command=lambda: back(frame_forget))
 
-    label_mail.grid(row=0, column=0, padx=20, pady=20)
-    entry_mail.grid(row=0, column=1, padx=20, pady=20)
-    button_submit.grid(row=1, column=1, pady=20)
+
+
+    button_back.grid(row=0,column=2,sticky='w')
+    label_mail.grid(row=1, column=0, padx=20, pady=20)
+    entry_mail.grid(row=1, column=1, padx=20, pady=20)
+    button_submit.grid(row=2, column=1, pady=20)
 
 
 # login window
@@ -114,8 +129,8 @@ def login(frame, user,button_stud,button_inst,button_comp):
     v = IntVar(value=0)
     check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
                             command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=2, width=15, bg="green",
-                           command=lambda: validate_account(frame, entry_usr, entry_pwd, user))
+    button_submit = Button(frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+                           command=lambda: validate_account(frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
     button_forget = Button(frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(frame,button_stud,button_inst,button_comp))
     button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame, user,button_stud,button_inst,button_comp))
     button_back = Button(frame, text="X",width=2,bg="red", command=lambda: home(frame))
@@ -808,7 +823,9 @@ def profile(frame, username, user):
     top_icons = Frame(frame, width=1060, bg='brown', height=40, padx=25)
     center_frame = Frame(frame, width=1060, height=580, bg="light blue")
     logo_canvas = Canvas(top_frame, height=80, width=100, )
-    logo_canvas.create_text(40, 40, text="logo", fill="black")
+    img_small_logo= Image.open("resources/small_logo.jpg")
+    img_small_logo = ImageTk.PhotoImage(img_small_logo)
+    logo_canvas.create_image(0, 0, image=img_small_logo, anchor='nw')
 
     button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
                            command=lambda: logout(frame))

@@ -831,7 +831,7 @@ def profile(frame, username, user):
     img_small_logo = ImageTk.PhotoImage(img_small_logo)
     logo_canvas.create_image(0, 0, image=img_small_logo, anchor='nw')
 
-    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
+    button_logout = Button(top_frame, bg="blue",fg="white",text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
                            command=lambda: logout(frame))
 
     def show_favourite(frame, username):
@@ -1667,8 +1667,8 @@ edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("C
 edupidia_button.place(x=550,y=250)
 
 
-frame_stud_log = Frame(label_main, bg="#b2e9f7")
-frame_inst_log = Frame(label_main, bg="#b2e9f7")
-frame_comp_log = Frame(label_main, bg="#b2e9f7")
+frame_stud_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_inst_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_comp_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
 
 window.mainloop()

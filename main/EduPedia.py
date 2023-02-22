@@ -816,13 +816,17 @@ def profile(frame, username, user):
         close_button.place(x=400, y=2)
 
     # inside frame
-    frame = Frame(label_main, width=1280, height=700)
+    frame = Frame(label_main, width=1280, height=700,bg="#115e5d")
     frame.pack()
-    top_frame = Frame(frame, width=1280, height=80, bg='green')
-    left_frame = Frame(frame, width=220, height=620, bg="black")
-    top_icons = Frame(frame, width=1060, bg='brown', height=40, padx=25)
+    top_frame = Frame(frame, width=1280, height=80, bg='#069c99')
+    left_frame = Frame(frame, width=220, height=620, bg="#041924")
+    top_icons = Frame(frame, width=1060, bg='#115e5d', height=40, padx=25)
     center_frame = Frame(frame, width=1060, height=580, bg="light blue")
-    logo_canvas = Canvas(top_frame, height=80, width=100, )
+
+
+    # top
+
+    logo_canvas = Canvas(top_frame, height=60, width=60, )
     img_small_logo= Image.open("resources/small_logo.jpg")
     img_small_logo = ImageTk.PhotoImage(img_small_logo)
     logo_canvas.create_image(0, 0, image=img_small_logo, anchor='nw')
@@ -1177,24 +1181,24 @@ def profile(frame, username, user):
 
 
     # left
-    profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="pink", width=18,
-                               anchor="nw")
+    profile_text_label = Label(left_frame, font=("Helvetica", "16"), text="My profile", bg="#041924", width=18,fg="white",
+                               anchor="sw",height=2)
     profile_img = Image.open("resources/profile.jpg")
     profile_img = ImageTk.PhotoImage(profile_img)
     profile_canvas = Canvas(left_frame, height=180, width=220)
     profile_canvas.create_image(0, 0, image=profile_img, anchor='nw')
-    profile_name_label = Label(left_frame, font=("Helvetica", "16"), text=f"{username}", bg="pink", width=18,
+    profile_name_label = Label(left_frame, font=("Helvetica", "16"), text=f"{username}", bg="#041924", width=18,fg="white",
                                anchor='nw')
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2,
-                               bg="yellow", command=lambda: view_profile(frame, username, user))
+                               bg="#05b3b0", command=lambda: view_profile(frame, username, user))
     update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2,
-                                 bg="orange", command=lambda: update_profile(frame, username, user))
-    contirubte_butt = Button(left_frame, text="Contiribute", font=("Helvetica", "16"), bg="green", width=18, height=2,
+                                 bg="#0f5c5b", command=lambda: update_profile(frame, username, user))
+    contirubte_butt = Button(left_frame, text="Contiribute", font=("Helvetica", "16"), bg="#05b3b0", width=18, height=2,
                              command=lambda: contribute(frame,username,user))
-    history_butt = Button(left_frame, text="History", font=("Helvetica", "16"), bg="green", width=18, height=2, command= lambda : show_history())
+    history_butt = Button(left_frame, text="History", font=("Helvetica", "16"), bg="#05b3b0", width=18, height=2, command= lambda : show_history())
 
     if user == "student":
-        favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="light green", width=18, height=2,command=lambda: show_favourite(frame, username))
+        favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2,command=lambda: show_favourite(frame, username))
         favorite_butt.grid(row=6, column=0)
 
     elif user == 'institute':
@@ -1324,29 +1328,29 @@ def profile(frame, username, user):
 
 
     # top_icons
-    search_button = Button(top_icons, text="search", bg='white', foreground='blue', font=("Helvetica", "14"), width=13,
+    search_button = Button(top_icons, text="search", bg='#22e2f0', foreground='blue',font=("Helvetica", "14"), width=13,
                            command=lambda: search_window())
-    vlog_button = Button(top_icons, text="blogs", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
+    vlog_button = Button(top_icons, text="blogs",  bg='#091836', foreground='#22e2f0', font=("Helvetica", "14"), height=1,
                          width=13, command=lambda: blog_feed(user))
-    create_vlog_button = Button(top_icons, text="create blogs", bg='white', foreground='blue', font=("Helvetica", "14"),
+    create_vlog_button = Button(top_icons, text="create blogs", bg='#22e2f0', foreground='blue', font=("Helvetica", "14"),
                                 height=1, width=13, command=lambda: create_blog(frame, username, user))
-    index_button = Button(top_icons, text="index", bg='white', foreground='blue', font=("Helvetica", "14"), height=1,
+    index_button = Button(top_icons, text="index",bg='#091836', foreground='#22e2f0', font=("Helvetica", "14"), height=1,
                           width=13, command=lambda: index())
 
     if user == 'student' or user == "institute":
-        calc_button = Button(top_icons, text="Calc", bg='white', foreground='blue', font=("Helvetica", "14"),
+        calc_button = Button(top_icons, text="Calc", bg='#22e2f0', foreground='blue', font=("Helvetica", "14"),
                              height=1, width=13, command=lambda: calculator(frame))
         calc_button.grid(row=0, column=5, padx=25)
 
     else:
-        analyse_button = Button(top_icons, text="Analyse", bg='white', foreground='blue', font=("Helvetica", "14"),
+        analyse_button = Button(top_icons, text="Analyse", bg='#22e2f0', foreground='blue', font=("Helvetica", "14"),
                                 height=1, width=13, command= lambda : analyse(frame))
         analyse_button.grid(row=0, column=5, padx=25)
 
     # top frame
     top_frame.place(x=0, y=0)
-    left_frame.place(x=0, y=80)
-    logo_canvas.place(x=0, y=0)
+    left_frame.place(x=0, y=88)
+    logo_canvas.place(x=10, y=10)
 
     button_logout.place(x=1150, y=20)
     top_icons.place(x=225, y=80)
@@ -1355,10 +1359,10 @@ def profile(frame, username, user):
     # left frame
     profile_text_label.grid(row=0, column=0)
     profile_canvas.grid(row=1, column=0)
-    profile_name_label.grid(row=2, column=0)
-    view_profile_butt.grid(row=3, column=0, pady=10)
+    profile_name_label.grid(row=2, column=0,pady=3)
+    view_profile_butt.grid(row=3, column=0,)
     update_profile_butt.grid(row=4, column=0)
-    history_butt.grid(row=5, column=0, pady=10)
+    history_butt.grid(row=5, column=0)
     contirubte_butt.grid(row=7, column=0)
 
     # top icons

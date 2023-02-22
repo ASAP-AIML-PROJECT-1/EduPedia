@@ -831,7 +831,7 @@ def profile(frame, username, user):
     img_small_logo = ImageTk.PhotoImage(img_small_logo)
     logo_canvas.create_image(0, 0, image=img_small_logo, anchor='nw')
 
-    button_logout = Button(top_frame, text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
+    button_logout = Button(top_frame, bg="blue",fg="white",text="log-out", font=("Comic Sans MS", 12, "bold"), width=6, height=1,
                            command=lambda: logout(frame))
 
     def show_favourite(frame, username):
@@ -1192,21 +1192,21 @@ def profile(frame, username, user):
     view_profile_butt = Button(left_frame, text="view profile", font=("Helvetica", "16"), width=18, height=2,
                                bg="#05b3b0", command=lambda: view_profile(frame, username, user))
     update_profile_butt = Button(left_frame, text="update profile", font=("Helvetica", "16"), width=18, height=2,
-                                 bg="#0f5c5b", command=lambda: update_profile(frame, username, user))
+                                 bg="#0f5c5b", command=lambda: update_profile(frame, username, user),fg="#aaedf0")
     contirubte_butt = Button(left_frame, text="Contiribute", font=("Helvetica", "16"), bg="#05b3b0", width=18, height=2,
                              command=lambda: contribute(frame,username,user))
     history_butt = Button(left_frame, text="History", font=("Helvetica", "16"), bg="#05b3b0", width=18, height=2, command= lambda : show_history())
 
     if user == "student":
-        favorite_butt = Button(left_frame, text="favorites", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2,command=lambda: show_favourite(frame, username))
+        favorite_butt = Button(left_frame, text="favorites",fg="#aaedf0", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2,command=lambda: show_favourite(frame, username))
         favorite_butt.grid(row=6, column=0)
 
     elif user == 'institute':
-        club_butt = Button(left_frame, text="Clubs", font=("Helvetica", "16"), bg="green", width=18, height=2, command= lambda : clubs())
+        club_butt = Button(left_frame, text="Clubs", fg="#aaedf0",font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2, command= lambda : clubs())
         club_butt.grid(row=7, column=0)
 
     else:
-        advertise_butt = Button(left_frame, text="Advertise", font=("Helvetica", "16"), bg="green", width=18, height=2 ,command= lambda : advertise())
+        advertise_butt = Button(left_frame, text="Advertise",fg="#aaedf0", font=("Helvetica", "16"), bg="green", width=18, height=2 ,command= lambda : advertise())
         advertise_butt.grid(row=7, column=0)
 
     def blog_feed(user):
@@ -1667,8 +1667,8 @@ edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("C
 edupidia_button.place(x=550,y=250)
 
 
-frame_stud_log = Frame(label_main, bg="#b2e9f7")
-frame_inst_log = Frame(label_main, bg="#b2e9f7")
-frame_comp_log = Frame(label_main, bg="#b2e9f7")
+frame_stud_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_inst_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_comp_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
 
 window.mainloop()

@@ -122,20 +122,22 @@ def login(frame, user,button_stud,button_inst,button_comp):
 
 
     frame.place(x=350,y=200)
-    label_usr = Label(frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"))
-    entry_usr = Entry(frame, font=("Helvetica", "16"))
-    label_pwd = Label(frame, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"))
-    entry_pwd = Entry(frame, show="*", font=("Helvetica", "16"))
-    v = IntVar(value=0)
-    check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
-                            command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
-                           command=lambda: validate_account(frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
-    button_forget = Button(frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(frame,button_stud,button_inst,button_comp))
-    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame, user,button_stud,button_inst,button_comp))
     button_back = Button(frame, text="X",width=2,bg="red", command=lambda: home(frame))
+    inside_frame=Frame(frame,bg="#b2e9f7")
+    button_back.grid(row=0,column=0,sticky="e")
+    inside_frame.grid(row=1,column=0,pady=10,padx=10)
+    label_usr = Label(inside_frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"))
+    entry_usr = Entry(inside_frame, font=("Helvetica", "16"))
+    label_pwd = Label(inside_frame, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"))
+    entry_pwd = Entry(inside_frame, show="*", font=("Helvetica", "16"))
+    v = IntVar(value=0)
+    check_pwd = Checkbutton(inside_frame, text="show password", variable=v, onvalue=1, offvalue=0,
+                            command=lambda: showpsd(v, entry_pwd))
+    button_submit = Button(inside_frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+                           command=lambda: validate_account(inside_frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
+    button_forget = Button(inside_frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(inside_frame,button_stud,button_inst,button_comp))
+    button_create = Button(inside_frame, text="Create account", fg="blue", command=lambda: create_uesr(inside_frame, user,button_stud,button_inst,button_comp))
 
-    button_back.grid(row=0, column=3,sticky='w',padx=10,pady=5)
     label_usr.grid(row=1, column=0, padx=10, pady=20)
     entry_usr.grid(row=1, column=1)
     label_pwd.grid(row=2, column=0)
@@ -1667,8 +1669,8 @@ edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("C
 edupidia_button.place(x=550,y=250)
 
 
-frame_stud_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
-frame_inst_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
-frame_comp_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_stud_log = Frame(label_main, bg="#0572b5")
+frame_inst_log = Frame(label_main, bg="#0572b5")
+frame_comp_log = Frame(label_main, bg="#0572b5")
 
 window.mainloop()

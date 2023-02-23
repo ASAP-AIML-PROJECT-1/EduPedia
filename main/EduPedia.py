@@ -63,6 +63,7 @@ def validate_account(frame, entry_usr, entry_pwd, user):
     # checking if any matches found for given username and password
     if results:
         # messagebox.showinfo("success", "Login Successful")
+
         profile(frame, entry_usr.get(), user)
     # if username and password does not match or exist
     else:
@@ -87,19 +88,21 @@ def forget(frame,button_stud,button_inst,button_comp):
             frame.place(x=350, y=200)
 
     frame.place_forget()
-    frame_forget = Frame(label_main, bg="#b2e9f7", width=700, height=300)
+
+    frame_forget = Frame(label_main,bg="#0572b5")
     frame_forget.place(x=350, y=200)
 
-    label_mail = Label(frame_forget, text="Enter mail address ", bg="#b2e9f7", font=("Helvetica", "16"))
-    entry_mail = Entry(frame_forget, font=("Helvetica", "16"))
-    button_submit = Button(frame_forget, text="Send recovery mail", height=1, width=15, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+    button_back = Button(frame_forget, text="X",width=2,bg="red", command=lambda: back(frame_forget))
+    inside_frame = Frame(frame_forget, bg="#b2e9f7")
+    button_back.grid(row=0, column=0, sticky="e")
+    inside_frame.grid(row=1, column=0, pady=10, padx=10)
+
+    label_mail = Label(inside_frame, text="Enter mail address ", bg="#b2e9f7", font=("Helvetica", "16"))
+    entry_mail = Entry(inside_frame, font=("Helvetica", "16"))
+    button_submit = Button(inside_frame, text="Send recovery mail", height=1, width=15, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
                            activebackground="#b2e9f7",activeforeground="#040742",
                            command=lambda: recovery_mail(entry_mail))
-    button_back = Button(frame_forget, text="X",width=2,bg="red", command=lambda: back(frame_forget))
 
-
-
-    button_back.grid(row=0,column=2,sticky='w')
     label_mail.grid(row=1, column=0, padx=20, pady=20)
     entry_mail.grid(row=1, column=1, padx=20, pady=20)
     button_submit.grid(row=2, column=1, pady=20)
@@ -114,6 +117,7 @@ def login(frame, user,button_stud,button_inst,button_comp):
 
 
     def home(frame):
+        inside_frame.place_forget()
         frame.place_forget()
         # button_stud.place(x=540, y=300)
         # button_inst.place(x=540, y=375)
@@ -122,20 +126,22 @@ def login(frame, user,button_stud,button_inst,button_comp):
 
 
     frame.place(x=350,y=200)
-    label_usr = Label(frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"))
-    entry_usr = Entry(frame, font=("Helvetica", "16"))
-    label_pwd = Label(frame, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"))
-    entry_pwd = Entry(frame, show="*", font=("Helvetica", "16"))
-    v = IntVar(value=0)
-    check_pwd = Checkbutton(frame, text="show password", variable=v, onvalue=1, offvalue=0,
-                            command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
-                           command=lambda: validate_account(frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
-    button_forget = Button(frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(frame,button_stud,button_inst,button_comp))
-    button_create = Button(frame, text="Create account", fg="blue", command=lambda: create_uesr(frame, user,button_stud,button_inst,button_comp))
     button_back = Button(frame, text="X",width=2,bg="red", command=lambda: home(frame))
+    inside_frame=Frame(frame,bg="#b2e9f7")
+    button_back.grid(row=0,column=0,sticky="e")
+    inside_frame.grid(row=1,column=0,pady=10,padx=10)
+    label_usr = Label(inside_frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"))
+    entry_usr = Entry(inside_frame, font=("Helvetica", "16"))
+    label_pwd = Label(inside_frame, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"))
+    entry_pwd = Entry(inside_frame, show="*", font=("Helvetica", "16"))
+    v = IntVar(value=0)
+    check_pwd = Checkbutton(inside_frame, text="show password", variable=v, onvalue=1, offvalue=0,
+                            command=lambda: showpsd(v, entry_pwd))
+    button_submit = Button(inside_frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+                           command=lambda: validate_account(frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
+    button_forget = Button(inside_frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(frame,button_stud,button_inst,button_comp))
+    button_create = Button(inside_frame, text="Create account", fg="blue", command=lambda: create_uesr(frame, user,button_stud,button_inst,button_comp))
 
-    button_back.grid(row=0, column=3,sticky='w',padx=10,pady=5)
     label_usr.grid(row=1, column=0, padx=10, pady=20)
     entry_usr.grid(row=1, column=1)
     label_pwd.grid(row=2, column=0)
@@ -1555,49 +1561,54 @@ def create_uesr(frame, user,button_stud,button_inst,button_comp):
         login(frame, user,button_stud,button_inst,button_comp)
 
     frame.pack_forget()
-    frame_create_usr = Frame(label_main, bg='#b2e9f7', width=500, height=400)
-    label_usr = Label(frame_create_usr, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
+    frame_create_usr = Frame(label_main,bg="#0572b5" )
+
+    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame,button_stud,button_inst,button_comp))
+    inside_frame = Frame(frame_create_usr, bg="#b2e9f7")
+    close_button.grid(row=0, column=0, sticky="e")
+    inside_frame.grid(row=1, column=0, pady=10, padx=10)
+    
+    
+    label_usr = Label(inside_frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
                       anchor='nw')
-    entry_usr = Entry(frame_create_usr, font=("Helvetica", "16"))
-    label_pwd = Label(frame_create_usr, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"), width=16,
+    entry_usr = Entry(inside_frame, font=("Helvetica", "16"))
+    label_pwd = Label(inside_frame, text="Enter Password ", bg='#b2e9f7', font=("Helvetica", "16"), width=16,
                       anchor='nw')
     v = IntVar(value=0)
-    check_pwd = Checkbutton(frame_create_usr, text="show password", variable=v, onvalue=1, offvalue=0,
+    check_pwd = Checkbutton(inside_frame, text="show password", variable=v, onvalue=1, offvalue=0,
                             command=lambda: showpsd(v, entry_pwd))
-    entry_pwd = Entry(frame_create_usr, show="*", font=("Helvetica", "16"))
-    label_conpwd = Label(frame_create_usr, text="Conform Password ", bg='#b2e9f7', font=("Helvetica", "16"), width=16,
+    entry_pwd = Entry(inside_frame, show="*", font=("Helvetica", "16"))
+    label_conpwd = Label(inside_frame, text="Conform Password ", bg='#b2e9f7', font=("Helvetica", "16"), width=16,
                          anchor='nw')
-    entry_conpwd = Entry(frame_create_usr, show="*", font=("Helvetica", "16"))
-    label_mob = Label(frame_create_usr, text="Enter Mobile no ", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
+    entry_conpwd = Entry(inside_frame, show="*", font=("Helvetica", "16"))
+    label_mob = Label(inside_frame, text="Enter Mobile no ", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
                       anchor='nw')
-    entry_mob = Entry(frame_create_usr, font=("Helvetica", "16"))
-    label_email = Label(frame_create_usr, text="Enter Email id", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
+    entry_mob = Entry(inside_frame, font=("Helvetica", "16"))
+    label_email = Label(inside_frame, text="Enter Email id", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
                         anchor='nw')
-    entry_email = Entry(frame_create_usr, font=("Helvetica", "16"))
-    entry_belongs_to = Entry(frame_create_usr, font=("Helvetica", "16"))
+    entry_email = Entry(inside_frame, font=("Helvetica", "16"))
+    entry_belongs_to = Entry(inside_frame, font=("Helvetica", "16"))
     entry_belongs_to.grid(row=6, column=1)
 
     if user == "student":
-        label_collge = Label(frame_create_usr, text="Enter Collage name ", bg="#b2e9f7", font=("Helvetica", "16"),
+        label_collge = Label(inside_frame, text="Enter Collage name ", bg="#b2e9f7", font=("Helvetica", "16"),
                              width=16, anchor='nw')
         label_collge.grid(row=6, column=0, pady=10)
 
     elif user == "institute":
-        label_institue = Label(frame_create_usr, text="Enter institute name", bg="#b2e9f7", font=("Helvetica", "16"),
+        label_institue = Label(inside_frame, text="Enter institute name", bg="#b2e9f7", font=("Helvetica", "16"),
                                width=16, anchor='nw')
         label_institue.grid(row=6, column=0, pady=10)
     else:
-        label_company = Label(frame_create_usr, text="Enter company name", bg="#b2e9f7", font=("Helvetica", "16"),
+        label_company = Label(inside_frame, text="Enter company name", bg="#b2e9f7", font=("Helvetica", "16"),
                               width=16, anchor='nw')
         label_company.grid(row=6, column=0, pady=10)
 
-    close_button = Button(frame_create_usr, text="X", bg="red", fg="white", width=3, command=lambda: close(frame,button_stud,button_inst,button_comp))
-    submit_button = Button(frame_create_usr, text="submit", bg="green", fg="#b2e9f7", font=("Helvetica", "16"),
+    submit_button = Button(inside_frame, text="submit", bg="green", fg="#b2e9f7", font=("Helvetica", "16"),
                            command=lambda: creating_account(entry_usr, entry_pwd, entry_conpwd, entry_mob, entry_email,
                                                             entry_belongs_to))
 
     frame_create_usr.place(x=350, y=100)
-    close_button.grid(row=0, column=2, sticky='e')
     label_usr.grid(row=1, column=0, pady=10, padx=10)
     entry_usr.grid(row=1, column=1, padx=5)
     label_pwd.grid(row=2, column=0, pady=10)
@@ -1667,8 +1678,8 @@ edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("C
 edupidia_button.place(x=550,y=250)
 
 
-frame_stud_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
-frame_inst_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
-frame_comp_log = Frame(label_main, bg="#b2e9f7",highlightthickness=8,highlightbackground="blue")
+frame_stud_log = Frame(label_main, bg="#0572b5")
+frame_inst_log = Frame(label_main, bg="#0572b5")
+frame_comp_log = Frame(label_main, bg="#0572b5")
 
 window.mainloop()

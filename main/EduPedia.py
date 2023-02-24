@@ -206,68 +206,63 @@ def profile(frame, username, user):
 
         def cancel():
             frame_update_profile.place_forget()
-            profile(frame, username, user)
 
-        frame.pack_forget()
-        frame_update_profile = Frame(label_main, bg="red")
-        frame_update_profile.pack()
-        frame_update_profile.place(x=350, y=50)
+        frame_update_profile = Frame(center_frame, bg="#0572b5")
+        button_back = Button(frame_update_profile, text="X", width=2, bg="red", command=lambda: cancel())
+        inside_frame = Frame(frame_update_profile, bg="#b2e9f7",)
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        frame_update_profile.place(x=200, y=50)
 
-        label_Name = Label(frame_update_profile, text="Name ", bg="yellow", font=("Helvetica", "16"))
-        entry_Name = Entry(frame_update_profile, font=("Helvetica", "16"))
-        label_email = Label(frame_update_profile, text="email ", bg="yellow", font=("Helvetica", "16"))
-        entry_email = Entry(frame_update_profile, font=("Helvetica", "16"))
-        label_phone_number = Label(frame_update_profile, text="Phone number ", bg="yellow", font=("Helvetica", "16"))
-        entry_phone_number = Entry(frame_update_profile, font=("Helvetica", "16"))
-        label_address = Label(frame_update_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
-        entry_address = Entry(frame_update_profile, font=("Helvetica", "16"))
+        label_Name = Label(inside_frame, text="Name ", bg="#b2e9f7", font=("Helvetica", "16"))
+        entry_Name = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+        label_email = Label(inside_frame, text="email ", bg="#b2e9f7", font=("Helvetica", "16"))
+        entry_email = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+        label_phone_number = Label(inside_frame, text="Phone number ", bg="#b2e9f7", font=("Helvetica", "16"))
+        entry_phone_number = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+        label_address = Label(inside_frame, text="Address ", bg="#b2e9f7", font=("Helvetica", "16"))
+        entry_address = Entry(inside_frame, font=("Helvetica", "16"),width=30)
 
-        button_submit = Button(frame_update_profile, text="save", height=2, width=15, bg="yellow",
+        button_submit = Button(inside_frame, text="save", height=2, width=15, bg="blue",fg="white",
                                command=lambda: save_profile())
-        button_cancel = Button(frame_update_profile, text="cancel", height=2, width=15, bg="yellow",
-                               command=lambda: cancel())
-
         if user == "student":
-            label_college = Label(frame_update_profile, text="College ", bg="yellow", font=("Helvetica", "16"))
-            entry_college = Entry(frame_update_profile, font=("Helvetica", "16"))
-            label_course = Label(frame_update_profile, text="Course ", bg="yellow", font=("Helvetica", "16"))
-            entry_course = Entry(frame_update_profile, font=("Helvetica", "16"))
-            label_interested_areas = Label(frame_update_profile, text="Interested areas ", bg="yellow",
+            label_college = Label(inside_frame, text="College ", bg="#b2e9f7", font=("Helvetica", "16"))
+            entry_college = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+            label_course = Label(inside_frame, text="Course ", bg="#b2e9f7", font=("Helvetica", "16"))
+            entry_course = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+            label_interested_areas = Label(inside_frame, text="Interested areas ", bg="#b2e9f7",
                                            font=("Helvetica", "16"))
-            entry_interested_areas = Entry(frame_update_profile, font=("Helvetica", "16"))
+            entry_interested_areas = Entry(inside_frame, font=("Helvetica", "16"),width=30)
 
-            label_college.grid(row=4, column=0, padx=20, pady=20)
-            entry_college.grid(row=4, column=1, padx=20, pady=20)
-            label_course.grid(row=5, column=0, padx=20, pady=20)
-            entry_course.grid(row=5, column=1, padx=20, pady=20)
-            label_interested_areas.grid(row=6, column=0, padx=20, pady=20)
-            entry_interested_areas.grid(row=6, column=1, padx=20, pady=20)
+            label_college.grid(row=4, column=0, pady=10,sticky="w")
+            entry_college.grid(row=4, column=1,sticky="e",padx=10)
+            label_course.grid(row=5, column=0,sticky="w")
+            entry_course.grid(row=5, column=1,sticky="e",padx=10)
+            label_interested_areas.grid(row=6, column=0,pady=10,sticky="w")
+            entry_interested_areas.grid(row=6, column=1,sticky="e",padx=10)
 
         elif user == "institute":
-            label_courses_offered = Label(frame_update_profile, text="Courses Offered ", bg="yellow",
-                                          font=("Helvetica", "16"))
-            entry_courses_offered = Entry(frame_update_profile, font=("Helvetica", "16"))
-            label_courses_offered.grid(row=4, column=0, padx=20, pady=20)
-            entry_courses_offered.grid(row=4, column=1, padx=20, pady=20)
+            label_courses_offered = Label(inside_frame, text="Courses Offered ", bg="#b2e9f7",
+                                          font=("Helvetica", "16"),)
+            entry_courses_offered = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+            label_courses_offered.grid(row=4, column=0,sticky="w",pady=10)
+            entry_courses_offered.grid(row=4, column=1,sticky="e",padx=10)
         else:
-            label_services_offered = Label(frame_update_profile, text="Services Providing ", bg="yellow",
+            label_services_offered = Label(inside_frame, text="Services Providing ", bg="#b2e9f7",
                                            font=("Helvetica", "16"))
-            entry_services_offered = Entry(frame_update_profile, font=("Helvetica", "16"))
-            label_services_offered.grid(row=4, column=0, padx=20, pady=20)
-            entry_services_offered.grid(row=4, column=1, padx=20, pady=20)
+            entry_services_offered = Entry(inside_frame, font=("Helvetica", "16"),width=30)
+            label_services_offered.grid(row=4, column=0,sticky="w",pady=10)
+            entry_services_offered.grid(row=4, column=1,sticky="e",padx=10)
 
-        label_Name.grid(row=0, column=0, padx=20, pady=20)
-        entry_Name.grid(row=0, column=1, padx=20, pady=20)
-        label_email.grid(row=1, column=0, padx=20, pady=20)
-        entry_email.grid(row=1, column=1, padx=20, pady=20)
-        label_phone_number.grid(row=2, column=0, padx=20, pady=20)
-        entry_phone_number.grid(row=2, column=1, padx=20, pady=20)
-        label_address.grid(row=3, column=0, padx=20, pady=20)
-        entry_address.grid(row=3, column=1, padx=20, pady=20)
-
+        label_Name.grid(row=0, column=0, pady=10,sticky="w")
+        entry_Name.grid(row=0, column=1,sticky="e",padx=10)
+        label_email.grid(row=1, column=0,sticky="w")
+        entry_email.grid(row=1, column=1,sticky="e",padx=10)
+        label_phone_number.grid(row=2, column=0,pady=10,sticky="w")
+        entry_phone_number.grid(row=2, column=1,sticky="e",padx=10)
+        label_address.grid(row=3, column=0,sticky="w")
+        entry_address.grid(row=3, column=1,sticky="e",padx=10)
         button_submit.grid(row=8, column=1, pady=20)
-        button_cancel.grid(row=8, column=0, pady=20)
-
     def create_blog(frame, username, user):
 
         def submit_create_blog():
@@ -542,7 +537,7 @@ def profile(frame, username, user):
 
     def calculator(fra):
 
-        base_frame = Frame(fra, width=450, height=640, bg='blue')
+        base_frame = Frame(fra, width=450, height=640, bg="#0572b5")
         base_frame.place(x=750, y=70)
         frame = Frame(base_frame, width=410, height=580, bg="black")
         frame.place(x=20, y=40)
@@ -1212,7 +1207,7 @@ def profile(frame, username, user):
         club_butt.grid(row=7, column=0)
 
     else:
-        advertise_butt = Button(left_frame, text="Advertise",fg="#aaedf0", font=("Helvetica", "16"), bg="green", width=18, height=2 ,command= lambda : advertise())
+        advertise_butt = Button(left_frame, text="Advertise",fg="#aaedf0", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2 ,command= lambda : advertise())
         advertise_butt.grid(row=7, column=0)
 
     def blog_feed(user):

@@ -321,12 +321,14 @@ def profile(frame, username, user):
 
         def back():
             frame_view_profile.place_forget()
-            profile(frame, username, user)
 
-        frame.pack_forget()
-        frame_view_profile = Frame(label_main, bg="red")
+        frame_view_profile = Frame(center_frame, bg="#0572b5")
+        button_back = Button(frame_view_profile, text="X", width=2, bg="red", command=lambda: back())
+        inside_frame = Frame(frame_view_profile, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
         frame_view_profile.pack()
-        frame_view_profile.place(x=350, y=50)
+        frame_view_profile.place(x=200, y=50)
 
         try:
             sql = f"SELECT * FROM {table} where username = %s"
@@ -334,66 +336,65 @@ def profile(frame, username, user):
             edupedia_cursor.execute(sql, val)
             profile_values = edupedia_cursor.fetchall()
 
-            label_Name = Label(frame_view_profile, text="Name ", bg="yellow", font=("Helvetica", "16"))
-            show_Name = Label(frame_view_profile, text=profile_values[0][1], bg="yellow", font=("Helvetica", "16"))
-            label_email = Label(frame_view_profile, text="email ", bg="yellow", font=("Helvetica", "16"))
-            show_email = Label(frame_view_profile, text=profile_values[0][3], bg="yellow", font=("Helvetica", "16"))
-            label_phone_number = Label(frame_view_profile, text="Phone number ", bg="yellow", font=("Helvetica", "16"))
-            show_phone_number = Label(frame_view_profile, text=profile_values[0][4], bg="yellow",
-                                      font=("Helvetica", "16"))
-            label_address = Label(frame_view_profile, text="Address ", bg="yellow", font=("Helvetica", "16"))
-            show_address = Label(frame_view_profile, text=profile_values[0][5], bg="yellow", font=("Helvetica", "16"))
+            label_Name = Label(inside_frame, text="Name ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+            show_Name = Label(inside_frame, text=f":  {profile_values[0][1]}", bg="#b2e9f7", font=("Helvetica", "16"),width=25,anchor="nw")
+            label_email = Label(inside_frame, text="email ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+            show_email = Label(inside_frame, text=f":  {profile_values[0][3]}", bg="#b2e9f7", font=("Helvetica", "16"),width=25,anchor="nw")
+            label_phone_number = Label(inside_frame, text="Phone number ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+            show_phone_number = Label(inside_frame, text=f":  {profile_values[0][4]}", bg="#b2e9f7",
+                                      font=("Helvetica", "16"),width=25,anchor="nw")
+            label_address = Label(inside_frame, text="Address ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+            show_address = Label(inside_frame, text=f":  {profile_values[0][5]}", bg="#b2e9f7", font=("Helvetica", "16"),width=25,anchor="nw")
 
-            button_back = Button(frame_view_profile, text="back", height=2, width=15, bg="yellow",
+            button_back = Button(inside_frame, text="back", height=2, width=15, bg="#b2e9f7",
                                  command=lambda: back())
 
             if user == "student":
-                label_college = Label(frame_view_profile, text="College ", bg="yellow", font=("Helvetica", "16"))
-                show_college = Label(frame_view_profile, text=profile_values[0][6], bg="yellow",
-                                     font=("Helvetica", "16"))
-                label_course = Label(frame_view_profile, text="Course ", bg="yellow", font=("Helvetica", "16"))
-                show_course = Label(frame_view_profile, text=profile_values[0][7], bg="yellow",
-                                    font=("Helvetica", "16"))
-                label_interested_areas = Label(frame_view_profile, text="Interested areas ", bg="yellow",
-                                               font=("Helvetica", "16"))
-                show_interested_areas = Label(frame_view_profile, text=profile_values[0][8], bg="yellow",
-                                              font=("Helvetica", "16"))
+                label_college = Label(inside_frame, text="College ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+                show_college = Label(inside_frame, text=f":  {profile_values[0][6]}", bg="#b2e9f7",
+                                     font=("Helvetica", "16"),width=25,anchor="nw")
+                label_course = Label(inside_frame, text="Course ", bg="#b2e9f7", font=("Helvetica", "16"),width=18,anchor="nw")
+                show_course = Label(inside_frame, text=f":  {profile_values[0][7]}", bg="#b2e9f7",
+                                    font=("Helvetica", "16"),width=25,anchor="nw")
+                label_interested_areas = Label(inside_frame, text="Interested areas ", bg="#b2e9f7",
+                                               font=("Helvetica", "16"),width=18,anchor="nw")
+                show_interested_areas = Label(inside_frame, text=f":  {profile_values[0][8]}", bg="#b2e9f7",
+                                              font=("Helvetica", "16"),width=25,anchor="nw")
 
-                label_college.grid(row=4, column=0, padx=20, pady=20)
-                show_college.grid(row=4, column=1, padx=20, pady=20)
-                label_course.grid(row=5, column=0, padx=20, pady=20)
-                show_course.grid(row=5, column=1, padx=20, pady=20)
-                label_interested_areas.grid(row=6, column=0, padx=20, pady=20)
-                show_interested_areas.grid(row=6, column=1, padx=20, pady=20)
+                label_college.grid(row=4, column=0,sticky="w",pady=10)
+                show_college.grid(row=4, column=1,sticky="w",padx=10)
+                label_course.grid(row=5, column=0,sticky="w",pady=10)
+                show_course.grid(row=5, column=1,sticky="w",padx=10)
+                label_interested_areas.grid(row=6, column=0,sticky="w",pady=10)
+                show_interested_areas.grid(row=6, column=1,sticky="w",padx=10)
 
             elif user == "institute":
-                label_courses_offered = Label(frame_view_profile, text="Courses Offered ", bg="yellow",
-                                              font=("Helvetica", "16"))
-                show_courses_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow",
-                                             font=("Helvetica", "16"))
-                label_courses_offered.grid(row=4, column=0, padx=20, pady=20)
-                show_courses_offered.grid(row=4, column=1, padx=20, pady=20)
+                label_courses_offered = Label(inside_frame, text="Courses Offered ", bg="#b2e9f7",
+                                              font=("Helvetica", "16"),width=18,anchor="nw")
+                show_courses_offered = Label(inside_frame, text=f":  {profile_values[0][6]}", bg="#b2e9f7",
+                                             font=("Helvetica", "16"),width=25,anchor="nw")
+                label_courses_offered.grid(row=4, column=0,sticky="w",pady=10)
+                show_courses_offered.grid(row=4, column=1,sticky="w",padx=10)
             else:
-                label_services_offered = Label(frame_view_profile, text="Services Providing ", bg="yellow",
-                                               font=("Helvetica", "16"))
-                show_services_offered = Label(frame_view_profile, text=profile_values[0][6], bg="yellow",
-                                              font=("Helvetica", "16"))
-                label_services_offered.grid(row=4, column=0, padx=20, pady=20)
-                show_services_offered.grid(row=4, column=1, padx=20, pady=20)
+                label_services_offered = Label(inside_frame, text="Services Providing ", bg="#b2e9f7",
+                                               font=("Helvetica", "16"),width=18,anchor="nw")
+                show_services_offered = Label(inside_frame, text=f":  {profile_values[0][6]}", bg="#b2e9f7",
+                                              font=("Helvetica", "16"),width=25,anchor="nw")
+                label_services_offered.grid(row=4, column=0,sticky="w",pady=10)
+                show_services_offered.grid(row=4, column=1,sticky="w",padx=10)
 
-            label_Name.grid(row=0, column=0, padx=20, pady=20)
-            show_Name.grid(row=0, column=1, padx=20, pady=20)
-            label_email.grid(row=1, column=0, padx=20, pady=20)
-            show_email.grid(row=1, column=1, padx=20, pady=20)
-            label_phone_number.grid(row=2, column=0, padx=20, pady=20)
-            show_phone_number.grid(row=2, column=1, padx=20, pady=20)
-            label_address.grid(row=3, column=0, padx=20, pady=20)
-            show_address.grid(row=3, column=1, padx=20, pady=20)
+            label_Name.grid(row=0, column=0,sticky="w",pady=10)
+            show_Name.grid(row=0, column=1,sticky="w",padx=10)
+            label_email.grid(row=1, column=0,sticky="w",pady=10)
+            show_email.grid(row=1, column=1,sticky="w",padx=10)
+            label_phone_number.grid(row=2, column=0,sticky="w",pady=10)
+            show_phone_number.grid(row=2, column=1,sticky="w",padx=10)
+            label_address.grid(row=3, column=0,sticky="w",pady=10)
+            show_address.grid(row=3, column=1,sticky="w",padx=10)
 
-            button_back.grid(row=8, column=0, pady=20)
         except Exception as error:
             messagebox.showerror("Error...!", f"{error}\nPlease contact the administrators")
-            profile(frame, username, user)
+            frame_view_profile.place_forget()
 
     def search_window():
         sercch_frame.place(x=200, y=150)
@@ -539,7 +540,7 @@ def profile(frame, username, user):
 
         base_frame = Frame(fra, width=450, height=640, bg="#0572b5")
         base_frame.place(x=750, y=70)
-        frame = Frame(base_frame, width=410, height=580, bg="black")
+        frame = Frame(base_frame, width=410, height=580,bg="#b2e9f7")
         frame.place(x=20, y=40)
 
         # label
@@ -843,12 +844,15 @@ def profile(frame, username, user):
             frame_favorite.place_forget()
             seacrh_result(favourite_search, frame_favorite)
 
-        frame_favorite = Frame(frame, height=200, width=800)
+        frame_favorite = Frame(frame, height=200, width=800,bg="#0572b5")
         frame_favorite.place(x=350, y=200)
-        list_box_favorie = Listbox(frame_favorite, height=17, width=100)
-        scroll_bar_favorite = Scrollbar(frame_favorite)
-        close_button = Button(frame_favorite, bg="red", text="X", width=2, command=lambda: close(frame_favorite))
-        go_button = Button(frame_favorite, bg="green", text="Go", command=lambda: go_favorite())
+        button_back = Button(frame_favorite, bg="red", text="X", width=2, command=lambda: close(frame_favorite))
+        inside_frame = Frame(frame_favorite, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        list_box_favorie = Listbox(inside_frame, height=10, width=50,font=("Helvetica", "16"))
+        scroll_bar_favorite = Scrollbar(inside_frame)
+        go_button = Button(inside_frame, bg="blue",fg="white", text="Go",width=4,font=("Helvetica", "13"), command=lambda: go_favorite())
 
         sql_favourite = "SELECT favourite FROM favourite WHERE username = %s"
         value_favourite = [f"{username}"]
@@ -856,10 +860,9 @@ def profile(frame, username, user):
         result_favourite = edupedia_cursor.fetchall()
         for favourite in result_favourite:
             list_box_favorie.insert(END, favourite)
-        close_button.grid(row=0, column=0, sticky="e", padx=10)
-        list_box_favorie.grid(row=1, column=0, sticky="w")
-        scroll_bar_favorite.grid(row=1, column=0, sticky="e")
-        go_button.grid(row=2, column=0, sticky="e", padx=10)
+        list_box_favorie.grid(row=1, column=0, sticky="w",padx=10,pady=10)
+        scroll_bar_favorite.grid(row=1, column=0, sticky="e",padx=10,pady=10)
+        go_button.grid(row=2, column=0, sticky="e", padx=20,pady=10)
 
     def show_history():
 
@@ -869,12 +872,15 @@ def profile(frame, username, user):
             frame_history.place_forget()
             seacrh_result(history_search, frame_history)
 
-        frame_history = Frame(frame, height=200, width=800)
+        frame_history = Frame(frame, height=200, width=800,bg="#0572b5")
         frame_history.place(x=350, y=200)
-        list_box_history = Listbox(frame_history, height=17, width=100)
-        scroll_bar_history = Scrollbar(frame_history)
-        close_button = Button(frame_history, bg="red", text="X", width=2, command=lambda: close(frame_history))
-        go_button = Button(frame_history, bg="green", text="Go", command=lambda: go_history())
+        button_back =  Button(frame_history, bg="red", text="X", width=2, command=lambda: close(frame_history))
+        inside_frame = Frame(frame_history, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        list_box_history = Listbox(inside_frame, height=10, width=50,font=("Helvetica", "16"))
+        scroll_bar_history = Scrollbar(inside_frame)
+        go_button = Button(inside_frame, bg="blue",fg="white", text="Go",width=4,font=("Helvetica", "13"), command=lambda: go_history())
 
         sql_history = "SELECT history FROM history WHERE username = %s"
         value_history = [f"{username}"]
@@ -882,10 +888,9 @@ def profile(frame, username, user):
         result_history = edupedia_cursor.fetchall()
         for history in result_history:
             list_box_history.insert(END, history)
-        close_button.grid(row=0, column=0, sticky="e", padx=10)
-        list_box_history.grid(row=1, column=0, sticky="w")
-        scroll_bar_history.grid(row=1, column=0, sticky="e")
-        go_button.grid(row=2, column=0, sticky="e", padx=10)
+        list_box_history.grid(row=1, column=0,sticky="w",padx=10,pady=10)
+        scroll_bar_history.grid(row=1, column=0,sticky="e",padx=10,pady=10)
+        go_button.grid(row=2, column=0, sticky="e",padx=20,pady=10)
 
     def contribute(frame,username,user):
         frame.pack_forget()

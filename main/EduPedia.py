@@ -846,7 +846,7 @@ def profile(frame, username, user):
 
         frame_favorite = Frame(frame, height=200, width=800,bg="#0572b5")
         frame_favorite.place(x=350, y=200)
-        button_back = Button(frame_favorite, bg="red", text="X", width=2, command=lambda: close(frame_favorite))
+        button_back = Button(frame_favorite,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_favorite))
         inside_frame = Frame(frame_favorite, bg="#b2e9f7")
         button_back.grid(row=0, column=0, sticky="e")
         inside_frame.grid(row=1, column=0, pady=10, padx=10)
@@ -874,7 +874,7 @@ def profile(frame, username, user):
 
         frame_history = Frame(frame, height=200, width=800,bg="#0572b5")
         frame_history.place(x=350, y=200)
-        button_back =  Button(frame_history, bg="red", text="X", width=2, command=lambda: close(frame_history))
+        button_back =  Button(frame_history,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_history))
         inside_frame = Frame(frame_history, bg="#b2e9f7")
         button_back.grid(row=0, column=0, sticky="e")
         inside_frame.grid(row=1, column=0, pady=10, padx=10)
@@ -1062,64 +1062,73 @@ def profile(frame, username, user):
         label_assign_works.grid(row=0, column=2)
 
     def advertise():
-        frame_ad = Frame(frame, width=800, height=200)
-        frame_ad.place(x=350, y=140)
-        frame_track_ad = Frame(frame, width=800, height=200,bg="#0572b5")
-        frame_your_ad = Frame(frame, width=800, height=200,bg="#0572b5")
-        frame_contact_us = Frame(frame, width=850, height=200,bg="#0572b5")
+        frame_ad = Frame(center_frame,bg="#0572b5")
+
+        button_back = Button(frame_ad, text="X", width=2, bg="red",fg="white", command=lambda: close(frame_ad))
+        inside_frame = Frame(frame_ad, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+
+        frame_ad.place(x=100, y=50)
+        frame_track_ad = Frame(inside_frame,bg="#b2e9f7")
+        frame_your_ad = Frame(inside_frame,bg="#b2e9f7")
+        frame_contact_us = Frame(inside_frame,bg="#b2e9f7")
 
         def track_ADVT():
-            frame_track_ad.place(x=400, y=200,bg="#0572b5")
-            frame_your_ad.place_forget()
-            frame_contact_us.place_forget()
-            button_IEEE = Button(frame_track_ad, text=f"See Progress", bg="#0abaf5", font=("Helvetica", "14"))
-            button_IEEE.grid(row=3, column=1)
-            button_ISTE = Button(frame_track_ad, text=f"Save Report", bg="#0abaf5", font=("Helvetica", "14"))
-            button_ISTE.grid(row=5, column=1)
-            button_NSS = Button(frame_track_ad, text=f"Advt. tools", bg="#0abaf5", font=("Helvetica", "14"))
-            button_NSS.grid(row=7, column=1)
-            button_others = Button(frame_track_ad, text=f"others", bg="#0abaf5", font=("Helvetica", "14"))
-            button_others.grid(row=9, column=1)
+
+            frame_track_ad.grid(row=1,column=0)
+            frame_your_ad.grid_forget()
+            frame_contact_us.grid_forget()
+
+            button_IEEE = Button(frame_track_ad, text=f"See Progress", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_IEEE.grid(row=3, column=1,pady=10,sticky="w")
+            button_ISTE = Button(frame_track_ad, text=f"Save Report", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_ISTE.grid(row=5, column=1,pady=10,sticky="w")
+            button_NSS = Button(frame_track_ad, text=f"Advt. tools", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_NSS.grid(row=7, column=1,pady=10,sticky="w")
+            button_others = Button(frame_track_ad, text=f"others", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_others.grid(row=9, column=1,pady=10,sticky="w")
 
         def Your_Ads():
-            frame_track_ad.place_forget()
-            frame_contact_us.place_forget()
-            frame_your_ad.place(x=560, y=200)
+
+
+            frame_your_ad.grid(row=1,column=1)
 
             button_cordinators = Button(frame_your_ad, text=f"Create New", bg="#0abaf5",
-                                        font=("Helvetica", "14"))
-            button_cordinators.grid(row=1, column=1)
-            button_secretaries = Button(frame_your_ad, text=f"Update Ads", bg="#0abaf5", font=("Helvetica", "14"))
-            button_secretaries.grid(row=2, column=1)
-            button_volunteers = Button(frame_your_ad, text=f"Connect to other Ad services", bg="#0abaf5", font=("Helvetica", "14"))
-            button_volunteers.grid(row=3, column=1)
-            button_others = Button(frame_your_ad, text=f"others", bg="#0abaf5", font=("Helvetica", "14"))
-            button_others.grid(row=4, column=1)
+                                        font=("Helvetica", "14"),width=15)
+            button_cordinators.grid(row=1, column=1,pady=10,sticky="w")
+            button_secretaries = Button(frame_your_ad, text=f"Update Ads", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_secretaries.grid(row=2, column=1,pady=10,sticky="w")
+            button_volunteers = Button(frame_your_ad, text=f"Connect to other Ad services", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_volunteers.grid(row=3, column=1,pady=10,sticky="w")
+            button_others = Button(frame_your_ad, text=f"others", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_others.grid(row=4, column=1,pady=10,sticky="w")
 
         def contact_us():
-            frame_your_ad.place_forget()
-            frame_track_ad.place_forget()
-            frame_contact_us.place(x=865, y=200)
-            button_events = Button(frame_contact_us, text=f"Premium Services", bg="#0abaf5", font=("Helvetica", "14"))
-            button_events.grid(row=3, column=1)
-            button_circular = Button(frame_contact_us, text=f"Report a problem", bg="#0abaf5", font=("Helvetica", "14"))
-            button_circular.grid(row=5, column=1)
+
+
+            frame_contact_us.grid(row=1,column=2)
+
+            button_events = Button(frame_contact_us, text=f"Premium Services", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_events.grid(row=3, column=1,pady=10,sticky="w")
+            button_circular = Button(frame_contact_us, text=f"Report a problem", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_circular.grid(row=5, column=1,pady=10,sticky="w")
             button_permission = Button(frame_contact_us, text=f"Help Needed", bg="#0abaf5",
-                                       font=("Helvetica", "14"))
-            button_permission.grid(row=7, column=1)
-            button_others = Button(frame_contact_us, text=f"others", bg="#0abaf5", font=("Helvetica", "14"))
-            button_others.grid(row=9, column=1)
+                                       font=("Helvetica", "14"),width=15)
+            button_permission.grid(row=7, column=1,pady=10,sticky="w")
+            button_others = Button(frame_contact_us, text=f"others", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_others.grid(row=9, column=1,pady=10,sticky="w")
 
-        label_track_ad = Button(frame_ad, font=("Helvetica", "14"), text="track ADVT", bg="pink", width=18,
-                                    anchor='nw', command=lambda: track_ADVT())
-        label_your_ad = Button(frame_ad, font=("Helvetica", "14"), text="Your Ads", bg="pink", width=18,
-                                    anchor='nw', command=lambda: Your_Ads())
-        label_contat_us = Button(frame_ad, font=("Helvetica", "14"), text="contact us", bg="pink", width=18,
-                                    anchor='nw', command=lambda: contact_us())
+        label_track_ad = Button(inside_frame, font=("Helvetica", "14"), text="track ADVT",bg="#07f3f7", width=22,
+                                     command=lambda: track_ADVT())
+        label_your_ad = Button(inside_frame, font=("Helvetica", "14"), text="Your Ads",bg="#07f3f7",width=22,
+                                     command=lambda: Your_Ads())
+        label_contat_us = Button(inside_frame, font=("Helvetica", "14"), text="contact us",bg="#07f3f7", width=22,
+                                    command=lambda: contact_us())
 
-        label_track_ad.grid(row=1, column=0)
-        label_your_ad.grid(row=1, column=1)
-        label_contat_us.grid(row=1, column=2)
+        label_track_ad.grid(row=0, column=0)
+        label_your_ad.grid(row=0, column=1)
+        label_contat_us.grid(row=0, column=2)
 
 
     # left
@@ -1157,7 +1166,7 @@ def profile(frame, username, user):
         frame_blog.place(x=300, y=150)
         list_box_blog = Listbox(frame_blog, height=10, width=50)
         scroll_bar_blog = Scrollbar(frame_blog)
-        close_button = Button(frame_blog, bg="red", text="X", width=2, command=lambda: close(frame_blog))
+        close_button = Button(frame_blog,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_blog))
 
         close_button.grid(row=0, column=0, sticky="e", padx=10)
         list_box_blog.grid(row=1, column=0, sticky="w")
@@ -1384,7 +1393,7 @@ def profile(frame, username, user):
         list_box_search = Listbox(frame_search, height=18, width=90,font=("Helvetica", "12"))
         scroll_bar_search = Scrollbar(frame_search)
         list_box_search.delete(0, END)
-        close_button = Button(frame_search, bg="red", text="X", width=2, command=lambda: close(frame_search))
+        close_button = Button(frame_search,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_search))
         go_button = Button(frame_search, bg="green", text="Go", command=lambda: go_search(count_index_table))
 
 

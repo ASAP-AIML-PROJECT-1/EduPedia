@@ -137,9 +137,9 @@ def login(frame, user,button_stud,button_inst,button_comp):
     v = IntVar(value=0)
     check_pwd = Checkbutton(inside_frame, text="show password", variable=v, onvalue=1, offvalue=0,
                             command=lambda: showpsd(v, entry_pwd))
-    button_submit = Button(inside_frame, text="Submit", height=1, width=10, bg="green",fg="yellow",font=("Comic Sans MS", 15, "bold"),
+    button_submit = Button(inside_frame, text="log-in", height=1, width=10, bg="blue",fg="white",font=("Comic Sans MS", 15, "bold"),
                            command=lambda: validate_account(frame, entry_usr, entry_pwd, user),activebackground="#b2e9f7",activeforeground="#040742")
-    button_forget = Button(inside_frame, text="forgot password", bg="blue", fg="white", command=lambda: forget(frame,button_stud,button_inst,button_comp))
+    button_forget = Button(inside_frame, text="forgot password", fg="blue", command=lambda: forget(frame,button_stud,button_inst,button_comp))
     button_create = Button(inside_frame, text="Create account", fg="blue", command=lambda: create_uesr(frame, user,button_stud,button_inst,button_comp))
 
     label_usr.grid(row=1, column=0, padx=10, pady=20)
@@ -893,95 +893,112 @@ def profile(frame, username, user):
         go_button.grid(row=2, column=0, sticky="e",padx=20,pady=10)
 
     def contribute(frame,username,user):
-        frame.pack_forget()
-        frame.place_forget()
-
         def submit_contribute_others(frame):
             messagebox.showinfo("Sorry","we are updating this")
-            frame.pack_forget()
-            profile(frame,username,user)
+            back()
+
         def submit_contribute_online_courses(frame):
-            frame.place_forget()
-            frame_contribute_submit = Frame(label_main, bg="red")
-            # frame_contribute_submit.pack()
-            frame_contribute_submit.place(x=350, y=30)
+
+            label_category.grid_forget()
+            button_category1.grid_forget()
+            button_category2.grid_forget()
+            button_category3.grid_forget()
+            button_category4.grid_forget()
             columns = ["title","category","description","level","duration","skills_covered","prerequisites","language","associated_with","instructors","price","rating","url"]
             for i in range(len(columns)):
-                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
-                                    font=("Helvetica", "16"))
-                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
-                label_title.grid(row=i, column=0, padx=20, pady=10)
-                entry_title.grid(row=i, column=1, padx=20, pady=10)
+                label_title = Label(inside_frame, text=f"{columns[i]}", bg="#b2e9f7", font=("Helvetica", "16"))
+                entry_title = Entry(inside_frame, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0, pady=1, sticky='w')
+                entry_title.grid(row=i, column=1, sticky='e', padx=10)
 
-            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
-                                 command=lambda: profile(frame, username, user))
-            button_back.grid(row=len(columns) + 1, column=0, padx=20, pady=20)
-            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
-                                   command=lambda: profile(frame, username, user))
-            button_submit.grid(row=len(columns) + 1, column=1, padx=20, pady=20)
 
+            button_back = Button(inside_frame, text="back", height=1, width=5, bg="white",fg="blue", font=("Helvetica", "16"),
+                                 command=lambda:back(),activeforeground="white",activebackground="blue")
+            button_back.grid(row=len(columns) + 1, column=1,sticky='w', pady=10,padx=35)
+            button_submit = Button(inside_frame, text="submit", height=1, width=6, bg="blue",fg="white", font=("Helvetica", "16"),
+                                   activeforeground="blue",activebackground="white")
+            button_submit.grid(row=len(columns) + 1, column=1, sticky='e', pady=20,padx=35)
         def submit_contribute_colleges(frame):
-            frame.place_forget()
-            frame_contribute_submit = Frame(label_main, bg="red")
-            # frame_contribute_submit.pack()
-            frame_contribute_submit.place(x=350, y=30)
+
+            label_category.grid_forget()
+            button_category1.grid_forget()
+            button_category2.grid_forget()
+            button_category3.grid_forget()
+            button_category4.grid_forget()
             columns = ["University_Name","College_Name","College_Type","State_Name","District_Name"]
             for i in range(len(columns)):
-                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow",
-                                    font=("Helvetica", "16"))
-                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
-                label_title.grid(row=i, column=0, padx=20, pady=10)
-                entry_title.grid(row=i, column=1, padx=20, pady=10)
+                label_title = Label(inside_frame, text=f"{columns[i]}", bg="#b2e9f7", font=("Helvetica", "16"))
+                entry_title = Entry(inside_frame, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0,pady=5,sticky='w')
+                entry_title.grid(row=i, column=1,sticky='e',padx=10)
 
-            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
-                                 command=lambda: profile(frame, username, user))
-            button_back.grid(row=len(columns) + 1, column=0, padx=20, pady=20)
-            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
-                                   command=lambda: profile(frame, username, user))
-            button_submit.grid(row=len(columns) + 1, column=1, padx=20, pady=20)
 
+            button_back = Button(inside_frame, text="back", height=1, width=5, bg="white",fg="blue", font=("Helvetica", "16"),
+                                 command=lambda:back(),activeforeground="white",activebackground="blue")
+            button_back.grid(row=len(columns) + 1, column=1,sticky='w', pady=10,padx=35)
+            button_submit = Button(inside_frame, text="submit", height=1, width=6, bg="blue",fg="white", font=("Helvetica", "16"),
+                                   activeforeground="blue",activebackground="white")
+            button_submit.grid(row=len(columns) + 1, column=1, sticky='e', pady=20,padx=35)
         def submit_contribute_books(frame):
 
-            frame.place_forget()
-            frame_contribute_submit = Frame(label_main, bg="red")
-            # frame_contribute_submit.pack()
-            frame_contribute_submit.place(x=350, y=30)
+
+            label_category.grid_forget()
+            button_category1.grid_forget()
+            button_category2.grid_forget()
+            button_category3.grid_forget()
+            button_category4.grid_forget()
+
+
             columns = ["author","image","description","download_link","pages","publisher","year","language","file"]
             for i in range(len(columns)):
-                label_title = Label(frame_contribute_submit, text=f"{columns[i]}", bg="yellow", font=("Helvetica", "16"))
-                entry_title = Entry(frame_contribute_submit, font=("Helvetica", "16"))
-                label_title.grid(row=i, column=0, padx=20, pady=10)
-                entry_title.grid(row=i, column=1, padx=20, pady=10)
-
-            button_back = Button(frame_contribute_submit, text="close", height=2, width=15, bg="yellow",
-                                 command=lambda: profile(frame, username, user))
-            button_back.grid(row=len(columns)+1, column=0, padx=20, pady=20)
-            button_submit = Button(frame_contribute_submit, text="submit", height=2, width=15, bg="yellow",
-                                 command=lambda: profile(frame, username, user))
-            button_submit.grid(row=len(columns)+1, column=1, padx=20, pady=20)
+                label_title = Label(inside_frame, text=f"{columns[i]}", bg="#b2e9f7", font=("Helvetica", "16"))
+                entry_title = Entry(inside_frame, font=("Helvetica", "16"))
+                label_title.grid(row=i, column=0,pady=5,sticky='w')
+                entry_title.grid(row=i, column=1,sticky='e',padx=10)
 
 
-        frame_contribute_profile = Frame(label_main, bg="red")
-        frame_contribute_profile.pack()
-        frame_contribute_profile.place(x=350, y=50)
+            button_back = Button(inside_frame, text="back", height=1, width=5, bg="white",fg="blue", font=("Helvetica", "16"),
+                                 command=lambda:back(),activeforeground="white",activebackground="blue")
+            button_back.grid(row=len(columns) + 1, column=1,sticky='w', pady=10,padx=35)
+            button_submit = Button(inside_frame, text="submit", height=1, width=6, bg="blue",fg="white", font=("Helvetica", "16"),
+                                   activeforeground="blue",activebackground="white")
+            button_submit.grid(row=len(columns) + 1, column=1, sticky='e', pady=20,padx=35)
 
-        label_category = Label(frame_contribute_profile, text="select a category ", bg="yellow", font=("Helvetica", "16"))
-        label_category.grid(row=0, column=0, padx=20, pady=20)
 
-        button_category = Button(frame_contribute_profile, text=f"books", bg="yellow",font=("Helvetica", "16"), command=lambda: submit_contribute_books(frame_contribute_profile))
-        button_category.grid(row=1, column=0, padx=20, pady=20)
-        button_category = Button(frame_contribute_profile, text=f"colleges", bg="yellow", font=("Helvetica", "16"),
-                                 command=lambda: submit_contribute_colleges(frame_contribute_profile))
-        button_category.grid(row=2, column=0, padx=20, pady=20)
-        button_category = Button(frame_contribute_profile, text=f"online coursees", bg="yellow", font=("Helvetica", "16"),
-                                 command=lambda: submit_contribute_online_courses(frame_contribute_profile))
-        button_category.grid(row=3, column=0, padx=20, pady=20)
-        button_category = Button(frame_contribute_profile, text=f"others", bg="yellow", font=("Helvetica", "16"),
-                                 command=lambda: submit_contribute_others(frame_contribute_profile))
-        button_category.grid(row=4, column=0, padx=20, pady=20)
 
-        button_back = Button(frame_contribute_profile, text="back", height=2, width=15, bg="yellow", command=lambda: profile(frame, username, user))
-        button_back.grid(row=5, column=0, padx=20, pady=20)
+        def back():
+            frame_contribute_profile.place_forget
+            frame_contribute_profile.place_forget()
+            contribute(frame,username,user)
+
+        def close(frame):
+            frame.place_forget()
+
+
+        frame_contribute_profile = Frame(center_frame,bg="#0572b5")
+        button_back = Button(frame_contribute_profile, text="X", width=2, bg="red",fg="white", command=lambda: close(frame_contribute_profile))
+        inside_frame = Frame(frame_contribute_profile, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        frame_contribute_profile.place(x=50,y=20)
+
+        label_category = Label(inside_frame, text="select a category ", bg="#b2e9f7",fg="blue", font=("Helvetica", "18"))
+        label_category.grid(row=0, column=0,pady=20,sticky="w")
+
+        button_category1= Button(inside_frame, text=f"books",bg="#0abaf5",font=("Helvetica", "18"), command=lambda: submit_contribute_books(inside_frame)
+                                 ,activebackground="blue",activeforeground="white",width=15)
+        button_category1.grid(row=1, column=0,sticky="w")
+        button_category2 = Button(inside_frame, text=f"colleges",bg="#0abaf5", font=("Helvetica", "18"),width=15,
+                                 command=lambda: submit_contribute_colleges(frame_contribute_profile),activebackground="blue",activeforeground="white")
+        button_category2.grid(row=2, column=0,pady=10,sticky="w")
+        button_category3= Button(inside_frame, text=f"online courses",bg="#0abaf5", font=("Helvetica", "18"),width=15,
+                                 command=lambda: submit_contribute_online_courses(frame_contribute_profile),activebackground="blue",activeforeground="white")
+        button_category3.grid(row=3, column=0,sticky="w")
+        button_category4= Button(inside_frame, text=f"others",bg="#0abaf5", font=("Helvetica", "18"),width=15,
+                                 command=lambda: submit_contribute_others(frame_contribute_profile),activebackground="blue",activeforeground="white")
+        button_category4.grid(row=4, column=0,pady=10,sticky="w")
+
+
 
     def clubs():
         frame_clubs = Frame(frame, width=800, height=200)

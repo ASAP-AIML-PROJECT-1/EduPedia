@@ -275,41 +275,42 @@ def profile(frame, username, user):
             messagebox.showinfo("Success", "Your blog has been uploaded succesfully")
             close(create_blog_frame)
 
-        create_blog_frame = Frame(frame, width=800, height=550, bg="black")
+        create_blog_frame = Frame(center_frame, width=800, height=550, bg="#0572b5")
+        button_back =  Button(create_blog_frame,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(create_blog_frame))
+        inside_frame = Frame(create_blog_frame, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
 
-        author_name_label = Label(create_blog_frame, text="author_name", font=("Helvetica", "16"), fg='white',
-                                  bg="black", anchor="nw", width=15)
-        author_name_entry = Entry(create_blog_frame, font=("Helvetica", "16"), width=50)
-        category_label = Label(create_blog_frame, text="category", font=("Helvetica", "16"), fg='white', bg="black",
+        author_name_label = Label(inside_frame, text="Author_name", font=("Helvetica", "16"),
+                                  bg="#b2e9f7", anchor="nw", width=15)
+        author_name_entry = Entry(inside_frame, font=("Helvetica", "16"), width=50)
+        category_label = Label(inside_frame, text="Category", font=("Helvetica", "16"),   bg="#b2e9f7",
                                anchor="nw", width=15)
-        category_entry = Entry(create_blog_frame, font=("Helvetica", "16"), width=50)
-        blog_name_label = Label(create_blog_frame, text="blog_name", font=("Helvetica", "16"), fg='white',
-                                bg="black", anchor="nw", width=15)
-        blog_name_entry = Entry(create_blog_frame, font=("Helvetica", "16"), width=50)
-        blog_label = Label(create_blog_frame, text="blog", font=("Helvetica", "16"), fg='white', bg="black",
+        category_entry = Entry(inside_frame, font=("Helvetica", "16"), width=50)
+        blog_name_label = Label(inside_frame, text="Blog_name", font=("Helvetica", "16"),
+                                bg="#b2e9f7", anchor="nw", width=15)
+        blog_name_entry = Entry(inside_frame, font=("Helvetica", "16"), width=50)
+        blog_label = Label(inside_frame, text="Blog", font=("Helvetica", "16"),   bg="#b2e9f7",
                            anchor="nw", width=15)
-        blog_text = Text(create_blog_frame, font=("Helvetica", "16"), width=50, height=5)
+        blog_text = Text(inside_frame, font=("Helvetica", "16"), width=50, height=5)
         blog_text_value = blog_text.get(1.0, "end-1c")
-        tags_label = Label(create_blog_frame, text="tags", font=("Helvetica", "16"), fg='white',
-                           bg="black", anchor="nw", width=15)
-        tags_entry = Entry(create_blog_frame, font=("Helvetica", "16"), width=50)
-        close_button = Button(create_blog_frame, text="X", bg="red", width=2, command=lambda: close(create_blog_frame))
-        create_button = Button(create_blog_frame, text="Create", bg="green", command=lambda: submit_create_blog())
+        tags_label = Label(inside_frame, text="Tags", font=("Helvetica", "16"),
+                           bg="#b2e9f7", anchor="nw", width=15)
+        tags_entry = Entry(inside_frame, font=("Helvetica", "16"), width=50)
+        create_button = Button(inside_frame, text="Create", width=6,bg="blue",fg="white",font=("Helvetica", "16"), command=lambda: submit_create_blog())
 
-        create_blog_frame.place(x=300, y=150)
-
-        close_button.grid(row=0, column=2, sticky='w', pady=5, padx=10)
-        author_name_label.grid(row=2, column=0)
-        author_name_entry.grid(row=2, column=1)
-        category_label.grid(row=3, column=0, pady=20)
-        category_entry.grid(row=3, column=1)
+        create_blog_frame.place(x=100, y=20)
+        author_name_label.grid(row=2, column=0,pady=10,padx=5)
+        author_name_entry.grid(row=2, column=1,sticky="e",padx=10)
+        category_label.grid(row=3, column=0, pady=10)
+        category_entry.grid(row=3, column=1,sticky="e",padx=10)
         blog_name_label.grid(row=4, column=0)
-        blog_name_entry.grid(row=4, column=1)
-        blog_label.grid(row=5, column=0, pady=20)
-        blog_text.grid(row=5, column=1, pady=20)
+        blog_name_entry.grid(row=4, column=1,sticky="e",padx=10)
+        blog_label.grid(row=5, column=0, pady=10)
+        blog_text.grid(row=5, column=1, pady=10)
         tags_label.grid(row=6, column=0)
-        tags_entry.grid(row=6, column=1)
-        create_button.grid(row=8, column=1, pady=20)
+        tags_entry.grid(row=6, column=1,sticky="e",padx=10)
+        create_button.grid(row=8, column=1, pady=10,sticky="e",padx=50)
 
     def view_profile(frame, username, user):
         if user == "student":
@@ -409,26 +410,30 @@ def profile(frame, username, user):
     # index
     def index():
         # index in profile
-        index_frame = Frame(frame, bg='white', width=200, height=400)
+        index_frame = Frame(center_frame,bg="#0572b5")
+        button_back =  Button(index_frame,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda:close(index_frame))
+        inside_frame = Frame(index_frame, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
 
         def goto():
             def show():
 
                 close(index_frame)
 
-                show_frame = Frame(frame, width=800, height=300, bg="white")
-                result_label = Label(show_frame, text="Results", fg="blue")
-                text_widget = Text(show_frame, width=85, height=15, bg='white', pady=20, padx=10,font=("Helvetica", "16"))
+                show_frame = Frame(center_frame, bg="#0572b5")
+                result_label = Label(show_frame, text="Results", fg="blue",font=("Helvetica", "16"))
+                text_widget = Text(show_frame, width=70,height=15, bg='white', pady=20, padx=10,font=("Helvetica", "16"))
                 scrollbar = Scrollbar(show_frame)
                 text_widget.config(yscrollcommand=scrollbar.set)
                 scrollbar.config(command=text_widget.yview)
-                close_button = Button(show_frame, text="X", bg="red", fg="white", width=2,
+                close_button = Button(show_frame, text="X", bg="red", fg="white", width=2,font=("Helvetica", "12"),
                                       command=lambda: close(show_frame))
-                result_label.grid(row=0, column=0, sticky='w', pady=10, padx=10)
-                close_button.grid(row=0, column=1, pady=10, sticky='w', padx=10)
-                text_widget.grid(row=1, column=0, sticky='w')
-                scrollbar.grid(row=1, column=0, sticky='e')
-                show_frame.place(x=300, y=180)
+                # result_label.grid(row=1, column=0, sticky='w', padx=10)
+                close_button.grid(row=0, column=0, sticky='e')
+                text_widget.grid(row=2, column=0, sticky='w',padx=10,pady=10)
+                scrollbar.grid(row=2, column=0, sticky='e',pady=10)
+                show_frame.place(x=50, y=35)
 
                 try:
                     index_of_item = list_box_index.curselection()
@@ -487,12 +492,14 @@ def profile(frame, username, user):
             except Exception as e:
                 messagebox.showinfo("oops", "select at least one")
                 index_frame.place_forget()
+                index()
 
-            back_button = Button(index_frame, text="Back", fg="green", bg="yellow",
+            back_button = Button(inside_frame, text="Back", fg="blue", bg="white",font=("Helvetica", "12"),
                                  command=lambda: back(index_frame))
-            back_button.grid(row=2, column=0, sticky='e', padx=60)
-            show_button = Button(index_frame, text="Show ", bg='blue', fg='white', command=lambda: show())
-            show_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+            back_button.grid(row=2, column=0, sticky='e', padx=100)
+            show_button = Button(inside_frame, text="Show ", bg='blue', fg='white',font=("Helvetica", "12"), command=lambda: show())
+            goto_button.grid_forget()
+            show_button.grid(row=2, column=0, pady=10, sticky='e', padx=20)
 
         def sort_reverse():
             data = list(list_box_index.get(0, END))
@@ -502,37 +509,35 @@ def profile(frame, username, user):
                 data.sort()
                 for values in data:
                     list_box_index.insert(END, values)
-                sort_button = Button(index_frame, text="A-Z", bg="red", command=lambda: sort_reverse())
-                sort_button.grid(row=0, column=0, pady=10, sticky='w')
+                sort_button = Button(inside_frame, text="A-Z", bg="light green",fg="blue",font=("Helvetica", "8"), command=lambda: sort_reverse())
+                sort_button.grid(row=0, column=0, pady=10, sticky='w',padx=10)
 
             list_box_index.delete(0, END)
             data.sort(reverse=True)
             for values in data:
                 list_box_index.insert(END, values)
-            sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_true())
-            sort_button.grid(row=0, column=0, pady=10, sticky='w')
+            sort_button = Button(inside_frame, text="Z-A",  bg="light green",fg="blue",font=("Helvetica", "8"), command=lambda: sort_true())
+            sort_button.grid(row=0, column=0, pady=10, sticky='w',padx=10)
 
-        index_frame.place(x=830, y=120)
+        index_frame.place(x=600,y=20)
         tables_index = ["blogs", "books", "colleges", "company_profile", "online_courses"]
         tables_index.sort()
 
-        sort_button = Button(index_frame, text="Z-A", bg="red", command=lambda: sort_reverse())
-        close_button = Button(index_frame, text="X", bg='green', width=2, command=lambda: close(index_frame))
-        list_box_index = Listbox(index_frame, width=32, height=10,font=("Helvetica", "16"))
-        scrollbar_index = Scrollbar(index_frame)
+        sort_button = Button(inside_frame, text="Z-A", bg="light green",fg="blue",font=("Helvetica", "8"), command=lambda: sort_reverse())
+        list_box_index = Listbox(inside_frame, width=32, height=10,font=("Helvetica", "16"))
+        scrollbar_index = Scrollbar(inside_frame)
         list_box_index.delete(0, END)
         for values in tables_index:
             list_box_index.insert(END, values)
 
-        goto_button = Button(index_frame, text="Go to", bg='blue', fg='white', command=lambda: goto())
+        goto_button = Button(inside_frame, text="Go to", bg='blue', font=("Helvetica", "12"),fg='white', command=lambda: goto())
 
-        sort_button.grid(row=0, column=0, pady=10, sticky='w')
-        close_button.grid(row=0, column=0, sticky='e')
+        sort_button.grid(row=0, column=0, pady=10, sticky='w',padx=10)
         list_box_index.grid(row=1, column=0, sticky='w', padx=10)
         scrollbar_index.grid(row=1, column=0, sticky='e')
         list_box_index.config(yscrollcommand=scrollbar_index.set)
         scrollbar_index.config(command=list_box_index.yview)
-        goto_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
+        goto_button.grid(row=2, column=0, pady=10, sticky='e', padx=40)
 
     # calculator
 
@@ -1188,7 +1193,6 @@ def profile(frame, username, user):
 
 
         result_blog_columns = ["author_name","category","blog_name","blog"]
-
         sql_blog_feed = f"SELECT * FROM blogs ORDER BY rating DESC LIMIT 50"
         edupedia_cursor.execute(sql_blog_feed)
         result_blog_feed = edupedia_cursor.fetchall()
@@ -1271,11 +1275,6 @@ def profile(frame, username, user):
         label_tredning.grid(row=0 ,column=0)
         label_ADVT.grid(row=0, column=1)
         label_reactions_to_post.grid(row=0, column=2)
-
-
-
-
-
 
 
     # top_icons
@@ -1512,8 +1511,8 @@ def create_uesr(frame, user,button_stud,button_inst,button_comp):
     inside_frame = Frame(frame_create_usr, bg="#b2e9f7")
     close_button.grid(row=0, column=0, sticky="e")
     inside_frame.grid(row=1, column=0, pady=10, padx=10)
-    
-    
+
+
     label_usr = Label(inside_frame, text="Enter Username ", bg="#b2e9f7", font=("Helvetica", "16"), width=16,
                       anchor='nw')
     entry_usr = Entry(inside_frame, font=("Helvetica", "16"))

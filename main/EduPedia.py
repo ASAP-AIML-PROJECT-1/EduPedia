@@ -199,10 +199,8 @@ def profile(frame, username, user):
                         edupedia.commit()
                 messagebox.showinfo("Success", "Profile updated succesfully")
                 frame_update_profile.place_forget()
-                profile(frame, username, user)
             except Exception as error:
                 messagebox.showerror("Error...!", f"{error}\nPlease contact the administrators")
-                profile(frame, username, user)
 
         def cancel():
             frame_update_profile.place_forget()
@@ -398,7 +396,7 @@ def profile(frame, username, user):
             frame_view_profile.place_forget()
 
     def search_window():
-        sercch_frame.place(x=200, y=150)
+        sercch_frame.place(x=150, y=100)
 
     def close(frame):
         frame.place_forget()
@@ -543,16 +541,16 @@ def profile(frame, username, user):
 
     def calculator(fra):
 
-        base_frame = Frame(fra, width=450, height=640, bg="#0572b5")
-        base_frame.place(x=750, y=70)
-        frame = Frame(base_frame, width=410, height=580,bg="#b2e9f7")
-        frame.place(x=20, y=40)
+        base_frame = Frame(center_frame, width=340, height=530, bg="#0572b5")
+        base_frame.place(x=600, y=10)
+        frame = Frame(base_frame, width=320, height=480,bg="#b2e9f7")
+        frame.place(x=10, y=40)
 
         # label
 
-        lb = Label(frame, height=2, width=18, text='', bg='white', fg='black', anchor="se",
-                   font=("Times", 25, "italic bold"))
-        lb.place(x=30, y=45, )
+        lb = Label(frame, height=2, width=16, text='', bg='white', fg='black', anchor="se",
+                   font=("Times", 24, "italic bold"))
+        lb.place(x=11, y=10, )
 
         # number button click action  add
 
@@ -757,70 +755,70 @@ def profile(frame, username, user):
 
         buttce = Button(frame, text='CE', bg='#fc475f', width=3, height=1, activebackground='red',
                         command=lambda: buttonce_clicked(), font=("Times", 25, "italic bold"))
-        buttce.place(x=30, y=150)
+        buttce.place(x=10, y=110)
         buttc = Button(frame, text='C', bg='#fc475f', width=3, height=1, activebackground='red',
                        command=lambda: buttonc_clicked(), font=("Times", 25, "italic bold"))
-        buttc.place(x=120, y=150)
+        buttc.place(x=80, y=110)
         buttx = Button(frame, text='X', bg='#fc475f', width=3, height=1, activebackground='red',
                        command=lambda: buttonX_clicked(), font=("Times", 25, "italic bold"))
-        buttx.place(x=210, y=150)
+        buttx.place(x=150, y=110)
 
         # number buttons
 
         butt7 = Button(frame, text='7', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button7_clicked('7'), font=("Times", 25, "italic bold"))
-        butt7.place(x=30, y=240)
+        butt7.place(x=10, y=190)
         butt8 = Button(frame, text='8', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button8_clicked('8'), font=("Times", 25, "italic bold"))
-        butt8.place(x=120, y=240)
+        butt8.place(x=80, y=190)
         butt9 = Button(frame, text='9', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button9_clicked('9'), font=("Times", 25, "italic bold"))
-        butt9.place(x=210, y=240)
+        butt9.place(x=150, y=190)
         butt4 = Button(frame, text='4', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button4_clicked('4'), font=("Times", 25, "italic bold"))
-        butt4.place(x=30, y=330)
+        butt4.place(x=10, y=260)
         butt5 = Button(frame, text='5', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button5_clicked('5'), font=("Times", 25, "italic bold"))
-        butt5.place(x=120, y=330)
+        butt5.place(x=80, y=260)
         butt6 = Button(frame, text='6', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button6_clicked('6'), font=("Times", 25, "italic bold"))
-        butt6.place(x=210, y=330)
+        butt6.place(x=150, y=260)
         butt1 = Button(frame, text='1', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button1_clicked('1'), font=("Times", 25, "italic bold"))
-        butt1.place(x=30, y=420)
+        butt1.place(x=10, y=330)
         butt2 = Button(frame, text='2', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button2_clicked('2'), font=("Times", 25, "italic bold"))
-        butt2.place(x=120, y=420)
+        butt2.place(x=80, y=330)
         butt3 = Button(frame, text='3', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button3_clicked('3'), font=("Times", 25, "italic bold"))
-        butt3.place(x=210, y=420)
+        butt3.place(x=150, y=330)
         butt0 = Button(frame, text='0', bg='gray', width=3, height=1, activebackground='#62bce3',
                        command=lambda: button0_clicked('0'), font=("Times", 25, "italic bold"))
-        butt0.place(x=30, y=510)
+        butt0.place(x=10, y=400)
         butt_dot = Button(frame, text='.', bg='gray', width=3, height=1, activebackground='#62bce3',
                           command=lambda: buttondot_clicked('.'), font=("Times", 25, "italic bold"))
-        butt_dot.place(x=120, y=510)
+        butt_dot.place(x=80, y=400)
 
         # operator buttons
 
         butt_equal = Button(frame, text='=', bg='#5bf0a5', width=8, height=1, activebackground='white',
                             command=lambda: equal_button_clicked(), font=("Times", 25, "italic bold"))
-        butt_equal.place(x=215, y=510)
+        butt_equal.place(x=150, y=400)
         butt_div = Button(frame, text='/', bg='#695cab', width=4, height=1, activebackground='green',
                           command=lambda: div_but_clicked(), font=("Times", 24, "italic bold"))
-        butt_div.place(x=297, y=150)
+        butt_div.place(x=227, y=110)
         butt_mult = Button(frame, text='*', bg='#695cab', width=4, height=1, activebackground='green',
                            command=lambda: mult_but_clicked(), font=("Times", 24, "italic bold"))
-        butt_mult.place(x=297, y=240)
+        butt_mult.place(x=227, y=190)
         butt_sub = Button(frame, text='-', bg='#695cab', width=4, height=1, activebackground='green',
                           command=lambda: sub_but_clicked(), font=("Times", 24, "italic bold"))
-        butt_sub.place(x=297, y=330)
+        butt_sub.place(x=227, y=260)
         butt_add = Button(frame, text='+', bg='#695cab', width=4, height=1, activebackground='green',
                           command=lambda: add_but_clicked(), font=("Times", 24, "italic bold"))
-        butt_add.place(x=297, y=420)
+        butt_add.place(x=227, y=330)
 
-        close_button = Button(base_frame, text="X", bg='red', width=3, command=lambda: close(base_frame))
-        close_button.place(x=400, y=2)
+        close_button = Button(base_frame, text="X", bg='red', fg="white",width=3, command=lambda: close(base_frame))
+        close_button.place(x=310,y=0)
 
     # inside frame
     frame = Frame(label_main, width=1280, height=700,bg="#115e5d")
@@ -1104,7 +1102,7 @@ def profile(frame, username, user):
             button_cordinators.grid(row=1, column=1,pady=10,sticky="w")
             button_secretaries = Button(frame_your_ad, text=f"Update Ads", bg="#0abaf5", font=("Helvetica", "14"),width=15)
             button_secretaries.grid(row=2, column=1,pady=10,sticky="w")
-            button_volunteers = Button(frame_your_ad, text=f"Connect to other Ad services", bg="#0abaf5", font=("Helvetica", "14"),width=15)
+            button_volunteers = Button(frame_your_ad, text=f"Ads Services", bg="#0abaf5", font=("Helvetica", "14"),width=15)
             button_volunteers.grid(row=3, column=1,pady=10,sticky="w")
             button_others = Button(frame_your_ad, text=f"others", bg="#0abaf5", font=("Helvetica", "14"),width=15)
             button_others.grid(row=4, column=1,pady=10,sticky="w")
@@ -1156,10 +1154,14 @@ def profile(frame, username, user):
     if user == "student":
         favorite_butt = Button(left_frame, text="favorites",fg="#aaedf0", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2,command=lambda: show_favourite(frame, username))
         favorite_butt.grid(row=6, column=0)
+        contirubte_butt.grid(row=7, column=0)
+
 
     elif user == 'institute':
         club_butt = Button(left_frame, text="Clubs", fg="#aaedf0",font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2, command= lambda : clubs())
         club_butt.grid(row=7, column=0)
+        contirubte_butt.grid(row=8, column=0)
+
 
     else:
         advertise_butt = Button(left_frame, text="Advertise",fg="#aaedf0", font=("Helvetica", "16"), bg="#0f5c5b", width=18, height=2 ,command= lambda : advertise())
@@ -1167,29 +1169,42 @@ def profile(frame, username, user):
 
     def blog_feed(user):
 
-        frame_blog = Frame(frame, height=50, width=60)
-        frame_blog.place(x=300, y=150)
-        list_box_blog = Listbox(frame_blog, height=10, width=50)
-        scroll_bar_blog = Scrollbar(frame_blog)
-        close_button = Button(frame_blog,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_blog))
+        frame_blog = Frame(center_frame, height=400, width=600, bg="#0572b5")
 
-        close_button.grid(row=0, column=0, sticky="e", padx=10)
-        list_box_blog.grid(row=1, column=0, sticky="w")
-        scroll_bar_blog.grid(row=1, column=0, sticky="e")
-        like_button = Button(frame_blog, bg="blue", text="Like")
-        like_button.grid(row=2, column=0, sticky="w", padx=10)
-        share_button = Button(frame_blog, bg="blue", text="share")
-        share_button.grid(row=2, column=0, sticky="w", padx=50)
-        favorite_button = Button(frame_blog, bg="blue", text="favorite")
-        favorite_button.grid(row=2, column=0, sticky="w", padx=100)
+        close_button = Button(frame_blog, text="X", bg="red", fg="white", width=2,
+                              command=lambda: close(frame_blog),font=("Helvetica", "10"),)
+        inside_frame = Frame(frame_blog, bg="#b2e9f7")
+        close_button.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+
+        frame_blog.place(x=50, y=20)
+
+        button_border =Frame(inside_frame, highlightbackground="blue",
+                                 highlightthickness=2)
+        button_border.grid(row=1, column=0, sticky="w", padx=10,pady=10)
+
+        like_button = Button(button_border, bg="white",fg="blue", text="Like",font=("Helvetica", "10"),width=4)
+        like_button.pack()
+
+        button_border =Frame(inside_frame, highlightbackground="green",
+                                 highlightthickness=2, bd=0)
+        button_border.grid(row=1, column=0, sticky="e", padx=30)
+        share_button = Button(button_border, bg="white",fg="green" ,text="share",font=("Helvetica", "10"),width=5)
+        share_button.pack()
+
+        button_border =Frame(inside_frame, highlightbackground="red",
+                                 highlightthickness=2)
+        button_border.grid(row=1, column=0, sticky="w", padx=70)
+        favorite_button = Button(button_border, bg="white",fg="red", text="fav",font=("Helvetica", "10"),width=4)
+        favorite_button.pack()
 
 
-        text_widget = Text(frame_blog, width=80, height=16, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
-        scrollbar = Scrollbar(frame_blog)
+        text_widget = Text(inside_frame, width=80, height=16, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
+        scrollbar = Scrollbar(inside_frame)
         text_widget.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=text_widget.yview)
-        text_widget.grid(row=1, column=0, sticky='w')
-        scrollbar.grid(row=1, column=0, sticky='e')
+        text_widget.grid(row=0, column=0, sticky='w',pady=5,padx=5)
+        scrollbar.grid(row=0, column=0, sticky='e',pady=5,padx=5)
 
 
         result_blog_columns = ["author_name","category","blog_name","blog"]
@@ -1217,12 +1232,16 @@ def profile(frame, username, user):
 
     def analyse(frame):
 
-        frame_analyse = Frame(frame,width=800 ,height=200)
-        frame_analyse.place(x=350,y=140)
+        frame_analyse = Frame(center_frame,bg="#0572b5")
+        button_back = Button(frame_analyse,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_analyse))
+        inside_frame = Frame(frame_analyse, bg="#b2e9f7")
+        button_back.grid(row=0, column=0, sticky="e")
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        frame_analyse.place(x=100,y=30)
 
         def plot(x,y):
-            frame_analyse_graph = Frame(frame, width=800, height=150)
-            frame_analyse_graph.place(x=350, y=200)
+            frame_analyse_graph = Frame(inside_frame, width=800, height=150)
+            frame_analyse_graph.grid(row=1,column=0,pady=10)
             fig = Figure(figsize=(7,4),dpi=100)
             graph = fig.add_subplot(111)
             draw = graph.bar(x,y,.3)
@@ -1266,15 +1285,15 @@ def profile(frame, username, user):
 
             plot(x_axis,y_axis)
 
-        label_tredning = Button(frame_analyse, font=("Helvetica", "16"), text="Trending", bg="pink", width=18,
+        label_tredning = Button(inside_frame, font=("Helvetica", "16"), text="Trending", bg="#07f3f7", width=20,
                                anchor='nw', command= lambda : trending())
-        label_ADVT = Button(frame_analyse, font=("Helvetica", "16"), text="ADVT.", bg="pink", width=18,
+        label_ADVT = Button(inside_frame, font=("Helvetica", "16"), text="ADVT.", bg="#07f3f7", width=20,
                                anchor='nw', command= lambda : ADVT())
-        label_reactions_to_post = Button(frame_analyse, font=("Helvetica", "16"), text="Reactions", bg="pink", width=18,
+        label_reactions_to_post = Button(inside_frame, font=("Helvetica", "16"), text="Reactions", bg="#07f3f7", width=20,
                                anchor='nw', command= lambda : reactions())
-        label_tredning.grid(row=0 ,column=0)
-        label_ADVT.grid(row=0, column=1)
-        label_reactions_to_post.grid(row=0, column=2)
+        label_tredning.grid(row=0 ,column=0,sticky="w",pady=10,padx=10)
+        label_ADVT.grid(row=0, column=0,padx=260)
+        label_reactions_to_post.grid(row=0, column=0,sticky="e",padx=10)
 
 
     # top_icons
@@ -1313,7 +1332,6 @@ def profile(frame, username, user):
     view_profile_butt.grid(row=3, column=0,)
     update_profile_butt.grid(row=4, column=0)
     history_butt.grid(row=5, column=0)
-    contirubte_butt.grid(row=7, column=0)
 
     # top icons
     search_button.grid(row=0, column=1, padx=25)
@@ -1325,6 +1343,14 @@ def profile(frame, username, user):
         # search result frame
 
         def go_search(count_index_table):
+            scroll_bar_search.grid_forget()
+            list_box_search.grid_forget()
+            button_back.grid_forget()
+            go_button.grid_forget()
+
+
+
+
             index_of_search = list_box_search.curselection()
             index_of_table = 0
             if index_of_search[0] > count_index_table[-1]:
@@ -1337,16 +1363,14 @@ def profile(frame, username, user):
 
             column_name = list_box_search.get(index_of_search)[5:]
             table_name = list_box_search.get(index_of_table)
-            print(column_name)
-            print(table_name)
 
-            text_widget = Text(frame_search, width=85, height=15, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
-            scrollbar = Scrollbar(frame_search)
+            text_widget = Text(inside_frame, width=70, height=15, bg='white', pady=20, padx=10, font=("Helvetica", "14"))
+            scrollbar = Scrollbar(inside_frame)
             text_widget.config(yscrollcommand=scrollbar.set)
             scrollbar.config(command=text_widget.yview)
 
-            text_widget.grid(row=1, column=0, sticky='w')
-            scrollbar.grid(row=1, column=0, sticky='e')
+            text_widget.grid(row=1, column=0, sticky='w',padx=10,pady=10)
+            scrollbar.grid(row=1, column=0, sticky='e',padx=10,pady=10)
 
             if table_name == "blogs":
                 selection = "blog_name"
@@ -1382,24 +1406,32 @@ def profile(frame, username, user):
 
             back_button = Button(frame_search, text="Close", fg="green", bg="yellow",
                                  command=lambda: close(frame_search))
-            back_button.grid(row=2, column=0, sticky='e', padx=10)
             #show_button = Button(frame_search, text="Show ", bg='blue', fg='white', command=lambda: show())
             #show_button.grid(row=2, column=0, pady=10, sticky='e', padx=10)
 
 
-        frame_search = Frame(frame, height=210, width=850)
-        frame_search.place(x=300, y=170)
-        list_box_search = Listbox(frame_search, height=18, width=90,font=("Helvetica", "12"))
-        scroll_bar_search = Scrollbar(frame_search)
+
+        frame_search = Frame(center_frame, height=400, width=850, bg="#0572b5")
+        inside_frame = Frame(frame_search, bg="#b2e9f7", width=600, height=300)
+        button_back = Button(inside_frame, text="Back", width=4, bg="white", fg="blue", font=("Helvetica", "12"),
+                             command=lambda: close(frame_search))
+        inside_frame.grid(row=1, column=0, pady=10, padx=10)
+        button_back.grid(row=2, column=0, sticky="e",padx=80,pady=10)
+
+
+
+        frame_search.place(x=100, y=40)
+        list_box_search = Listbox(inside_frame, height=18, width=90,font=("Helvetica", "12"))
+        scroll_bar_search = Scrollbar(inside_frame)
         list_box_search.delete(0, END)
         close_button = Button(frame_search,text="X",width=2,bg="red",fg="white" ,font=("Helvetica", "12"),command=lambda: close(frame_search))
-        go_button = Button(frame_search, bg="green", text="Go", command=lambda: go_search(count_index_table))
+        go_button = Button(inside_frame, bg="blue",fg="white",width=4, text="Go",font=("Helvetica", "12"), command=lambda: go_search(count_index_table))
 
 
         close_button.grid(row=0, column=0, sticky="e", padx=10)
-        list_box_search.grid(row=1, column=0, sticky="w")
-        scroll_bar_search.grid(row=1, column=0, sticky="e")
-        go_button.grid(row=2, column=0, sticky="e", padx=10)
+        list_box_search.grid(row=1, column=0, sticky="w",padx=10,pady=10)
+        scroll_bar_search.grid(row=1, column=0, sticky="e",padx=10,pady=10)
+        go_button.grid(row=2, column=0, sticky="e", padx=20,pady=10)
 
 
         search_tables = ["blogs", "books", "colleges", "company_profile", "online_courses"]
@@ -1423,7 +1455,6 @@ def profile(frame, username, user):
             val_search = [f"%{search_Entry}%"]
             edupedia_cursor.execute(sql_search, val_search)
             result_tables = edupedia_cursor.fetchall()
-            print(result_tables, "\n\n")
             count+=2
             count_index_table.append(count)
             for i in range(len(result_tables)):
@@ -1431,11 +1462,15 @@ def profile(frame, username, user):
                 count+=1
             list_box_search.insert(END, "")
             count+=1
-        print(count_index_table)
 
 
     # seacrh frame
-    sercch_frame = Frame(center_frame, bg="orange", width=700, height=300)
+    sercch_frame = Frame(center_frame,bg="#0572b5", width=700, height=300)
+    button_back = Button(sercch_frame, text="X", width=2, bg="red", fg="white", font=("Helvetica", "12"),
+                         command=lambda: close(sercch_frame))
+    inside_frame = Frame(sercch_frame, bg="#b2e9f7",width=600,height=300)
+    button_back.grid(row=0, column=0, sticky="e")
+    inside_frame.grid(row=1, column=0, pady=10, padx=10)
     search_img = Image.open("resources/search.png")
     search_img = ImageTk.PhotoImage(search_img)
     search_button = Button(sercch_frame, image=search_img, font=("Comic Sans MS", 15, "bold"), anchor='nw', border=0,
@@ -1446,9 +1481,9 @@ def profile(frame, username, user):
     close_img = ImageTk.PhotoImage(close_img)
     close_button = Button(sercch_frame, image=close_img, borderwidth=0, command=lambda: close(sercch_frame))
 
-    search_button.place(x=30, y=100)
-    search_Entry.place(x=50, y=100)
-    close_button.place(x=670, y=0)
+    search_button.place(x=540, y=150)
+    search_Entry.place(x=50, y=150)
+    # close_button.place(x=670, y=0)
     window.mainloop()
 
 
@@ -1617,7 +1652,7 @@ def into(w=None,e=None):
 
 
 welcome_label=Label(label_main,text="Welcome to",font=("Comic Sans MS", 13, "bold"))
-edupidia_button=Button(label_main,text="Edupedia",fg="#0f9496",width=10,font=("Comic Sans MS", 25, "bold"),activebackground="#d3f4f5",activeforeground="#0f9496",command=lambda :into(welcome_label,edupidia_button,))
+edupidia_button=Button(label_main,text="Edupedia",fg="#042866",width=10,font=("Comic Sans MS", 25, "bold"),activebackground="#d3f4f5",activeforeground="#0f9496",command=lambda :into(welcome_label,edupidia_button,))
 # welcome_label.place(x=620,y=250)
 edupidia_button.place(x=550,y=250)
 
